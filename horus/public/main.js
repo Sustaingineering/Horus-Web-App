@@ -1,19 +1,18 @@
-const electron = require(‘electron’);
-const app = electron.app;
-const BrowserWindow = electron.BrowserWindow;
-let mainWindow;
+const {
+  app,
+  BrowserWindow
+} = require('electron');
 
 function createWindow() {
+  // Create the browser window.
   mainWindow = new BrowserWindow({
     width: 900,
     height: 680
   });
-
+  // Lozd the index.html of the app.
   mainWindow.loadURL('http://localhost:3000');
-  app.setAboutPanelOptions({
-    applicationName: 'Horus',
-    applicationVersion: '0.0 .1',
-  })
+
+
   mainWindow.on('closed', () => mainWindow = null);
 }
 
@@ -26,16 +25,6 @@ function createWindow() {
 app.on('ready', createWindow);
 
 /**
- * activate: Runs when the application is activated.
- * We’ll want to call the createWindow function to create a new window.
- */
-app.on('activate', () => {
-  if (mainWindow === null) {
-    createWindow();
-  }
-});
-
-/**
  * window-all-closed: Emitted when all windows have been closed.
  * This will close the app on all platforms, except Mac,
  * which will only close the window but will explicitly require
@@ -44,5 +33,15 @@ app.on('activate', () => {
 app.on('window-all-closed', () => {
   if (process.platform !== 'darwin') {
     app.quit();
+  }
+});
+
+/**
+ * activate: Runs when the application is activated.
+ * We’ll want to call the createWindow function to create a new window.
+ */
+app.on('activate', () => {
+  if (mainWindow === null) {
+    createWindow();
   }
 });
