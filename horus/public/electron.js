@@ -2,6 +2,9 @@ const {
   app,
   BrowserWindow
 } = require('electron');
+const isDev = require('electron-is-dev');
+const path = require('path');
+const url = require('url');
 
 function createWindow() {
   // Create the browser window.
@@ -10,8 +13,10 @@ function createWindow() {
     height: 680
   });
   // Lozd the index.html of the app.
-  mainWindow.loadURL('http://localhost:3000');
-
+  mainWindow.loadURL(isDev ?
+    'http://localhost:3000' :
+    `file://${path.join(__dirname, '../build/index.html')}`
+  );
 
   mainWindow.on('closed', () => mainWindow = null);
 }
