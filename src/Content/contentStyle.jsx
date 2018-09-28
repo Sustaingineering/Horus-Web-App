@@ -1,10 +1,13 @@
 // Content Styles
 
+import { backgroundColor } from "../assets/jss/mainStyle";
+
 const contentStyle = theme => ({
   root: {
     position: "relative",
     minHeight: "calc(100vh - 70px)",
-    paddingBottom: "30px"
+    paddingBottom: "30px",
+    backgroundColor: backgroundColor
   },
   container: {
     flexGrow: 1,

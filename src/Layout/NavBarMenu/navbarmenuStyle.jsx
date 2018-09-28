@@ -9,7 +9,8 @@ const navbarmenuStyle = theme => ({
     transition: theme.transitions.create("width", {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.enteringScreen
-    })
+    }),
+    backgroundColor: primaryColor
   },
   drawerPaperClose: {
     overflowX: "hidden",
@@ -32,6 +33,16 @@ const navbarmenuStyle = theme => ({
   },
   chevron: {
     color: "white"
+  },
+  listItems: {
+    color: "white"
+  },
+  sidebarDivider: {
+    color: "white",
+    backgroundColor: "white",
+    width: "50%",
+    marginLeft: "auto",
+    marginRight: "auto"
   }
 });
 
