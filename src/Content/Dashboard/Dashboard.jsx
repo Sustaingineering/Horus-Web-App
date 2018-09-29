@@ -8,6 +8,7 @@ import {
   Typography,
   MuiThemeProvider
 } from "@material-ui/core";
+import MonitoringData from "./MonitoringData";
 //Style
 import dashboardStyle from "./dashboardStyle";
 
@@ -60,6 +61,7 @@ class Dashboard extends Component {
             <Typography variant="display1" color="primary" gutterBottom>
               Dashboard
             </Typography>
+            <MonitoringData />
             <Grid container spacing={24}>
               <Grid item xs={12} sm={12} md={6}>
                 <Paper className={classes.paper}>

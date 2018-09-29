@@ -37,7 +37,9 @@ class Profile extends Component {
     };
   }
 
-  componentWillMount() {}
+  componentWillMount() {
+    //rreqyest
+  }
 
   handleChange = name => event => {
     this.setState({
@@ -106,7 +108,7 @@ class Profile extends Component {
                                 id="firstName"
                                 label="First Name"
                                 className={classes.textField}
-                                value={this.state.firstName}
+                                value={this.state.firstName || ""}
                                 onChange={this.handleChange("firstName")}
                                 helperText="First Name"
                                 margin="normal"
