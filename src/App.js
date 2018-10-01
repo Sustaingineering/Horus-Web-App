@@ -24,6 +24,7 @@ class App extends Component {
   }
 
   componentDidMount = () => {
+    
     this.setState({ authUser: true });
   };
 

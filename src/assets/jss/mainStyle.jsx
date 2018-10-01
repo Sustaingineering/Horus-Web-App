@@ -1,6 +1,6 @@
 // Variables - Styles that are used on more than one component
 // MUI THEME
-import { createMuiTheme } from '@material-ui/core/styles';
+import { createMuiTheme } from "@material-ui/core/styles";
 
 const drawerWidth = 240;
 
@@ -22,30 +22,57 @@ const defaultFont = {
 };
 
 // Colors
-const primaryColor = "#9368E9";
-const warningColor = "#ff9800";
-const dangerColor = "#f44336";
-const successColor = "#4caf50";
-const infoColor = "#00acc1";
-const roseColor = "#e91e63";
-const grayColor = "#999999";
+const primaryColor = "#27293d";
+const secondaryColor = "#fff";
+const backgroundColor = "#1e1e2d";
+const backgroundColorGradient = "linear-gradient(#1e1e2f,#1e1e24)";
+const successColor = "#00f2c3";
+const successColorGradient =
+  "linear-gradient(to bottom left,#00f2c3,#0098f0,#00f2c3)";
+const infoColor = "#1d8cf8";
+const infoColorGradient =
+  "linear-gradient(to bottom left,#1d8cf8,#3358f4,#1d8cf8)";
+const warningColor = "#ff8d72";
+const warningColorGradient =
+  "linear-gradient(to bottom left,#ff8d72,#ff6491,#ff8d72)";
+const dangerColor = "#fd5d93";
+const dangerColorGradient =
+  "linear-gradient(to bottom left,#fd5d93,#ec250d,#fd5d93)";
+const defaultColor = "#344675";
+const defaultColorGradient =
+  "linear-gradient(to bottom left,#344675,#263148,#344675)";
 
 // MuiTheme
 const mainTheme = createMuiTheme({
+  typography: {
+    // Use the system font instead of the default Roboto font.
+    fontFamily: [
+      "-apple-system",
+      "BlinkMacSystemFont",
+      '"Segoe UI"',
+      "Roboto",
+      '"Helvetica Neue"',
+      "Arial",
+      "sans-serif",
+      '"Apple Color Emoji"',
+      '"Segoe UI Emoji"',
+      '"Segoe UI Symbol"'
+    ].join(",")
+  },
   palette: {
     primary: {
-      light: '#9368E9',
-      main: '#9368E9',
-      dark: '#9368E9',
-      contrastText: '#fff',
+      light: "#fff",
+      main: "#fff",
+      dark: "#fff",
+      contrastText: "#fff"
     },
     secondary: {
-      light: '#fff',
-      main: '#fff',
-      dark: '#fff',
-      contrastText: '#9368E9',
-    },
-  },
+      light: "#fff",
+      main: "#fff",
+      dark: "#fff",
+      contrastText: "#fff"
+    }
+  }
 });
 
 export {
@@ -54,12 +81,12 @@ export {
   transition,
   container,
   defaultFont,
+  backgroundColor,
   primaryColor,
+  secondaryColor,
   warningColor,
   dangerColor,
   successColor,
   infoColor,
-  roseColor,
-  grayColor,
-  mainTheme,
+  mainTheme
 };

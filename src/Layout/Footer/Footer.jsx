@@ -4,7 +4,8 @@ import PropTypes from "prop-types";
 // import { Paper } from '@material-ui/core/';
 // Style
 import footerStyle from "./footerStyle";
-import { withStyles } from "@material-ui/core/styles";
+import { withStyles, Typography, MuiThemeProvider } from "@material-ui/core";
+import { mainTheme } from "../../assets/jss/mainStyle";
 
 class Footer extends Component {
   state = {
@@ -20,7 +21,19 @@ class Footer extends Component {
 
     return (
       <Fragment>
-        <div className={classes.root} />
+        <MuiThemeProvider theme={mainTheme}>
+          <div className={classes.root}>
+            <Typography
+              className={classes.content}
+              color="primary"
+              variant="Title"
+              gutterBottom
+              align="right"
+            >
+              Horus
+            </Typography>
+          </div>
+        </MuiThemeProvider>
       </Fragment>
     );
   }

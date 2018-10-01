@@ -7,7 +7,11 @@ const footerStyle = theme => ({
     backgroundColor: primaryColor,
     width: "100%",
     height: "40px"
-    // marginTop: '-40px',
+  },
+  content: {
+    position: "relative",
+    top: "10px",
+    right: "20px"
   }
 });
 
