@@ -62,6 +62,7 @@ class Dashboard extends Component {
               Dashboard
             </Typography>
             <MonitoringData />
+            <br />
             <Grid container spacing={24}>
               <Grid item xs={12} sm={12} md={6}>
                 <Paper className={classes.paper}>
