@@ -13,6 +13,20 @@ const dashboardStyle = theme => ({
     textAlign: "center",
     color: theme.palette.text.secondary,
     backgroundColor: primaryColor
+  },
+  tabs: {
+    // borderBottom: "1px solid #e8e8e8"
+  },
+  tab: {
+    color: "white",
+    "&:hover": {
+      color: "white",
+      opacity: 1
+    },
+    "&$tabSelected": {
+      color: "#fff",
+      fontWeight: theme.typography.fontWeightMedium
+    }
   }
 });
 
