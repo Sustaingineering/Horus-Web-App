@@ -15,6 +15,8 @@ import MuiPickersUtilsProvider from "material-ui-pickers/utils/MuiPickersUtilsPr
 
 import "./App.css";
 
+//import {ipcRenderer} from "electron";
+
 class App extends Component {
   constructor(props) {
     super(props);
@@ -23,9 +25,9 @@ class App extends Component {
     };
   }
 
-  componentDidMount = () => {
-    
-    this.setState({ authUser: true });
+  componentDidMount = async () => {
+    console.log('component did mount')
+    this.setState({ authUser: false });
   };
 
   render() {
