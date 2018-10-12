@@ -71,6 +71,17 @@ const mainTheme = createMuiTheme({
       main: "#fff",
       dark: "#fff",
       contrastText: "#fff"
+    },
+    overrides: {
+      MuiInput: {
+        // Name of the styleSheet
+        underline: {
+          "&:hover:not($disabled):before": {
+            backgroundColor: "#fff",
+            height: 1
+          }
+        }
+      }
     }
   }
 });
