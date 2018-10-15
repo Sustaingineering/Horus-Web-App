@@ -20,16 +20,9 @@ import ChevronLeft from "@material-ui/icons/ChevronLeft";
 import signinStyle from "./signinStyle";
 import { withStyles, MuiThemeProvider } from "@material-ui/core/styles";
 import { mainTheme } from "../../assets/jss/mainStyle";
-
-const INITIAL_STATE = {
-  firstName: "",
-  lastName: "",
-  email: "",
-  passwordOne: "",
-  passwordTwo: "",
-  error: null,
-  openDialog: false
-};
+// Electron
+const electron = window.require("electron");
+const ipcRenderer = electron.ipcRenderer;
 
 const byPropKey = (propertyName, value) => () => ({
   [propertyName]: value
@@ -38,23 +31,23 @@ const byPropKey = (propertyName, value) => () => ({
 class SignUpPage extends Component {
   constructor(props) {
     super(props);
-    this.state = { ...INITIAL_STATE };
+    this.state = { 
+      organization: "",
+      username: "",
+      email: "",
+      password: "",
+      error: null,
+      openDialog: false
+    };
   }
 
-  signIn = event => {
-    // const { email, passwordOne } = this.state;
-    // const { history } = this.props;
-    // auth
-    //   .doCreateUserWithEmailAndPassword(email, passwordOne)
-    //   .then(authUser => {
-    //     this.setState(() => ({ ...INITIAL_STATE }));
-    //     history.push("/dashboard");
-    //   })
-    //   .catch(error => {
-    //     this.setState(byPropKey("error", error));
-    //     this.dialogPromptOpen(error.message);
-    //   });
-    // event.preventDefault();
+  signUp = () => {
+    const password = this.state.password;
+    const email = this.state.email;
+    const organization = this.state.organization;
+    const username = this.state.username;
+    ipcRenderer.send("sign-up", { password, email, organization, username });
+    console.log("click");
   };
 
   dialogPromptOpen = message => {
@@ -74,16 +67,13 @@ class SignUpPage extends Component {
 
   render() {
     const { classes } = this.props;
-    const { firstName, lastName, email, passwordOne, passwordTwo } = this.state;
+    const { organization, username, email, password} = this.state;
 
     const isInvalid =
-      firstName === "" ||
-      lastName === "" ||
+      organization === "" ||
+      username === "" ||
       email === "" ||
-      passwordOne === "" ||
-      passwordTwo === "" ||
-      firstName === lastName ||
-      passwordOne !== passwordTwo;
+      password=== "";
 
     return (
       <Fragment>
@@ -93,33 +83,33 @@ class SignUpPage extends Component {
             <div className={classes.container}>
               <Paper className={classes.paper}>
                 <Link to="/login">
-                  <ChevronLeft className={classes.iconBack} />
+                  <ChevronLeft className={classes.iconBack} className={classes.title} />
                 </Link>
                 <Avatar className={classes.avatar}>
                   <LockIcon />
                 </Avatar>
-                <Typography variant="headline">Register</Typography>
+                <Typography variant="headline" className={classes.title}>Register</Typography>
                 <form className={classes.form}>
                   <FormControl margin="normal" required fullWidth>
                     <TextField
-                      id="firstName"
-                      label="First Name"
-                      placeholder="First Name"
+                      id="organization"
+                      label="Organization" //this
+                      placeholder="Organization" //this 
                       type="text"
-                      name="firstName"
+                      name="organization" 
                       onChange={this.handleChange}
-                      value={this.state.firstName}
+                      value={this.state.organization}
                     />
                   </FormControl>
                   <FormControl margin="normal" required fullWidth>
                     <TextField
-                      id="lastName"
-                      label="Last Name"
-                      placeholder="Last Name"
+                      id="username"
+                      label="Username"
+                      placeholder="Username"
                       type="text"
-                      name="lastName"
+                      name="username"
                       onChange={this.handleChange}
-                      value={this.state.lastName}
+                      value={this.state.username}
                     />
                   </FormControl>
                   <FormControl margin="normal" required fullWidth>
@@ -135,31 +125,20 @@ class SignUpPage extends Component {
                   </FormControl>
                   <FormControl margin="normal" required fullWidth>
                     <TextField
-                      id="passwordOne"
+                      id="password"
                       label="Password"
                       placeholder="Password"
                       type="password"
-                      name="passwordOne"
+                      name="password"
                       onChange={this.handleChange}
-                      value={this.state.passwordOne}
-                    />
-                  </FormControl>
-                  <FormControl margin="normal" required fullWidth>
-                    <TextField
-                      id="passwordTwo"
-                      label="Confirm Password"
-                      placeholder="Confirm Password"
-                      type="password"
-                      name="passwordTwo"
-                      onChange={this.handleChange}
-                      value={this.state.passwordTwo}
+                      value={this.state.password}
                     />
                   </FormControl>
                   <Button
                     fullWidth
                     disabled={isInvalid}
                     variant="contained"
-                    onClick={this.signIn}
+                    onClick={this.signUp}
                     type="submit"
                     color="primary"
                     className={classes.submit}
