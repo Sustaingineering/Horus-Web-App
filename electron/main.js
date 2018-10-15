@@ -8,7 +8,7 @@ const datastore = require('./datastore');
 let windows = {};
 
 // Enable Electron-Reload
-//require('electron-reload')(__dirname)
+require('electron-reload')(__dirname)
 
 // [ Triggers ]
 
@@ -51,6 +51,7 @@ ipcMain.on('log-out', async (e, msg) => {
 
 ipcMain.on('log-in', async (e, msg) => {
   try {
+    console.log("Login IPC Bus");
     let isLoggedIn = await datastore.loginUser(msg.email, msg.password, msg.isRemembered)
     if (!isLoggedIn) {
       e.sender.send('log-in', {error: "Incorrect username or password"})

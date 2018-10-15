@@ -1,5 +1,6 @@
 import React, { Component, Fragment } from "react";
 import PropTypes from "prop-types";
+
 // Router
 import { Link, withRouter } from "react-router-dom";
 // Material UI Components
@@ -19,38 +20,37 @@ import LockIcon from "@material-ui/icons/LockOutlined";
 import signinStyle from "./signinStyle";
 import { withStyles, MuiThemeProvider } from "@material-ui/core/styles";
 import { mainTheme } from "../../assets/jss/mainStyle";
-
-const INITIAL_STATE = {
-  email: "",
-  password: "",
-  error: null,
-  openDialog: false
-};
-
-const byPropKey = (propertyName, value) => () => ({
-  [propertyName]: value
-});
+// Electron
+const electron = window.require("electron");
+const ipcRenderer = electron.ipcRenderer;
+// const fs = electron.remote.require("fs");
 
 class SignInPage extends Component {
   constructor(props) {
     super(props);
-    this.state = { ...INITIAL_STATE };
+    this.state = {
+      email: "",
+      password: "",
+      error: null,
+      openDialog: false,
+      isRemembered: false
+    };
   }
 
-  login = event => {
-    // const { email, password } = this.state;
-    // const { history } = this.props;
-    // auth
-    //   .doSignInWithEmailAndPassword(email, password)
-    //   .then(() => {
-    //     this.setState(() => ({ ...INITIAL_STATE }));
-    //     history.push("/dashboard");
-    //   })
-    //   .catch(error => {
-    //     this.setState(byPropKey("error", error));
-    //     this.dialogPromptOpen(error.message);
-    //   });
-    // event.preventDefault();
+  componentDidMount = () => {
+    ipcRenderer.on("log-in", (e, msg) => {
+      if (msg.error) {
+        return alert(msg.error);
+      }
+    });
+  };
+
+  login = () => {
+    const tpas = this.state.password;
+    const temail = this.state.email;
+    const tisRemembered = this.state.isRemembered;
+    ipcRenderer.send("log-in", { tpas, temail, tisRemembered });
+    console.log("click");
   };
 
   dialogPromptOpen = message => {
@@ -70,7 +70,6 @@ class SignInPage extends Component {
 
   render() {
     const { classes } = this.props;
-    // const isInvalid = this.state.password === "" || this.state.email === "";
 
     return (
       <Fragment>
@@ -82,10 +81,13 @@ class SignInPage extends Component {
                 <Avatar className={classes.avatar}>
                   <LockIcon />
                 </Avatar>
-                <Typography variant="headline">Sign in</Typography>
+                <Typography variant="headline" className={classes.title}>
+                  Sign in
+                </Typography>
                 <form className={classes.form}>
                   <FormControl margin="normal" required fullWidth>
                     <TextField
+                      className={classes.field}
                       autoFocus
                       autoComplete="email"
                       type="email"
@@ -98,6 +100,7 @@ class SignInPage extends Component {
                   </FormControl>
                   <FormControl margin="normal" required fullWidth>
                     <TextField
+                      className={classes.field}
                       autoComplete="current-password"
                       id="password"
                       label="Password"
@@ -110,10 +113,8 @@ class SignInPage extends Component {
                   <Button
                     fullWidth
                     className={classes.submit}
-                    // disabled={isInvalid}
                     variant="contained"
-                    onClick={this.login}
-                    type="submit"
+                    onClick={() => this.login()}
                     color="primary"
                   >
                     Sign in

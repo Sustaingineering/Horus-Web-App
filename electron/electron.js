@@ -4,7 +4,6 @@ const path = require('path');
 const url = require('url');
 const datastore = require('./datastore');
 
-
 let windows = {};
 
 // [ METHODS ]
@@ -66,9 +65,15 @@ ipcMain.on('log-out', async (e, msg) => {
 
 ipcMain.on('log-in', async (e, msg) => {
   try {
-    let login = await datastore.loginUser(msg.email, msg.password, msg)
+    console.log("Login IPC Bus");
+    let isLoggedIn = await datastore.loginUser(msg.email, msg.password, msg.isRemembered)
+    if (!isLoggedIn) {
+      e.sender.send('log-in', {error: "Incorrect username or password"})
+      return
+    }
   } catch(error) {
-
+    console.log('error', error)
+    e.sender.send('log-in', {error: error})
   }
 })
 

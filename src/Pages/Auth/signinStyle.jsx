@@ -1,6 +1,5 @@
 // SignIn Styles
-import loginBg from "../../assets/images/loginbg.jpg";
-import loginBg2 from "../../assets/images/reajustes-01.png";
+import { primaryColor, backgroundColor } from "../../assets/jss/mainStyle";
 
 const signinStyle = theme => ({
   root: {
@@ -10,10 +9,11 @@ const signinStyle = theme => ({
     display: "flex",
     height: "100%",
     minHeight: "100vh",
-    backgroundImage: "url(" + loginBg2 + ")",
+    backgroundColor: primaryColor,
     backgroundRepeat: "no-repeat",
     backgroundSize: "cover",
-    backgroundPosition: "center"
+    backgroundPosition: "center",
+    color: "white"
   },
   container: {
     marginTop: "10%",
@@ -29,20 +29,36 @@ const signinStyle = theme => ({
   },
   form: {
     width: "100%", // Fix IE11 issue.
-    marginTop: theme.spacing.unit
+    marginTop: theme.spacing.unit,
+    color: "white",
+    borderBottomColor: "white"
+  },
+  field: {
+    color: "white",
+    borderBottomColor: "white"
   },
   noDeco: {
     textDecoration: "none",
     width: "100%"
   },
+  input: {
+    color: "white"
+  },
   submit: {
-    marginTop: theme.spacing.unit * 3
+    marginTop: theme.spacing.unit * 3,
+    backgroundColor: primaryColor,
+    color: "white",
+    "&:hover": {
+      backgroundColor: "white",
+      color: "black"
+    }
   },
   iconBack: {
     minHeight: "30px",
     width: "auto"
   },
   paper: {
+    backgroundColor: backgroundColor,
     marginTop: theme.spacing.unit * 8,
     display: "flex",
     flexDirection: "column",
@@ -52,7 +68,10 @@ const signinStyle = theme => ({
   },
   avatar: {
     margin: theme.spacing.unit,
-    backgroundColor: theme.palette.secondary.main
+    backgroundColor: primaryColor
+  },
+  title: {
+    color: "white"
   }
 });
 
