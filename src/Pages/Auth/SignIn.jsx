@@ -96,6 +96,12 @@ class SignInPage extends Component {
                       label="Email"
                       onChange={this.handleChange}
                       value={this.state.email}
+                      InputProps={{
+                        className: classes.input
+                      }}
+                      InputLabelProps={{
+                        className: classes.input
+                      }}
                     />
                   </FormControl>
                   <FormControl margin="normal" required fullWidth>
@@ -108,6 +114,12 @@ class SignInPage extends Component {
                       type="password"
                       onChange={this.handleChange}
                       value={this.state.password}
+                      InputProps={{
+                        className: classes.input
+                      }}
+                      InputLabelProps={{
+                        className: classes.input
+                      }}
                     />
                   </FormControl>
                   <Button

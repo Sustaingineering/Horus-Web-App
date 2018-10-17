@@ -99,6 +99,13 @@ class SignUpPage extends Component {
                       name="organization" 
                       onChange={this.handleChange}
                       value={this.state.organization}
+                      defaultValue="color"
+                      InputProps={{
+                        className: classes.input
+                      }}
+                      InputLabelProps={{
+                        className: classes.input
+                      }}
                     />
                   </FormControl>
                   <FormControl margin="normal" required fullWidth>
@@ -110,6 +117,12 @@ class SignUpPage extends Component {
                       name="username"
                       onChange={this.handleChange}
                       value={this.state.username}
+                      InputProps={{
+                        className: classes.input
+                      }}
+                      InputLabelProps={{
+                        className: classes.input
+                      }}
                     />
                   </FormControl>
                   <FormControl margin="normal" required fullWidth>
@@ -121,6 +134,12 @@ class SignUpPage extends Component {
                       name="email"
                       onChange={this.handleChange}
                       value={this.state.email}
+                      InputProps={{
+                        className: classes.input
+                      }}
+                      InputLabelProps={{
+                        className: classes.input
+                      }}
                     />
                   </FormControl>
                   <FormControl margin="normal" required fullWidth>
@@ -132,6 +151,12 @@ class SignUpPage extends Component {
                       name="password"
                       onChange={this.handleChange}
                       value={this.state.password}
+                      InputProps={{
+                        className: classes.input
+                      }}
+                      InputLabelProps={{
+                        className: classes.input
+                      }}
                     />
                   </FormControl>
                   <Button
