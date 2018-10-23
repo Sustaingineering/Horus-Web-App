@@ -71,6 +71,7 @@ ipcMain.on('log-in', async (e, msg) => {
       e.sender.send('log-in', {error: "Incorrect username or password"})
       return
     }
+      e.sender.send('log-in', "Successfully logged in")
   } catch(error) {
     console.log('error', error)
     e.sender.send('log-in', {error: error})

@@ -106,6 +106,9 @@ exports.loginUser = function(email, password, isRemember) {
     return new Promise(async (resolve, reject) => {
         try {
             const user = await find({ email: email, password: password }, 'userInfo')
+            
+            console.log('checlpoiont 1',user)
+            
             if (user.length === 0) {
                 return reject('Incorrect email or password')
             }
@@ -332,6 +335,8 @@ exports.getHistoryData = function(data) {
 
 var find = exports.find = function(object, tableName) {
     return new Promise((resolve, reject) => {
+        console.log('inside find', object, tableName)
+
         udb[tableName].find(object, (error, docs) => {
             if (error) {
                 return reject(error)
