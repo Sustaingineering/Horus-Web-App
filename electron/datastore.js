@@ -5,9 +5,9 @@ var user_id = exports.user_id = null;
 let user_sensors = {};
 
 let udb = {
-    userInfo: new Datastore({ filename: `${__dirname}/electron/datastore/local/userInfo`, autoload: true }),
-    dataCollection: new Datastore({ filename: `${__dirname}/electron/datastore/local/dataCollection`, autoload: true }),
-    userSettings: new Datastore({ filename: `${__dirname}/electron/datastore/local/userSettings`, autoload: true })
+    userInfo: new Datastore({ filename: `${__dirname}/datastore/local/userInfo`, autoload: true }),
+    dataCollection: new Datastore({ filename: `${__dirname}/datastore/local/dataCollection`, autoload: true }),
+    userSettings: new Datastore({ filename: `${__dirname}/datastore/local/userSettings`, autoload: true })
 };
 
 var initializeDataStore = exports.initializeDataStore = () => {
