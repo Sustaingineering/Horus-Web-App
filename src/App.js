@@ -15,7 +15,18 @@ import MuiPickersUtilsProvider from "material-ui-pickers/utils/MuiPickersUtilsPr
 
 import "./App.css";
 
-//import {ipcRenderer} from "electron";
+const electron = window.require("electron");
+const ipcRenderer = electron.ipcRenderer;
+
+ipcRenderer.on("log-in-app", (e, msg) => {
+  console.log('inside loginapp')
+  if (msg.error) {
+    return console.log(msg.error);
+  }
+  return console.log(msg)
+
+  //TODO: transition to monitor
+});
 
 class App extends Component {
   constructor(props) {
@@ -30,6 +41,9 @@ class App extends Component {
     this.setState({ authUser: false });
   };
 
+
+
+  
   render() {
     const renderPlatform = this.state.authUser ? (
       <Fragment>
