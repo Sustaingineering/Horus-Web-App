@@ -27,7 +27,7 @@ class App extends Component {
 
   componentDidMount = async () => {
     console.log('component did mount')
-    this.setState({ authUser: false });
+    this.setState({ authUser: true });
   };
 
   render() {
