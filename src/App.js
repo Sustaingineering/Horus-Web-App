@@ -33,7 +33,7 @@ class App extends Component {
       if (msg.error) {
         return console.log(msg.error);
       }
-      this.setState({ authUser : true})
+      this.setState({ authUser : true}) 
     });
   };
   
