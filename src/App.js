@@ -18,31 +18,24 @@ import "./App.css";
 const electron = window.require("electron");
 const ipcRenderer = electron.ipcRenderer;
 
-ipcRenderer.on("log-in-app", (e, msg) => {
-  console.log('inside loginapp')
-  if (msg.error) {
-    return console.log(msg.error);
-  }
-  return console.log(msg)
-
-  //TODO: transition to monitor
-});
 
 class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      authUser: null
+      authUser: false
     };
   }
 
   componentDidMount = async () => {
-    console.log('component did mount')
-    this.setState({ authUser: false });
+    ipcRenderer.on("log-in-app", (e, msg) => {
+      console.log('inside loginapp')
+      if (msg.error) {
+        return console.log(msg.error);
+      }
+      this.setState({ authUser : true})
+    });
   };
-
-
-
   
   render() {
     const renderPlatform = this.state.authUser ? (
