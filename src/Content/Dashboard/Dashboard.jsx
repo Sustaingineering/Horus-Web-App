@@ -12,6 +12,7 @@ import {
 // Components
 import MonitoringData from "./MonitoringData";
 import Chart from "./Chart";
+import HistoryChart from "./historyChart";
 //Style
 import dashboardStyle from "./dashboardStyle";
 
@@ -84,16 +85,16 @@ class Dashboard extends Component {
               <TabContainer>
                 <Grid container spacing={24}>
                   <Grid item xs={12} sm={12} md={6}>
-                    <Chart data={data} title={"Voltage"} />
+                    <HistoryChart data={data} title={"Voltage"} />
                   </Grid>
                   <Grid item xs={12} sm={12} md={6}>
-                    <Chart data={data1} title={"Current"} />
+                    <HistoryChart data={data1} title={"Current"} />
                   </Grid>
                   <Grid item xs={12} sm={12} md={6}>
-                    <Chart data={data2} title={"Power"} />
+                    <HistoryChart data={data2} title={"Power"} />
                   </Grid>
                   <Grid item xs={12} sm={12} md={6}>
-                    <Chart data={data} title={"Temperature"} />
+                    <HistoryChart data={data} title={"Temperature"} />
                   </Grid>
                 </Grid>
               </TabContainer>
