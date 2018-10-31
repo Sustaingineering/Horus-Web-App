@@ -8,6 +8,10 @@ const dashboardStyle = theme => ({
     // marginRight: '30px',
     height: "100%"
   },
+  title: {
+    color: "white",
+    fontSize: 20,
+  },
   paper: {
     padding: theme.spacing.unit * 2,
     textAlign: "center",

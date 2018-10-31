@@ -42,7 +42,7 @@ class SignInPage extends Component {
       if (msg.error) {
         return alert(msg.error);
       }
-      return alert(msg)
+      return alert(msg);
 
       //TODO: transition to monitor
     });
@@ -52,7 +52,11 @@ class SignInPage extends Component {
     const tpas = this.state.password;
     const temail = this.state.email;
     const tisRemembered = this.state.isRemembered;
-    ipcRenderer.send("log-in", { password: tpas, email: temail, isRemembered: tisRemembered });
+    ipcRenderer.send("log-in", {
+      password: tpas,
+      email: temail,
+      isRemembered: tisRemembered
+    });
     console.log("click");
   };
 

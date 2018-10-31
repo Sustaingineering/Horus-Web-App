@@ -18,7 +18,6 @@ import "./App.css";
 const electron = window.require("electron");
 const ipcRenderer = electron.ipcRenderer;
 
-
 class App extends Component {
   constructor(props) {
     super(props);
@@ -29,33 +28,35 @@ class App extends Component {
 
   componentDidMount = async () => {
     ipcRenderer.on("log-in-app", (e, msg) => {
-      console.log('inside loginapp')
+      console.log("inside loginapp");
       if (msg.error) {
         return console.log(msg.error);
       }
-      this.setState({ authUser : true}) 
+      this.setState({
+        authUser: true
+      });
     });
   };
-  
+
   render() {
     const renderPlatform = this.state.authUser ? (
       <Fragment>
         <Switch>
           <Redirect from="/login" to="/dashboard" />
           <Redirect from="/signup" to="/dashboard" />
-        </Switch>
+        </Switch>{" "}
         <Content />
       </Fragment>
     ) : (
       <Fragment>
         <Switch>
-          <Route path="/" exact component={LandingPage} />
-          <Route path="/login" exact component={SignInPage} />
-          <Route path="/signup" exact component={SignUpPage} />
+          <Route path="/" exact component={LandingPage} />{" "}
+          <Route path="/login" exact component={SignInPage} />{" "}
+          <Route path="/signup" exact component={SignUpPage} />{" "}
           <Redirect from="/dashboard" to="/login" />
           <Redirect from="/config" to="/login" />
           <Redirect from="/profile" to="/login" />
-        </Switch>
+        </Switch>{" "}
       </Fragment>
     );
 
@@ -63,11 +64,12 @@ class App extends Component {
       <BrowserRouter>
         <MuiPickersUtilsProvider utils={DateFnsUtils}>
           <Switch>
-            {/* <Route path='/' exact component={LandingPage}/> */}
-            {/* <Route render={() => <h1>404 not found</h1>}/> */}
-          </Switch>
-          {renderPlatform}
-        </MuiPickersUtilsProvider>
+            {" "}
+            {/* <Route path='/' exact component={LandingPage}/> */}{" "}
+            {/* <Route render={() => <h1>404 not found</h1>}/> */}{" "}
+          </Switch>{" "}
+          {renderPlatform}{" "}
+        </MuiPickersUtilsProvider>{" "}
       </BrowserRouter>
     );
   }

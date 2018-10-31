@@ -31,7 +31,7 @@ const byPropKey = (propertyName, value) => () => ({
 class SignUpPage extends Component {
   constructor(props) {
     super(props);
-    this.state = { 
+    this.state = {
       organization: "",
       username: "",
       email: "",
@@ -67,13 +67,10 @@ class SignUpPage extends Component {
 
   render() {
     const { classes } = this.props;
-    const { organization, username, email, password} = this.state;
+    const { organization, username, email, password } = this.state;
 
     const isInvalid =
-      organization === "" ||
-      username === "" ||
-      email === "" ||
-      password=== "";
+      organization === "" || username === "" || email === "" || password === "";
 
     return (
       <Fragment>
@@ -83,20 +80,25 @@ class SignUpPage extends Component {
             <div className={classes.container}>
               <Paper className={classes.paper}>
                 <Link to="/login">
-                  <ChevronLeft className={classes.iconBack} className={classes.title} />
+                  <ChevronLeft
+                    className={classes.iconBack}
+                    className={classes.title}
+                  />
                 </Link>
                 <Avatar className={classes.avatar}>
                   <LockIcon />
                 </Avatar>
-                <Typography variant="headline" className={classes.title}>Register</Typography>
+                <Typography variant="headline" className={classes.title}>
+                  Register
+                </Typography>
                 <form className={classes.form}>
                   <FormControl margin="normal" required fullWidth>
                     <TextField
                       id="organization"
                       label="Organization" //this
-                      placeholder="Organization" //this 
+                      placeholder="Organization" //this
                       type="text"
-                      name="organization" 
+                      name="organization"
                       onChange={this.handleChange}
                       value={this.state.organization}
                       defaultValue="color"

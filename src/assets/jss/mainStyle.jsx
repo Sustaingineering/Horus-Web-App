@@ -99,5 +99,12 @@ export {
   dangerColor,
   successColor,
   infoColor,
-  mainTheme
+  mainTheme,
+  backgroundColorGradient,
+  successColorGradient,
+  infoColorGradient,
+  warningColorGradient,
+  dangerColorGradient,
+  defaultColor,
+  defaultColorGradient
 };

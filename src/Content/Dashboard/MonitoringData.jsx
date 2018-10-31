@@ -2,7 +2,7 @@ import React from "react";
 import PropTypes from "prop-types";
 import { withStyles } from "@material-ui/core/styles";
 import Paper from "@material-ui/core/Paper";
-import { Grid, Avatar, Typography } from "@material-ui/core";
+import { Grid, Typography } from "@material-ui/core";
 import { primaryColor } from "../../assets/jss/mainStyle";
 
 import Timeline from "@material-ui/icons/Timeline";
