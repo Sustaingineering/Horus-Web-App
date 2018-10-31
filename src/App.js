@@ -1,5 +1,4 @@
 import React, { Component, Fragment } from "react";
-import PropTypes from "prop-types";
 // Router
 import { Switch, BrowserRouter, Route, Redirect } from "react-router-dom";
 // Components

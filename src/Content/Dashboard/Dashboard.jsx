@@ -3,57 +3,19 @@ import PropTypes from "prop-types";
 // Material UI Components
 import {
   Grid,
-  Paper,
   withStyles,
   Tabs,
   Tab,
   Typography,
   MuiThemeProvider
 } from "@material-ui/core";
+// Components
 import MonitoringData from "./MonitoringData";
+import Chart from "./Chart";
 //Style
 import dashboardStyle from "./dashboardStyle";
 
-import Chart from "./Chart";
-
-
-
-// Recharts
-import {
-  XAxis,
-  YAxis,
-  Tooltip,
-  Legend,
-  Cell,
-  ResponsiveContainer,
-  CartesianGrid,
-  ScatterChart,
-  Scatter,
-  BarChart,
-  Bar,
-  AreaChart,
-  Area,
-  PolarGrid,
-  PolarAngleAxis,
-  PolarRadiusAxis,
-  RadarChart,
-  Radar,
-  RadialBarChart,
-  RadialBar,
-  PieChart,
-  Pie
-} from "recharts";
-import {
-  data,
-  data1,
-  data2,
-  data3,
-  data4,
-  data5,
-  colors,
-  renderCustomizedLabel,
-  RadialBarChartStyle
-} from "./data";
+import { data, data1, data2 } from "./data";
 import { mainTheme } from "../../assets/jss/mainStyle";
 
 function TabContainer(props) {
@@ -104,33 +66,38 @@ class Dashboard extends Component {
               <TabContainer>
                 <Grid container spacing={24}>
                   <Grid item xs={12} sm={12} md={6}>
-                    <div className="first_column">
-                      <Chart data={data} title={"Voltage"}/>
-                      <br />
-                      <Chart data={data1} title={"Current"}/>
-                    </div>
-                    <br />
-                    <Chart data={data2} title={"Power"}/>
-                    <br />
-                    <Chart data={data} title={"Temperature"}/>
+                    <Chart data={data} title={"Voltage"} />
+                  </Grid>
+                  <Grid item xs={12} sm={12} md={6}>
+                    <Chart data={data1} title={"Current"} />
+                  </Grid>
+                  <Grid item xs={12} sm={12} md={6}>
+                    <Chart data={data2} title={"Power"} />
+                  </Grid>
+                  <Grid item xs={12} sm={12} md={6}>
+                    <Chart data={data} title={"Temperature"} />
                   </Grid>
                 </Grid>
               </TabContainer>
             )}
-            {value === 1 && 
-            <TabContainer>
-              <Grid container spacing={24}>
-                <Grid item xs={12} sm={12} md={6}>
-                  <Chart data={data} title={"Voltage"}/>
-                  <br />
-                  <Chart data={data1} title={"Current"}/>
-                  <br />
-                  <Chart data={data2} title={"Power"}/>
-                  <br />
-                  <Chart data={data} title={"Temperature"}/>
+            {value === 1 && (
+              <TabContainer>
+                <Grid container spacing={24}>
+                  <Grid item xs={12} sm={12} md={6}>
+                    <Chart data={data} title={"Voltage"} />
+                  </Grid>
+                  <Grid item xs={12} sm={12} md={6}>
+                    <Chart data={data1} title={"Current"} />
+                  </Grid>
+                  <Grid item xs={12} sm={12} md={6}>
+                    <Chart data={data2} title={"Power"} />
+                  </Grid>
+                  <Grid item xs={12} sm={12} md={6}>
+                    <Chart data={data} title={"Temperature"} />
+                  </Grid>
                 </Grid>
-              </Grid>
-            </TabContainer>}
+              </TabContainer>
+            )}
             {value === 2 && <TabContainer>Summary</TabContainer>}
           </div>
         </MuiThemeProvider>
