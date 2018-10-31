@@ -61,15 +61,14 @@ class Chart extends React.Component {
     render(){
         const { classes } = this.props;
         return (
+            
             <Paper className={classes.paper}>
+                <div className={classes.title}>{this.props.title}</div>
                 <ResponsiveContainer width="100%" height={300}>
                 <AreaChart
                     data={this.props.data}
                     margin={{ top: 10, right: 30, left: 0, bottom: 0 }}
                 >
-                {/* <XAxis dataKey="name">
-                    <Label value="Pages of my website" offset={0} position="center" />
-                </XAxis> */}
                     <CartesianGrid
                     strokeDasharray="5 5"
                     verticalFill={["263148", "#444444"]}

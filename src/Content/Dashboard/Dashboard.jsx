@@ -16,6 +16,8 @@ import dashboardStyle from "./dashboardStyle";
 
 import Chart from "./Chart";
 
+
+
 // Recharts
 import {
   XAxis,
@@ -102,19 +104,33 @@ class Dashboard extends Component {
               <TabContainer>
                 <Grid container spacing={24}>
                   <Grid item xs={12} sm={12} md={6}>
-                    {/* <div> */}
-                    <Chart data={data}/>
+                    <div className="first_column">
+                      <Chart data={data} title={"Voltage"}/>
+                      <br />
+                      <Chart data={data1} title={"Current"}/>
+                    </div>
                     <br />
-                    <Chart data={data1}/>
+                    <Chart data={data2} title={"Power"}/>
                     <br />
-                    <Chart data={data2}/>
-                    <br />
-                    <Chart data={data}/>
+                    <Chart data={data} title={"Temperature"}/>
                   </Grid>
                 </Grid>
               </TabContainer>
             )}
-            {value === 1 && <TabContainer>History</TabContainer>}
+            {value === 1 && 
+            <TabContainer>
+              <Grid container spacing={24}>
+                <Grid item xs={12} sm={12} md={6}>
+                  <Chart data={data} title={"Voltage"}/>
+                  <br />
+                  <Chart data={data1} title={"Current"}/>
+                  <br />
+                  <Chart data={data2} title={"Power"}/>
+                  <br />
+                  <Chart data={data} title={"Temperature"}/>
+                </Grid>
+              </Grid>
+            </TabContainer>}
             {value === 2 && <TabContainer>Summary</TabContainer>}
           </div>
         </MuiThemeProvider>
