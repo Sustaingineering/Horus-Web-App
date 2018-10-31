@@ -1,5 +1,4 @@
 import React, { Component, Fragment } from "react";
-import PropTypes from "prop-types";
 // Router
 import { Switch, BrowserRouter, Route, Redirect } from "react-router-dom";
 // Components
@@ -44,15 +43,15 @@ class App extends Component {
         <Switch>
           <Redirect from="/login" to="/dashboard" />
           <Redirect from="/signup" to="/dashboard" />
-        </Switch>{" "}
+        </Switch>
         <Content />
       </Fragment>
     ) : (
       <Fragment>
         <Switch>
-          <Route path="/" exact component={LandingPage} />{" "}
-          <Route path="/login" exact component={SignInPage} />{" "}
-          <Route path="/signup" exact component={SignUpPage} />{" "}
+          <Route path="/" exact component={LandingPage} />
+          <Route path="/login" exact component={SignInPage} />
+          <Route path="/signup" exact component={SignUpPage} />
           <Redirect from="/dashboard" to="/login" />
           <Redirect from="/config" to="/login" />
           <Redirect from="/profile" to="/login" />
@@ -64,12 +63,11 @@ class App extends Component {
       <BrowserRouter>
         <MuiPickersUtilsProvider utils={DateFnsUtils}>
           <Switch>
-            {" "}
-            {/* <Route path='/' exact component={LandingPage}/> */}{" "}
-            {/* <Route render={() => <h1>404 not found</h1>}/> */}{" "}
-          </Switch>{" "}
-          {renderPlatform}{" "}
-        </MuiPickersUtilsProvider>{" "}
+            {/* <Route path='/' exact component={LandingPage}/> */}
+            {/* <Route render={() => <h1>404 not found</h1>}/> */}
+          </Switch>
+          {renderPlatform}
+        </MuiPickersUtilsProvider>
       </BrowserRouter>
     );
   }

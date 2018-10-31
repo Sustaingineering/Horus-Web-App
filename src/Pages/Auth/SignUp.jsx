@@ -81,8 +81,7 @@ class SignUpPage extends Component {
               <Paper className={classes.paper}>
                 <Link to="/login">
                   <ChevronLeft
-                    className={classes.iconBack}
-                    className={classes.title}
+                    className={[classes.iconBack, classes.title].join(" ")}
                   />
                 </Link>
                 <Avatar className={classes.avatar}>
