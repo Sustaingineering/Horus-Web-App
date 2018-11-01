@@ -69,6 +69,7 @@ class SignUpPage extends Component {
     const { classes } = this.props;
     const { organization, username, email, password } = this.state;
 
+    // Add logic for password validation; discuss with management.
     const isInvalid =
       organization === "" || username === "" || email === "" || password === "";
 
