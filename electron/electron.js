@@ -63,6 +63,20 @@ ipcMain.on('log-out', async (e, msg) => {
   }
 })
 
+// Backend Signup
+ ipcMain.on('sign-up', async (e, msg) => {
+  try {
+    let isOldUser = await datastore.findUser(msg.email)
+    if (isOldUser) {
+      e.sender.send('is-new-user', {error:"User already exists"})
+      return
+    }
+    await datastore.newUser(msg)
+  } catch(error) {
+    e.sender.send('is-new-user', false)
+  }
+})
+
 ipcMain.on('log-in', async (e, msg) => {
   try {
     console.log("Login IPC Bus");
