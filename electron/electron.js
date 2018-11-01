@@ -63,6 +63,16 @@ ipcMain.on('log-out', async (e, msg) => {
   }
 })
 
+// Backend Signup
+//  ipcMain.on('sign-up', async (e, msg) => {
+//   try {
+//     // do stuff
+//   } catch(error) {
+//     // do stuff
+      // ipcMain.send('sign-up', "Sucessfully signed in")
+//   }
+// })
+
 ipcMain.on('log-in', async (e, msg) => {
   try {
     console.log("Login IPC Bus");

@@ -21,19 +21,28 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      authUser: false
+      authUser: false,
+      loggedIn: false
     };
   }
 
   componentDidMount = async () => {
     ipcRenderer.on("log-in-app", (e, msg) => {
-      console.log("inside loginapp");
       if (msg.error) {
         return console.log(msg.error);
       }
       this.setState({
         authUser: true
       });
+    });
+
+    ipcRenderer.on("sign-up", (e, msg) => {
+      if (msg.error) {
+        return console.log(msg.error);
+      }
+      this.setState({ 
+        loggedIn: true
+      }) 
     });
   };
 
@@ -53,8 +62,7 @@ class App extends Component {
           <Route path="/login" exact component={SignInPage} />
           <Route path="/signup" exact component={SignUpPage} />
           <Redirect from="/dashboard" to="/login" />
-          <Redirect from="/config" to="/login" />
-          <Redirect from="/profile" to="/login" />
+          <Redirect from="/signup" to="/login" />
         </Switch>{" "}
       </Fragment>
     );
