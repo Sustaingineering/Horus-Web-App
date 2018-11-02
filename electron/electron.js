@@ -4,6 +4,9 @@ const path = require('path');
 const url = require('url');
 const datastore = require('./datastore');
 
+// Global variable to store the current user's email or username
+let user = "";
+
 let windows = {};
 
 // [ METHODS ]
@@ -55,6 +58,7 @@ ipcMain.on('is-active-session', async (e, msg) => {
 
 ipcMain.on('log-out', async (e, msg) => {
   try {
+    user = "";
     await datastore.logOut();
     return e.sender.send('log-out', {"log-out": true});
   } catch(error) {
@@ -80,15 +84,38 @@ ipcMain.on('log-out', async (e, msg) => {
 ipcMain.on('log-in', async (e, msg) => {
   try {
     console.log("Login IPC Bus");
-    let isLoggedIn = await datastore.loginUser(msg.email, msg.password, msg.isRemembered)
+    let isLoggedIn = await datastore.loginUser(msg.user, msg.password, msg.isRemembered);
     if (!isLoggedIn) {
-      e.sender.send('log-in', {error: "Incorrect username or password"})
-      return
+      e.sender.send('log-in', {error: "Incorrect username or password"});
+      return;
     }
-      e.sender.send('log-in-app', "Successfully logged in")
+    else {
+      // Store the user's email or username, so that it could be used to grab their username and organization
+      // to be sent to the monitor window in 'update-sidebar'
+      user = msg.user;
+    }
+
+    e.sender.send('log-in-app', "Successfully logged in")/////////// TODO: Check this
   } catch(error) {
     console.log('error', error)
     e.sender.send('log-in', {error: error})
+  }
+})
+
+//TODO: Verify it works
+ipcMain.on('update-sidebar', async (e, msg) => {
+  try {
+    let current_user = await datastore.find({email: email}, 'userInfo')
+    // For easier referencing
+    current_user = current_user[0]
+    if (current_user)  {
+      e.sender.send('update-sidebar', {username: current_user.username, organization: current_user.organization })
+    } 
+    else {
+      console.log ("The user doesn't not exist. The sidebar was not updated.")
+    }
+  } catch (error){
+    console.log(error)
   }
 })
 
