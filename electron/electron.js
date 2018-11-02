@@ -3,7 +3,25 @@ const isDev = require('electron-is-dev');
 const path = require('path');
 const url = require('url');
 const datastore = require('./datastore');
+<<<<<<< HEAD
 const { default: installExtension, REACT_DEVELOPER_TOOLS } = require('electron-devtools-installer');
+=======
+
+//Node Emailer variables
+const nodemailer = require('nodemailer');
+var transporter = nodemailer.createTransport({
+  service: 'gmail',
+  auth: {
+    user: 'horus.sustaingineering@gmail.com',
+    pass: 'horus4ever!'
+  }
+});
+// Global variable to store the current user's email or username
+let user = "";
+>>>>>>> Fixing Issues
+
+//Verification Code
+var verificationCode = ""
 
 let windows = {};
 
@@ -94,6 +112,26 @@ ipcMain.on('log-in', async (e, msg) => {
   }
 })
 
+<<<<<<< HEAD
+=======
+//TODO: Verify it works
+ipcMain.on('update-sidebar', async (e, msg) => {
+  try {
+    let current_user = await datastore.find({email: email}, 'userInfo')
+    // For easier referencing
+    current_user = current_user[0]
+    if (current_user)  {
+      e.sender.send('update-sidebar', {username: current_user.username, organization: current_user.organization })
+    } 
+    else {
+      console.log ("The user doesn't not exist. The sidebar was not updated.")
+    }
+  } catch (error){
+    console.log(error)
+  }
+});
+
+>>>>>>> Fixing Issues
 // [ TRIGGERS ]
 
 /**

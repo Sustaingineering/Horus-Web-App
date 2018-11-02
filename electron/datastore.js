@@ -138,17 +138,11 @@ exports.restoreSession = function (userId) {
 }
 
 
-exports.loginUser = function (email, password, isRemember) {
+exports.loginUser = function(userName, password, isRemember) {
     return new Promise(async (resolve, reject) => {
         try {
-            // const user = await find({ email: email, password: password }, 'userInfo')
-            
             console.log('Inside Login User')
-            
-            // if (user.length === 0) {
-            //     return reject('Incorrect email or password')
-            // }
-            
+    
             let user;
             var validator = require("email-validator");
             if(validator.validate(userName)) {
