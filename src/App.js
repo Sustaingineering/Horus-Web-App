@@ -10,7 +10,7 @@ import SignInPage from "./Pages/Auth/SignIn";
 import SignUpPage from "./Pages/Auth/SignUp";
 // Date Picker
 import DateFnsUtils from "material-ui-pickers/utils/date-fns-utils";
-import MuiPickersUtilsProvider from "material-ui-pickers/utils/MuiPickersUtilsProvider";
+import MuiPickersUtilsProvider from "material-ui-pickers/MuiPickersUtilsProvider";
 
 import "./App.css";
 
