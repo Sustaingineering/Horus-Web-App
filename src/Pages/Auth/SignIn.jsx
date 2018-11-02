@@ -43,8 +43,6 @@ class SignInPage extends Component {
         return alert(msg.error);
       }
       return alert(msg);
-
-      //TODO: transition to monitor
     });
   };
 
