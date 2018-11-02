@@ -141,17 +141,30 @@ exports.restoreSession = function (userId) {
 exports.loginUser = function (email, password, isRemember) {
     return new Promise(async (resolve, reject) => {
         try {
-            const user = await find({
-                email: email,
-                password: password
-            }, 'userInfo')
-
+            // const user = await find({ email: email, password: password }, 'userInfo')
+            
             console.log('Inside Login User')
-
-            if (user.length === 0) {
-                return reject('Incorrect email or password')
+            
+            // if (user.length === 0) {
+            //     return reject('Incorrect email or password')
+            // }
+            
+            let user;
+            var validator = require("email-validator");
+            if(validator.validate(userName)) {
+                user = await find({ email: userName, password: password }, 'userInfo');
+                if (user.length === 0) {
+                    return reject('Incorrect email or password');
+                }
+                user_id = user[0]._id;
             }
-            user_id = user[0]._id
+            else {
+                user = await find({ username: userName, password: password }, 'userInfo');
+                if(user.length === 0) {
+                    return reject('Incorrect username or password');
+                }
+                user_id = user[0]._id;
+            }
 
             const setting = await find({
                 userId: user_id
