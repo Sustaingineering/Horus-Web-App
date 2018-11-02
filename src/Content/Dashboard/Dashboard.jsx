@@ -67,16 +67,16 @@ class Dashboard extends Component {
               <TabContainer>
                 <Grid container spacing={24}>
                   <Grid item xs={12} sm={12} md={6}>
-                    <Chart data={data} title={"Voltage"} />
+                    <Chart data={data2} title={"Voltage"} yaxis={"Volts"} />
                   </Grid>
                   <Grid item xs={12} sm={12} md={6}>
-                    <Chart data={data1} title={"Current"} />
+                    <Chart data={data1} title={"Current"} yaxis={"Amps"}/>
                   </Grid>
                   <Grid item xs={12} sm={12} md={6}>
-                    <Chart data={data2} title={"Power"} />
+                    <Chart data={data2} title={"Power"} yaxis={"Watts"}/>
                   </Grid>
                   <Grid item xs={12} sm={12} md={6}>
-                    <Chart data={data} title={"Temperature"} />
+                    <Chart data={data} title={"Temperature"} yaxis={"Celsius"}/>
                   </Grid>
                 </Grid>
               </TabContainer>
@@ -85,16 +85,16 @@ class Dashboard extends Component {
               <TabContainer>
                 <Grid container spacing={24}>
                   <Grid item xs={12} sm={12} md={6}>
-                    <HistoryChart data={data} title={"Voltage"} />
+                    <HistoryChart data={data2} title={"Voltage"} yaxis={"Volts"}/>
                   </Grid>
                   <Grid item xs={12} sm={12} md={6}>
-                    <HistoryChart data={data1} title={"Current"} />
+                    <HistoryChart data={data1} title={"Current"} yaxis={"Amps"}/>
                   </Grid>
                   <Grid item xs={12} sm={12} md={6}>
-                    <HistoryChart data={data2} title={"Power"} />
+                    <HistoryChart data={data2} title={"Power"} yaxis={"Watts"}/>
                   </Grid>
                   <Grid item xs={12} sm={12} md={6}>
-                    <HistoryChart data={data} title={"Temperature"} />
+                    <HistoryChart data={data} title={"Temperature"} yaxis={"Celsius"}/>
                   </Grid>
                 </Grid>
               </TabContainer>
