@@ -3,9 +3,7 @@ const isDev = require('electron-is-dev');
 const path = require('path');
 const url = require('url');
 const datastore = require('./datastore');
-<<<<<<< HEAD
 const { default: installExtension, REACT_DEVELOPER_TOOLS } = require('electron-devtools-installer');
-=======
 
 //Node Emailer variables
 const nodemailer = require('nodemailer');
@@ -18,7 +16,6 @@ var transporter = nodemailer.createTransport({
 });
 // Global variable to store the current user's email or username
 let user = "";
->>>>>>> Fixing Issues
 
 //Verification Code
 var verificationCode = ""
@@ -112,8 +109,6 @@ ipcMain.on('log-in', async (e, msg) => {
   }
 })
 
-<<<<<<< HEAD
-=======
 //TODO: Verify it works
 ipcMain.on('update-sidebar', async (e, msg) => {
   try {
@@ -131,7 +126,6 @@ ipcMain.on('update-sidebar', async (e, msg) => {
   }
 });
 
->>>>>>> Fixing Issues
 // [ TRIGGERS ]
 
 /**
