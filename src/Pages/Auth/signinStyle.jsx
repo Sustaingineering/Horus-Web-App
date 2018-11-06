@@ -16,7 +16,7 @@ const signinStyle = theme => ({
     color: "white"
   },
   container: {
-    marginTop: "10%",
+    marginTop: "5%",
     width: "auto",
     display: "block", // Fix IE11 issue.
     marginRight: theme.spacing.unit * 3,

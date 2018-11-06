@@ -29,7 +29,6 @@ class App extends Component {
   componentDidMount = async () => {
     ipcRenderer.on("log-in-app", (e, msg) => {
       if (msg.error) {
-        alert(msg.error);
         return console.log(msg.error);
       }
       this.setState({

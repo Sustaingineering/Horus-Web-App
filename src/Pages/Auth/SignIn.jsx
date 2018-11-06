@@ -42,7 +42,6 @@ class SignInPage extends Component {
       if (msg.error) {
         return alert(msg.error);
       }
-      return alert(msg);
     });
   };
 
@@ -55,7 +54,6 @@ class SignInPage extends Component {
       email: temail,
       isRemembered: tisRemembered
     });
-    console.log("click");
   };
 
   dialogPromptOpen = message => {
