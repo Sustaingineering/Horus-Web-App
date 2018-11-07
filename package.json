@@ -13,6 +13,7 @@
     "cross-env": "^5.2.0",
     "date-fns": "^2.0.0-alpha.16",
     "electron-is-dev": "^1.0.1",
+    "email-validator": "^2.0.4",
     "font-awesome": "^4.7.0",
     "jquery": "^3.3.1",
     "material-ui-pickers": "^1.0.1",

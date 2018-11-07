@@ -137,6 +137,44 @@ exports.restoreSession = function (userId) {
     })
 }
 
+exports.getUserName = function() {
+    return new Promise(async (resolve, reject) => {
+        try {
+            if(user_id === null) {
+                return reject("User not signed-in")
+            }
+            return resolve(user_id.username);
+        } catch (error){
+            return reject(error);
+        };
+    });
+};
+
+exports.getUserEmail = function() {
+    return new Promise(async (resolve, reject) => {
+        try {
+            if(user_id === null) {
+                return reject("User not signed-in")
+            }
+            return resolve(user_id.email);
+        } catch (error){
+            return reject(error);
+        };
+    });
+};
+
+exports.getUserOrganization = function() {
+    return new Promise(async (resolve, reject) => {
+        try {
+            if(user_id === null) {
+                return reject("User not signed-in")
+            }
+            return resolve(user_id.organization);
+        } catch (error){
+            return reject(error);
+        };
+    });
+};
 
 exports.loginUser = function(userName, password, isRemember) {
     return new Promise(async (resolve, reject) => {
@@ -150,15 +188,14 @@ exports.loginUser = function(userName, password, isRemember) {
                 if (user.length === 0) {
                     return reject('Incorrect email or password');
                 }
-                user_id = user[0]._id;
             }
             else {
                 user = await find({ username: userName, password: password }, 'userInfo');
                 if(user.length === 0) {
                     return reject('Incorrect username or password');
                 }
-                user_id = user[0]._id;
             }
+            user_id = user[0]._id;
 
             const setting = await find({
                 userId: user_id
@@ -218,6 +255,7 @@ exports.newUser = function (msg) {
     })
 }
 
+//TODO: Check
 //Update Password
 exports.newPassword = function (msg) {
     return new Promise(async (resolve, reject) => {

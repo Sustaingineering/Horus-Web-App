@@ -29,8 +29,9 @@ var transporter = nodemailer.createTransport({
     pass: 'horus4ever!'
   }
 });
-// Global variable to store the current user's email or username
-let user = "";
+
+//User Email
+var userEmail = ""
 
 //Verification Code
 var verificationCode = ""
@@ -118,12 +119,6 @@ ipcMain.on('log-in', async (e, msg) => {
       e.sender.send('log-in', {error: "Incorrect username or password"});
       return;
     }
-    else {
-      // Store the user's email or username, so that it could be used to grab their username and organization
-      // to be sent to the monitor window in 'update-sidebar'
-      user = msg.user;
-    }
-
     e.sender.send('log-in-app', "Successfully logged in")/////////// TODO: Check this
   } catch(error) {
     console.log('error', error)
@@ -134,19 +129,45 @@ ipcMain.on('log-in', async (e, msg) => {
 //TODO: Verify it works
 ipcMain.on('update-sidebar', async (e, msg) => {
   try {
-    let current_user = await datastore.find({email: email}, 'userInfo')
-    // For easier referencing
-    current_user = current_user[0]
-    if (current_user)  {
-      e.sender.send('update-sidebar', {username: current_user.username, organization: current_user.organization })
-    } 
-    else {
-      console.log ("The user doesn't not exist. The sidebar was not updated.")
+    let username = await datastore.getUserName();
+    let organization = await datastore.getUserOrganization();
+    if (!username || !organization) {
+      e.sender.send('update-sidebar', {error: "The user is not signed-in."});
     }
-  } catch (error){
-    console.log(error)
+
+    e.sender.send('update-sidebar', {username: username, organization: organization});
+  } catch (error) {
+    console.log(error);
+    e.sender.send('update-sidebar', {error: error});
   }
 });
+
+//Verify email
+ipcMain.on('email-exists', async (e, msg) => {
+  try {
+    let emailExists = await datastore.findUser(msg.email);
+    if (!emailExists) {
+      e.sender.send('email-exists', {error:"Email does not exist"});
+      return;
+    }
+    userEmail = msg.email;
+    e.sender.send('email-exists', true);
+  } catch(error) {
+    e.sender.send('email-exists', false);
+  }
+})
+
+//Reset Password
+ipcMain.on('new-password', async (e, msg) => {
+  try {
+    //Save new password to the mapped email
+    await datastore.newPassword({email: userEmail, password: msg.password});
+    verificationCode = "";
+    e.sender.send('new-password', true);
+  } catch(error) {
+    e.sender.send('new-password', false);
+  }
+}) 
 
 // [ TRIGGERS ]
 
