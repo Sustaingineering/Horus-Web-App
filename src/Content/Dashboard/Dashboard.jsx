@@ -16,7 +16,7 @@ import HistoryChart from "./historyChart";
 //Style
 import dashboardStyle from "./dashboardStyle";
 
-import { data, data1, data2 } from "./data";
+import { data, data1, data2, tempDummyData } from "./data";
 import { mainTheme } from "../../assets/jss/mainStyle";
 
 function TabContainer(props) {
@@ -59,7 +59,7 @@ class Dashboard extends Component {
               // scrollable
               // scrollButtons="auto"
             >
-              <Tab className={classes.tab} label="Real-Time" />
+              <Tab className={classes.tab} label="Current" />
               <Tab className={classes.tab} label="History" />
               <Tab className={classes.tab} label="Summary" />
             </Tabs>
@@ -76,7 +76,7 @@ class Dashboard extends Component {
                     <Chart data={data2} title={"Power"} />
                   </Grid>
                   <Grid item xs={12} sm={12} md={6}>
-                    <Chart data={data} title={"Temperature"} />
+                    <Chart data={tempDummyData} title={"Temperature"} />
                   </Grid>
                 </Grid>
               </TabContainer>
@@ -94,7 +94,7 @@ class Dashboard extends Component {
                     <HistoryChart data={data2} title={"Power"} />
                   </Grid>
                   <Grid item xs={12} sm={12} md={6}>
-                    <HistoryChart data={data} title={"Temperature"} />
+                    <HistoryChart data={tempDummyData} title={"Temperature"} />
                   </Grid>
                 </Grid>
               </TabContainer>
