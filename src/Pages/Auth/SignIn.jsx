@@ -129,7 +129,8 @@ class SignInPage extends Component {
                     fullWidth
                     className={classes.submit}
                     variant="contained"
-                    onClick={() => this.login()}
+                    type="button"
+                    onClick={this.login}
                     color="primary"
                   >
                     Sign in
@@ -140,6 +141,7 @@ class SignInPage extends Component {
                       className={classes.submit}
                       variant="contained"
                       color="secondary"
+                      type="button"
                     >
                       Register
                     </Button>

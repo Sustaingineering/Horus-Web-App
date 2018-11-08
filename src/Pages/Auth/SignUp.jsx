@@ -48,12 +48,15 @@ class SignUpPage extends Component {
     ipcRenderer.on("is-new-user", (e, msg) => {
       if (msg.error) {
         return alert(msg.error);
+      } else {
+        const { history } = this.props;
+        history.push("/login");
       }
       this.setState({
         isValidUser: true
-      })
+      });
     });
-  }
+  };
   // push
   signUp = e => {
     const password = this.state.password;
@@ -88,7 +91,7 @@ class SignUpPage extends Component {
   handleChangeEmail = event => {
     const name = event.target.name;
     const value = event.target.value;
-    const filter = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+    const filter = /^([a-zA-Z0-9_.-])+@(([a-zA-Z0-9-])+.)+([a-zA-Z0-9]{2,4})+$/;
     const test = !filter.test(event.target.value);
     this.setState({
       email: value,
@@ -200,34 +203,17 @@ class SignUpPage extends Component {
                       }}
                     />
                   </FormControl>
-                  {isValidUser ? (
-                  <Link to="/login" className={classes.noDeco}>
-                    <Button
-                      fullWidth
-                      disabled={isInvalid}
-                      variant="contained"
-                      onClick={this.signUp}
-                      type="submit"
-                      color="primary"
-                      className={classes.submit}
-                    >
-                      Register
-                    </Button>
-                  </Link> 
-                  ) : (
-                  <Link to="/signup" className={classes.noDeco}>
-                    <Button
-                      fullWidth
-                      disabled={isInvalid}
-                      variant="contained"
-                      onClick={this.signUp}
-                      type="submit"
-                      color="primary"
-                      className={classes.submit}
-                    >
-                      Register
-                    </Button>
-                  </Link> )}
+                  <Button
+                    fullWidth
+                    disabled={isInvalid}
+                    variant="contained"
+                    onClick={this.signUp}
+                    type="button"
+                    color="primary"
+                    className={classes.submit}
+                  >
+                    Register
+                  </Button>
                 </form>
               </Paper>
             </div>
