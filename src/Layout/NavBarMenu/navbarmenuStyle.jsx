@@ -35,6 +35,7 @@ const navbarmenuStyle = theme => ({
     color: "white"
   },
   listItems: {
+    backgroundColor: primaryColor,
     color: "white"
   },
   sidebarDivider: {

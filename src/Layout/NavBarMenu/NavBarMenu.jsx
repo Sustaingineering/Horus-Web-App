@@ -10,7 +10,8 @@ import {
   ListItem,
   ListItemIcon,
   ListItemText,
-  Collapse
+  Collapse,
+  Typography
 } from "@material-ui/core";
 // Routing
 import { Link } from "react-router-dom";
@@ -84,7 +85,7 @@ class NavBarMenu extends Component {
                 )}
               </IconButton>
             </div>
-            <List className={classes.listItems}>
+            <List>
               <Link style={style} to="/dashboard">
                 <ListItem button onClick={this.handleDrawerClose}>
                   <ListItemIcon>
@@ -92,7 +93,11 @@ class NavBarMenu extends Component {
                   </ListItemIcon>
                   <ListItemText
                     className={classes.listItems}
-                    primary="Dashboard"
+                    primary={
+                      <Typography type="body2" style={{ color: "#FFFFFF" }}>
+                        Dashboard
+                      </Typography>
+                    }
                   />
                 </ListItem>
               </Link>
@@ -101,7 +106,14 @@ class NavBarMenu extends Component {
                 <ListItemIcon>
                   <GraphicEQ style={style} />
                 </ListItemIcon>
-                <ListItemText inset primary="Sensor" />
+                <ListItemText
+                  inset
+                  primary={
+                    <Typography type="body2" style={{ color: "#FFFFFF" }}>
+                      Sensor
+                    </Typography>
+                  }
+                />
                 {this.state.open ? <ExpandLess /> : <ExpandMore />}
               </ListItem>
 
@@ -114,18 +126,11 @@ class NavBarMenu extends Component {
                       </ListItemIcon>
                       <ListItemText
                         className={classes.listItems}
-                        primary="Dashboard"
-                      />
-                    </ListItem>
-                  </Link>
-                  <Link style={style} to="/dashboard">
-                    <ListItem button onClick={this.handleDrawerClose}>
-                      <ListItemIcon>
-                        <Dashboard style={style} />
-                      </ListItemIcon>
-                      <ListItemText
-                        className={classes.listItems}
-                        primary="Dashboard"
+                        primary={
+                          <Typography type="body2" style={{ color: "#FFFFFF" }}>
+                            Dashboard
+                          </Typography>
+                        }
                       />
                     </ListItem>
                   </Link>
@@ -141,7 +146,11 @@ class NavBarMenu extends Component {
                   </ListItemIcon>
                   <ListItemText
                     className={classes.listItems}
-                    primary="Configuración"
+                    primary={
+                      <Typography type="body2" style={{ color: "#FFFFFF" }}>
+                        Config
+                      </Typography>
+                    }
                   />
                 </ListItem>
               </Link>
