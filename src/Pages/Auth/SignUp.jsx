@@ -39,17 +39,33 @@ class SignUpPage extends Component {
       error: null,
       openDialog: false,
       isValidPassword: false,
-      isValidEmail: false
+      isValidEmail: false,
+      isValidUser: false
     };
   }
 
-  signUp = () => {
+  componentDidMount = () => {
+    ipcRenderer.on("is-new-user", (e, msg) => {
+      if (msg.error) {
+        return alert(msg.error);
+      }
+      this.setState({
+        isValidUser: true
+      })
+    });
+  }
+  // push
+  signUp = e => {
     const password = this.state.password;
     const email = this.state.email;
     const organization = this.state.organization;
     const username = this.state.username;
-    ipcRenderer.send("sign-up", { password, email, organization, username });
-    console.log("click");
+    ipcRenderer.send("sign-up", {
+      password,
+      email,
+      organization,
+      username
+    });
   };
 
   dialogPromptOpen = message => {
@@ -66,29 +82,30 @@ class SignUpPage extends Component {
   handleChange = event => {
     const name = event.target.name;
     const value = event.target.value;
-    this.setState ({[name]: value})
+    this.setState({ [name]: value });
   };
 
   handleChangeEmail = event => {
     const name = event.target.name;
     const value = event.target.value;
     const filter = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
-    const test = !filter.test(event.target.value)
-    this.setState (
-      {
-        email: value,
-        isValidEmail: test
-      }
-    )
+    const test = !filter.test(event.target.value);
+    this.setState({
+      email: value,
+      isValidEmail: test
+    });
   };
 
   render() {
     const { classes } = this.props;
-    const { organization, username, email, password } = this.state;
+    const { organization, username, email, password, isValidUser } = this.state;
 
     // Add logic for password validation; discuss with management.
     const isInvalid =
-      organization === "" || username === "" || this.state.isValidEmail || password === "";
+      organization === "" ||
+      username === "" ||
+      this.state.isValidEmail ||
+      password === "";
 
     return (
       <Fragment>
@@ -147,7 +164,11 @@ class SignUpPage extends Component {
                   <FormControl margin="normal" required fullWidth>
                     <TextField
                       id="emailField"
-                      label={this.state.isValidEmail ? "Invalid Email" : "Email Address"}
+                      label={
+                        this.state.isValidEmail
+                          ? "Invalid Email"
+                          : "Email Address"
+                      }
                       placeholder="Email address"
                       type="email"
                       name="email"
@@ -178,18 +199,35 @@ class SignUpPage extends Component {
                         className: classes.input
                       }}
                     />
-                  </FormControl>  
-                  <Button
-                    fullWidth
-                    disabled={isInvalid}
-                    variant="contained"
-                    onClick={this.signUp}
-                    type="submit"
-                    color="primary"
-                    className={classes.submit}
-                  >
-                    Register
-                  </Button>
+                  </FormControl>
+                  {isValidUser ? (
+                  <Link to="/login" className={classes.noDeco}>
+                    <Button
+                      fullWidth
+                      disabled={isInvalid}
+                      variant="contained"
+                      onClick={this.signUp}
+                      type="submit"
+                      color="primary"
+                      className={classes.submit}
+                    >
+                      Register
+                    </Button>
+                  </Link> 
+                  ) : (
+                  <Link to="/signup" className={classes.noDeco}>
+                    <Button
+                      fullWidth
+                      disabled={isInvalid}
+                      variant="contained"
+                      onClick={this.signUp}
+                      type="submit"
+                      color="primary"
+                      className={classes.submit}
+                    >
+                      Register
+                    </Button>
+                  </Link> )}
                 </form>
               </Paper>
             </div>

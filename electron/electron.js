@@ -71,6 +71,7 @@ ipcMain.on('log-out', async (e, msg) => {
       e.sender.send('is-new-user', {error:"User already exists"})
       return
     }
+      e.sender.send('is-new-user', true)
     await datastore.newUser(msg)
   } catch(error) {
     e.sender.send('is-new-user', false)
@@ -79,10 +80,9 @@ ipcMain.on('log-out', async (e, msg) => {
 
 ipcMain.on('log-in', async (e, msg) => {
   try {
-    console.log("Login IPC Bus");
     let isLoggedIn = await datastore.loginUser(msg.email, msg.password, msg.isRemembered)
     if (!isLoggedIn) {
-      e.sender.send('log-in', {error: "Incorrect username or password"})
+      e.sender.send('log-in', {error: "Incorrect email or password"})
       return
     }
       e.sender.send('log-in-app', "Successfully logged in")
