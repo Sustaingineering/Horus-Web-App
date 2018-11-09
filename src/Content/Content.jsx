@@ -55,7 +55,7 @@ class Content extends Component {
                 path={sensor.name}
                 key={sensor.name}
                 exact
-                component={<Sensor sensor={sensor.name} />}
+                render={() => <Sensor sensor={sensor.name} />}
               />
             ))}
             <Route path="/config" exact render={() => <h1>config</h1>} />
