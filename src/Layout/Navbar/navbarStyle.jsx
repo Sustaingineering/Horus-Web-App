@@ -43,6 +43,20 @@ const navbarStyle = theme => ({
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.enteringScreen
     })
+  },
+  button: {
+    textAlign: "center",
+    marginTop: theme.spacing.unit,
+    backgroundColor: primaryColor,
+    color: "white",
+    "&:hover": {
+      backgroundColor: "white",
+      color: "black"
+    }
+  },
+  lft: {
+    paddingLeft: 10,
+    paddingRight: 20
   }
 });
 

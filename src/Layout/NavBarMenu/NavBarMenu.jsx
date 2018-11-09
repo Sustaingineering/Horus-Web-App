@@ -28,6 +28,9 @@ import ExpandMore from "@material-ui/icons/ExpandMore";
 import navbarmenuStyle from "./navbarmenuStyle";
 import classNames from "classnames";
 import { mainTheme } from "../../assets/jss/mainStyle";
+// Electron
+const electron = window.require("electron");
+const ipcRenderer = electron.ipcRenderer;
 
 const style = {
   textDecoration: "none",
@@ -39,9 +42,28 @@ class NavBarMenu extends Component {
     super();
     this.state = {
       openDrawer: false,
-      open: false
+      open: false,
+      sensorsList: [{}]
     };
   }
+
+  componentWillMount = () => {
+    ipcRenderer.on("get-sensors", (e, msg) => {
+      if (msg.error) {
+        // return alert(msg.error);
+      } else {
+        // return alert(msg);
+      }
+    });
+    var temp = [
+      { name: "S1", type: "default" },
+      { name: "S2", type: "default" },
+      { name: "S3", type: "default" },
+      { name: "S4", type: "default" },
+      { name: "S5", type: "default" }
+    ];
+    this.setState({ sensorsList: temp });
+  };
 
   handleClick = () => {
     this.setState(state => ({
@@ -107,6 +129,7 @@ class NavBarMenu extends Component {
                   <GraphicEQ style={style} />
                 </ListItemIcon>
                 <ListItemText
+                  key="SensorList"
                   inset
                   primary={
                     <Typography type="body2" style={{ color: "#FFFFFF" }}>
@@ -119,21 +142,34 @@ class NavBarMenu extends Component {
 
               <Collapse in={this.state.open} timeout="auto" unmountOnExit>
                 <List component="div" disablePadding>
-                  <Link style={style} to="/dashboard">
-                    <ListItem button onClick={this.handleDrawerClose}>
-                      <ListItemIcon>
-                        <Dashboard style={style} />
-                      </ListItemIcon>
-                      <ListItemText
-                        className={classes.listItems}
-                        primary={
-                          <Typography type="body2" style={{ color: "#FFFFFF" }}>
-                            Dashboard
-                          </Typography>
-                        }
-                      />
-                    </ListItem>
-                  </Link>
+                  {this.state.sensorsList.map(sensor => (
+                    <Link
+                      key={sensor.name}
+                      style={style}
+                      to={"/" + sensor.name}
+                    >
+                      <ListItem
+                        key={sensor.name}
+                        button
+                        onClick={this.handleDrawerClose}
+                      >
+                        <ListItemIcon>
+                          <Dashboard style={style} />
+                        </ListItemIcon>
+                        <ListItemText
+                          className={classes.listItems}
+                          primary={
+                            <Typography
+                              type="body2"
+                              style={{ color: "#FFFFFF" }}
+                            >
+                              {sensor.name}
+                            </Typography>
+                          }
+                        />
+                      </ListItem>
+                    </Link>
+                  ))}
                 </List>
               </Collapse>
             </List>

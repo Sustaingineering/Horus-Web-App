@@ -6,11 +6,17 @@ import { Link } from "react-router-dom";
 import Button from "@material-ui/core/Button";
 // Styles
 import { withStyles, MuiThemeProvider } from "@material-ui/core/styles";
-import { mainTheme } from "../../assets/jss/mainStyle";
+import { mainTheme, primaryColor } from "../../assets/jss/mainStyle";
 
 const styles = theme => ({
   button: {
-    margin: theme.spacing.unit
+    marginTop: theme.spacing.unit,
+    backgroundColor: primaryColor,
+    color: "white",
+    "&:hover": {
+      backgroundColor: "white",
+      color: "black"
+    }
   },
   noDec: {
     textDecoration: "none"
