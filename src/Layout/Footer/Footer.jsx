@@ -26,7 +26,7 @@ class Footer extends Component {
             <Typography
               className={classes.content}
               color="primary"
-              variant="display1"
+              variant="body1"
               gutterBottom
               align="right"
             >

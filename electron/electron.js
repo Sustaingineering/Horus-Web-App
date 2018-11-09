@@ -16,6 +16,10 @@ function createWindow() {
     height: 680,
     show: false
   });
+
+  BrowserWindow.addDevToolsExtension(
+    "C:/Users/jluis/AppData/Local/Google/Chrome/User Data/Default/Extensions/fmkadmapgofadopljbjfkapdkoienihi/3.4.2_0"
+  );
   // Lozd the index.html of the app.
   windows.mainWindow.loadURL(isDev ?
     'http://localhost:3000' :

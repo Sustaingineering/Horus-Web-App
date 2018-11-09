@@ -49,13 +49,13 @@ class Content extends Component {
           <NavBar />
           <div className={classes.container}>
             <Route path="/" exact component={Dashboard} />
-            {/* Dynamically generate paths for router */}
+            <Route path="/dashboard" exact component={Dashboard} />
             {this.state.sensorsList.map(sensor => (
               <Route
                 path={sensor.name}
                 key={sensor.name}
                 exact
-                render={() => <Sensor sensor={sensor.name} />}
+                render={() => <Sensor sensorName={sensor.name} />}
               />
             ))}
             <Route path="/config" exact render={() => <h1>config</h1>} />

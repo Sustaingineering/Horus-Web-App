@@ -7,9 +7,7 @@ import dashboardStyle from "./dashboardStyle";
 import { mainTheme } from "../../assets/jss/mainStyle";
 
 class Sensor extends Component {
-  state = {
-    value: 0
-  };
+  state = {};
 
   render() {
     const { classes } = this.props;
@@ -18,7 +16,7 @@ class Sensor extends Component {
         <MuiThemeProvider theme={mainTheme}>
           <div className={classes.root}>
             <Typography variant="display1" color="primary" gutterBottom>
-              {this.props.sensor}
+              {this.props.sensorName}
             </Typography>
           </div>
         </MuiThemeProvider>
