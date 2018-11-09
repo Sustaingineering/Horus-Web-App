@@ -52,9 +52,8 @@ class Content extends Component {
             <Route path="/dashboard" exact component={Dashboard} />
             {this.state.sensorsList.map(sensor => (
               <Route
-                path={sensor.name}
+                path={"/" + sensor.name}
                 key={sensor.name}
-                exact
                 render={() => <Sensor sensorName={sensor.name} />}
               />
             ))}
