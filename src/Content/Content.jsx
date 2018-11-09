@@ -24,7 +24,7 @@ class Content extends Component {
   }
 
   componentWillMount = () => {
-    ipcRenderer.on("get-sensors", (e, msg) => {
+    ipcRenderer.on("get-sensor-list", (e, msg) => {
       if (msg.error) {
         // return alert(msg.error);
       } else {

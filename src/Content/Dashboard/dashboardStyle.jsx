@@ -10,7 +10,7 @@ const dashboardStyle = theme => ({
   },
   title: {
     color: "white",
-    fontSize: 20,
+    fontSize: 20
   },
   paper: {
     padding: theme.spacing.unit * 2,
@@ -19,17 +19,13 @@ const dashboardStyle = theme => ({
     backgroundColor: primaryColor
   },
   tabs: {
-    // borderBottom: "1px solid #e8e8e8"
+    borderBottom: "1px solid #e8e8e8"
   },
   tab: {
     color: "white",
     "&:hover": {
       color: "white",
       opacity: 1
-    },
-    "&$tabSelected": {
-      color: "#fff",
-      fontWeight: theme.typography.fontWeightMedium
     }
   }
 });

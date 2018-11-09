@@ -5,6 +5,7 @@ import { withStyles, Typography, MuiThemeProvider } from "@material-ui/core";
 //Style
 import dashboardStyle from "./dashboardStyle";
 import { mainTheme } from "../../assets/jss/mainStyle";
+import Dashboard from "./Dashboard";
 
 class Sensor extends Component {
   state = {};
@@ -18,6 +19,7 @@ class Sensor extends Component {
             <Typography variant="display1" color="primary" gutterBottom>
               {this.props.sensorName}
             </Typography>
+            <Dashboard sensorName={this.props.sensorName} />
           </div>
         </MuiThemeProvider>
       </Fragment>
