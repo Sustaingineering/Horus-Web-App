@@ -143,11 +143,7 @@ class NavBarMenu extends Component {
               <Collapse in={this.state.open} timeout="auto" unmountOnExit>
                 <List component="div" disablePadding>
                   {this.state.sensorsList.map(sensor => (
-                    <Link
-                      key={sensor.name}
-                      style={style}
-                      to={"/" + sensor.name}
-                    >
+                    <Link key={sensor.name} style={style} to={sensor.name}>
                       <ListItem
                         key={sensor.name}
                         button
