@@ -21,29 +21,14 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      authUser: false,
-      loggedIn: false
+      authUser: false
     };
   }
 
   componentDidMount = async () => {
     ipcRenderer.on("log-in-app", (e, msg) => {
-      if (msg.error) {
-        alert(msg.error);
-        return console.log(msg.error);
-      }
       this.setState({
         authUser: true
-      });
-    });
-
-    ipcRenderer.on("sign-up", (e, msg) => {
-      if (msg.error) {
-        alert(msg.error);
-        return console.log(msg.error);
-      }
-      this.setState({
-        loggedIn: true
       });
     });
   };
@@ -53,7 +38,7 @@ class App extends Component {
       <Fragment>
         <Switch>
           <Redirect from="/login" to="/dashboard" />
-          <Redirect from="/signup" to="/dashboard" />
+          <Redirect from="/signup" to="/login" />
         </Switch>
         <Content />
       </Fragment>
