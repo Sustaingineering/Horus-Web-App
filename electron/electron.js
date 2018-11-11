@@ -94,10 +94,11 @@ ipcMain.on('log-out', async (e, msg) => {
   }
 })
 
+//TODO:Check
 ipcMain.on('log-in', async (e, msg) => {
   try {
     console.log("Login IPC Bus");
-    let isLoggedIn = await datastore.loginUser(msg.user, msg.password, msg.isRemembered);
+    let isLoggedIn = await datastore.loginUser(msg.user, msg.password, msg.isRemembered); //TODO: Ensure msg order is correct
     if (!isLoggedIn) {
       e.sender.send('log-in', {error: "Incorrect username or password"});
       return;
@@ -109,6 +110,7 @@ ipcMain.on('log-in', async (e, msg) => {
   }
 })
 
+//TODO: Check
 //TODO: Verify it works
 ipcMain.on('update-sidebar', async (e, msg) => {
   try {
@@ -125,6 +127,7 @@ ipcMain.on('update-sidebar', async (e, msg) => {
   }
 });
 
+//TODO: Check
 //Verify email
 ipcMain.on('email-exists', async (e, msg) => {
   try {
@@ -134,21 +137,57 @@ ipcMain.on('email-exists', async (e, msg) => {
       return;
     }
     userEmail = msg.email;
+    let randomCode = Math.random().toString(36).substring(7);
+    const mailOptions = {
+      from: 'horus.sustaingineering@gmail.com',
+      to: userEmail,
+      subject: 'Reset your Password Verification Code',
+      html: `
+      <p>
+      Hi,
+        This is your temporary verification code: ` + randomCode + `
+      </p>
+      `,
+    };
+    verificationCode = randomCode;
+    await transporter.sendMail(mailOptions, function (error, info) {
+      if(error) {
+        console.log(error);
+      } else {
+        console.log(info);
+      }
+    });
     e.sender.send('email-exists', true);
   } catch(error) {
     e.sender.send('email-exists', false);
   }
 })
 
+//TODO: Check
 //Reset Password
 ipcMain.on('new-password', async (e, msg) => {
   try {
     //Save new password to the mapped email
     await datastore.newPassword({email: userEmail, password: msg.password});
-    verificationCode = "";
-    e.sender.send('new-password', true);
+    e.sender.send('new-password', true);///TODO: On front-end, print message
   } catch(error) {
     e.sender.send('new-password', false);
+  }
+}) 
+
+//TODO: Check
+//VerifyCode
+ipcMain.on('verify-code', async (e, msg) => {
+  try {
+    //Save new password to the mapped email
+    if(!(msg.code === verificationCode)) {
+      e.sender.send('verify-code', {error: 'Wrong Verification Code entered'});
+      return;
+    }
+    verificationCode = "";
+    e.sender.send('verify-code', true);
+  } catch(error) {
+    e.sender.send('verify-code', false);
   }
 }) 
 

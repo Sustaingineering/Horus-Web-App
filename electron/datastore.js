@@ -101,6 +101,7 @@ exports.restoreSession = function(userId) {
     })
 }
 
+//TODO: Check
 exports.getUserName = function() {
     return new Promise(async (resolve, reject) => {
         try {
@@ -114,6 +115,7 @@ exports.getUserName = function() {
     });
 };
 
+//TODO: Check
 exports.getUserEmail = function() {
     return new Promise(async (resolve, reject) => {
         try {
@@ -127,6 +129,7 @@ exports.getUserEmail = function() {
     });
 };
 
+//TODO: Check
 exports.getUserOrganization = function() {
     return new Promise(async (resolve, reject) => {
         try {
@@ -140,6 +143,7 @@ exports.getUserOrganization = function() {
     });
 };
 
+//TODO: Check
 exports.loginUser = function(userName, password, isRemember) {
     return new Promise(async (resolve, reject) => {
         try {
