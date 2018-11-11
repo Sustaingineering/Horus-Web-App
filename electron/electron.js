@@ -128,9 +128,9 @@ app.on('ready', async () => {
  * the user to quit the program.
  * */
 app.on('window-all-closed', () => {
-  if (process.platform !== 'darwin') {
+  // if (process.platform !== 'darwin') {
     app.quit();
-  }
+  // }
 });
 
 /**
