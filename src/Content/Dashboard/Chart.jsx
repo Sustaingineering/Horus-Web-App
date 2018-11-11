@@ -19,25 +19,35 @@ import {
 class Chart extends React.Component {
   render() {
     const { classes } = this.props;
+    let Voltage = "Voltage";
+    let Current = "Current";
+    let Power = "Power";
+    let Temperature = "Temperature";
 
     return (
       <Fragment>
         {(() => {
           switch (this.props.type) {
-            case "voltage":
+            case Voltage:
               return (
                 <Paper className={classes.paper}>
-                  <div className={classes.title}>{this.props.title}</div>
+                  {/* <div className={classes.title}>{this.props.title}</div> */}
                   <ResponsiveContainer width="100%" height={300}>
                     <AreaChart
                       data={this.props.data}
-                      margin={{ top: 10, right: 30, left: 0, bottom: 0 }}
+                      margin={{ top: 30, right: 30, left: 0, bottom: 10 }}
                     >
                       <CartesianGrid
                         strokeDasharray="5 5"
                         verticalFill={["263148", "#444444"]}
                         fillOpacity={0.2}
                       />
+                      
+            {/* <XAxis dataKey="name">
+              <Label value="Time" offset={0} fill= 'white' position="insideBottom" dy={10}/>
+              <Label value={this.props.title} offset={0} fontSize={20} fill= 'white' position="top" dy={-240} />
+            </XAxis> */}
+
                       <defs>
                         <linearGradient
                           id="colorvoltage"
@@ -62,8 +72,12 @@ class Chart extends React.Component {
                         dataKey="name"
                         tick={{ fill: "white" }}
                         stroke="#efefef"
-                      />
-                      <YAxis tick={{ fill: "white" }} stroke="#efefef" />
+                      >
+                        <Label value="Time" offset={0} fill= 'white' position="insideBottom" dy={10}/>
+                        <Label value={Voltage} offset={0} fontSize={20} fill= 'white' position="top" dy={-245} />      
+                      </XAxis>
+                      <YAxis tick={{ fill: "white" }} stroke="#efefef" 
+                      label={{value: "Volts", fill: 'white', angle: -90, position: 'insideLeft' }} />
                       <Tooltip />
                       <Area
                         type="monotone"
@@ -78,15 +92,14 @@ class Chart extends React.Component {
                   </ResponsiveContainer>
                 </Paper>
               );
-            case "current":
+            case Current:
               return (
                 <Paper className={classes.paper}>
-                  <div className={classes.title}>{this.props.title}</div>
+                  {/* <div className={classes.title}>{this.props.title}</div> */}
                   <ResponsiveContainer width="100%" height={300}>
                     <AreaChart
                       data={this.props.data}
-                      margin={{ top: 10, right: 30, left: 0, bottom: 0 }}
-                    >
+                      margin={{ top: 30, right: 30, left: 0, bottom: 10 }}                    >
                       <CartesianGrid
                         strokeDasharray="5 5"
                         verticalFill={["263148", "#444444"]}
@@ -116,8 +129,14 @@ class Chart extends React.Component {
                         dataKey="name"
                         tick={{ fill: "white" }}
                         stroke="#efefef"
-                      />
-                      <YAxis tick={{ fill: "white" }} stroke="#efefef" />
+                      >
+                        <Label value="Time" offset={0} fill= 'white' position="insideBottom" dy={10}/>
+                        <Label value={Current} offset={0} fontSize={20} fill= 'white' position="top" dy={-245} />  
+                      </XAxis>
+                                         
+
+                      <YAxis tick={{ fill: "white" }} stroke="#efefef" 
+                             label={{value: "Amps", fill: 'white', angle: -90, position: 'insideLeft' }} />/>
                       <Tooltip />
                       <Area
                         type="monotone"
@@ -132,15 +151,13 @@ class Chart extends React.Component {
                   </ResponsiveContainer>
                 </Paper>
               );
-            case "power":
+            case Power:
               return (
                 <Paper className={classes.paper}>
-                  <div className={classes.title}>{this.props.title}</div>
                   <ResponsiveContainer width="100%" height={300}>
                     <AreaChart
                       data={this.props.data}
-                      margin={{ top: 10, right: 30, left: 0, bottom: 0 }}
-                    >
+                      margin={{ top: 30, right: 30, left: 0, bottom: 10 }}                    >
                       <CartesianGrid
                         strokeDasharray="5 5"
                         verticalFill={["263148", "#444444"]}
@@ -170,8 +187,12 @@ class Chart extends React.Component {
                         dataKey="name"
                         tick={{ fill: "white" }}
                         stroke="#efefef"
-                      />
-                      <YAxis tick={{ fill: "white" }} stroke="#efefef" />
+                      >
+                        <Label value="Time" offset={0} fill= 'white' position="insideBottom" dy={10}/>
+                        <Label value={Power} offset={0} fontSize={20} fill= 'white' position="top" dy={-245} /> 
+                      </XAxis>
+                      <YAxis tick={{ fill: "white" }} stroke="#efefef" 
+                              label={{value: "Watts", fill: 'white', angle: -90, position: 'insideLeft' }} />
                       <Tooltip />
                       <Area
                         type="monotone"
@@ -186,15 +207,13 @@ class Chart extends React.Component {
                   </ResponsiveContainer>
                 </Paper>
               );
-            case "temp":
+            case Temperature:
               return (
                 <Paper className={classes.paper}>
-                  <div className={classes.title}>{this.props.title}</div>
                   <ResponsiveContainer width="100%" height={300}>
                     <AreaChart
                       data={this.props.data}
-                      margin={{ top: 10, right: 30, left: 0, bottom: 0 }}
-                    >
+                      margin={{ top: 30, right: 30, left: 0, bottom: 10 }}                    >
                       <CartesianGrid
                         strokeDasharray="5 5"
                         verticalFill={["263148", "#444444"]}
@@ -242,8 +261,12 @@ class Chart extends React.Component {
                         dataKey="name"
                         tick={{ fill: "white" }}
                         stroke="#efefef"
-                      />
-                      <YAxis tick={{ fill: "white" }} stroke="#efefef" />
+                      >
+                        <Label value="Time" offset={0} fill= 'white' position="insideBottom" dy={10}/>
+                        <Label value={Temperature} offset={0} fontSize={20} fill= 'white' position="top" dy={-245} /> 
+                      </XAxis>
+                      <YAxis tick={{ fill: "white" }} stroke="#efefef" 
+                             label={{value: "Celsius", fill: 'white', angle: -90, position: 'insideLeft' }} />
                       <Tooltip />
                       <Area
                         type="monotone"

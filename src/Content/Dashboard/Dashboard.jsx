@@ -112,7 +112,7 @@ class Dashboard extends Component {
                   <Grid item xs={12} sm={12} md={6}>
                     <Chart
                       data={this.state.voltageData}
-                      type="voltage"
+                      type="Voltage"
                       title={"Voltage"}
                       dataKey1="voltage"
                       dataKey2=""
@@ -121,7 +121,7 @@ class Dashboard extends Component {
                   <Grid item xs={12} sm={12} md={6}>
                     <Chart
                       data={this.state.currentData}
-                      type="current"
+                      type="Current"
                       title={"Current"}
                       dataKey1="current"
                       dataKey2=""
@@ -130,7 +130,7 @@ class Dashboard extends Component {
                   <Grid item xs={12} sm={12} md={6}>
                     <Chart
                       data={this.state.powerData}
-                      type="power"
+                      type="Power"
                       title={"Power"}
                       dataKey1="power"
                       dataKey2=""
@@ -139,7 +139,7 @@ class Dashboard extends Component {
                   <Grid item xs={12} sm={12} md={6}>
                     <Chart
                       data={this.state.tempData}
-                      type="temp"
+                      type="Temperature"
                       title={"Temperature"}
                       dataKey1="opTemp"
                       dataKey2="suTemp"
@@ -154,7 +154,7 @@ class Dashboard extends Component {
                   <Grid item xs={12} sm={12} md={6}>
                     <HistoryChart
                       data={this.state.voltageData}
-                      type="voltage"
+                      type="Voltage"
                       title={"Voltage"}
                       dataKey1="voltage"
                       dataKey2=""
@@ -163,7 +163,7 @@ class Dashboard extends Component {
                   <Grid item xs={12} sm={12} md={6}>
                     <HistoryChart
                       data={this.state.currentData}
-                      type="current"
+                      type="Current"
                       title={"Current"}
                       dataKey1="current"
                       dataKey2=""
@@ -172,7 +172,7 @@ class Dashboard extends Component {
                   <Grid item xs={12} sm={12} md={6}>
                     <HistoryChart
                       data={this.state.powerData}
-                      type="power"
+                      type="Power"
                       title={"Power"}
                       dataKey1="power"
                       dataKey2=""
@@ -181,7 +181,7 @@ class Dashboard extends Component {
                   <Grid item xs={12} sm={12} md={6}>
                     <HistoryChart
                       data={this.state.tempData}
-                      type="temp"
+                      type="Temperature"
                       title={"Temperature"}
                       dataKey1="opTemp"
                       dataKey2="suTemp"
