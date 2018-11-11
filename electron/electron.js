@@ -3,6 +3,7 @@ const isDev = require('electron-is-dev');
 const path = require('path');
 const url = require('url');
 const datastore = require('./datastore');
+const { default: installExtension, REACT_DEVELOPER_TOOLS } = require('electron-devtools-installer');
 
 let windows = {};
 
@@ -17,9 +18,6 @@ function createWindow() {
     show: false
   });
 
-  BrowserWindow.addDevToolsExtension(
-    "C:/Users/jluis/AppData/Local/Google/Chrome/User Data/Default/Extensions/fmkadmapgofadopljbjfkapdkoienihi/3.4.2_0"
-  );
   // Lozd the index.html of the app.
   windows.mainWindow.loadURL(isDev ?
     'http://localhost:3000' :
@@ -68,7 +66,7 @@ ipcMain.on('log-out', async (e, msg) => {
 })
 
 // Backend Signup
- ipcMain.on('sign-up', async (e, msg) => {
+ipcMain.on('sign-up', async (e, msg) => {
   try {
     let isOldUser = await datastore.findUser(msg.email)
     if (isOldUser) {
@@ -107,6 +105,13 @@ ipcMain.on('log-in', async (e, msg) => {
 app.on('ready', async () => {
   try{
     createWindow();
+    console.log(`[ INFO ] Initializing React Dev Tools`);
+    installExtension(REACT_DEVELOPER_TOOLS).then((name) => {
+        console.log(`Added Extension:  ${name}`);
+    })
+    .catch((err) => {
+        console.log('An error occurred: ', err);
+    });
     console.log(`[ INFO ] Initializing datastore`)
     await datastore.initializeDataStore()
     console.log(`[ INFO ] checking active sessions`)
