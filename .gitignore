@@ -12,6 +12,7 @@
 
 #local databases
 /electron/datastore/*
+
 # misc
 .DS_Store
 .env.local

@@ -1,37 +1,25 @@
 import React, { Component, Fragment } from "react";
 import PropTypes from "prop-types";
 // Material UI Components
-// import { Paper } from '@material-ui/core/';
-// Style
-import footerStyle from "./footerStyle";
 import { withStyles, Typography, MuiThemeProvider } from "@material-ui/core";
+//Style
+import dashboardStyle from "./dashboardStyle";
 import { mainTheme } from "../../assets/jss/mainStyle";
+import Dashboard from "./Dashboard";
 
-class Footer extends Component {
-  state = {
-    value: 0
-  };
-
-  handleChange = (event, value) => {
-    this.setState({ value });
-  };
+class Sensor extends Component {
+  state = {};
 
   render() {
     const { classes } = this.props;
-
     return (
       <Fragment>
         <MuiThemeProvider theme={mainTheme}>
           <div className={classes.root}>
-            <Typography
-              className={classes.content}
-              color="primary"
-              variant="body1"
-              gutterBottom
-              align="right"
-            >
-              Horus
+            <Typography variant="display1" color="primary" gutterBottom>
+              {this.props.sensorName}
             </Typography>
+            <Dashboard sensorName={this.props.sensorName} />
           </div>
         </MuiThemeProvider>
       </Fragment>
@@ -39,8 +27,8 @@ class Footer extends Component {
   }
 }
 
-Footer.propTypes = {
+Sensor.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
-export default withStyles(footerStyle)(Footer);
+export default withStyles(dashboardStyle)(Sensor);

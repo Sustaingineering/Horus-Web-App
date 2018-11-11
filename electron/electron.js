@@ -3,6 +3,7 @@ const isDev = require('electron-is-dev');
 const path = require('path');
 const url = require('url');
 const datastore = require('./datastore');
+const { default: installExtension, REACT_DEVELOPER_TOOLS } = require('electron-devtools-installer');
 
 let windows = {};
 
@@ -16,6 +17,7 @@ function createWindow() {
     height: 680,
     show: false
   });
+
   // Lozd the index.html of the app.
   windows.mainWindow.loadURL(isDev ?
     'http://localhost:3000' :
@@ -64,14 +66,13 @@ ipcMain.on('log-out', async (e, msg) => {
 })
 
 // Backend Signup
- ipcMain.on('sign-up', async (e, msg) => {
+ipcMain.on('sign-up', async (e, msg) => {
   try {
     let isOldUser = await datastore.findUser(msg.email)
     if (isOldUser) {
       e.sender.send('is-new-user', {error:"User already exists"})
       return
     }
-      e.sender.send('is-new-user', true)
     await datastore.newUser(msg)
   } catch(error) {
     e.sender.send('is-new-user', false)
@@ -80,9 +81,10 @@ ipcMain.on('log-out', async (e, msg) => {
 
 ipcMain.on('log-in', async (e, msg) => {
   try {
+    console.log("Login IPC Bus");
     let isLoggedIn = await datastore.loginUser(msg.email, msg.password, msg.isRemembered)
     if (!isLoggedIn) {
-      e.sender.send('log-in', {error: "Incorrect email or password"})
+      e.sender.send('log-in', {error: "Incorrect username or password"})
       return
     }
       e.sender.send('log-in-app', "Successfully logged in")
@@ -103,6 +105,13 @@ ipcMain.on('log-in', async (e, msg) => {
 app.on('ready', async () => {
   try{
     createWindow();
+    console.log(`[ INFO ] Initializing React Dev Tools`);
+    installExtension(REACT_DEVELOPER_TOOLS).then((name) => {
+        console.log(`Added Extension:  ${name}`);
+    })
+    .catch((err) => {
+        console.log('An error occurred: ', err);
+    });
     console.log(`[ INFO ] Initializing datastore`)
     await datastore.initializeDataStore()
     console.log(`[ INFO ] checking active sessions`)
@@ -119,9 +128,9 @@ app.on('ready', async () => {
  * the user to quit the program.
  * */
 app.on('window-all-closed', () => {
-  if (process.platform !== 'darwin') {
+  // if (process.platform !== 'darwin') {
     app.quit();
-  }
+  // }
 });
 
 /**

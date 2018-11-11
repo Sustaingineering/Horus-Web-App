@@ -19,14 +19,14 @@ npm scirpts
 
 ```JSON
 "scripts": {
-    "react-start": "react-scripts start",
-    "react-build": "react-scripts build",
-    "react-test": "react-scripts test --env=jsdom",
-    "react-eject": "react-scripts eject",
-    "electron-build": "electron-builder",
-    "release": "npm run react-build && electron-builder --publish=always",
-    "build": "npm run react-build && npm run electron-build",
-    "start"
+  "react-start": "react-scripts start",
+  "react-build": "react-scripts build",
+  "react-test": "react-scripts test --env=jsdom",
+  "react-eject": "react-scripts eject",
+  "electron-build": "electron-builder",
+  "release": "npm run react-build && electron-builder --publish=always",
+  "build": "npm run react-build && npm run electron-build",
+  "start": "concurrently \"cross-env BROWSER=none npm run react-start\" \"wait-on http://localhost:3000 && electron .\""
 }
 ```
 

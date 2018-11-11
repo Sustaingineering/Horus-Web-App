@@ -5,14 +5,25 @@ var user_id = exports.user_id = null;
 let user_sensors = {};
 
 let udb = {
-    userInfo: new Datastore({ filename: `${__dirname}/datastore/local/userInfo`, autoload: true }),
-    dataCollection: new Datastore({ filename: `${__dirname}/datastore/local/dataCollection`, autoload: true }),
-    userSettings: new Datastore({ filename: `${__dirname}/datastore/local/userSettings`, autoload: true })
+    userInfo: new Datastore({
+        filename: `${__dirname}/datastore/local/userInfo`,
+        autoload: true
+    }),
+    dataCollection: new Datastore({
+        filename: `${__dirname}/datastore/local/dataCollection`,
+        autoload: true
+    }),
+    userSettings: new Datastore({
+        filename: `${__dirname}/datastore/local/userSettings`,
+        autoload: true
+    })
 };
 
 var initializeDataStore = exports.initializeDataStore = () => {
     return new Promise((resolve, reject) => {
-        udb.userInfo.find({ _id: '0000000000000001' }, (error, docs) => {
+        udb.userInfo.find({
+            _id: '0000000000000001'
+        }, (error, docs) => {
             console.log('res', error, docs)
             if (error) {
                 return reject(error)
@@ -20,10 +31,10 @@ var initializeDataStore = exports.initializeDataStore = () => {
             if (docs.length !== 0) {
                 return resolve();
             }
-            var doc = { 
-                        _id: '0000000000000001'
-                    };
-            udb.userInfo.insert(doc, error => {   // Callback is optional
+            var doc = {
+                _id: '0000000000000001'
+            };
+            udb.userInfo.insert(doc, error => { // Callback is optional
                 if (error) {
                     return reject(error)
                 }
@@ -33,9 +44,11 @@ var initializeDataStore = exports.initializeDataStore = () => {
     })
 }
 
-exports.findUser = function(email) {
+exports.findUser = function (email) {
     return new Promise((resolve, reject) => {
-        udb.userInfo.find({ email: email }, (error, docs) => {
+        udb.userInfo.find({
+            email: email
+        }, (error, docs) => {
             if (error) {
                 return reject(error)
             }
@@ -47,32 +60,53 @@ exports.findUser = function(email) {
     })
 }
 
-exports.getUserSensors = function(userId) {
+exports.getUserSensors = function (userId) {
     return new Promise((resolve, reject) => {
-        try{
+        try {
 
-        } catch(error) {
+        } catch (error) {
 
         }
     })
 }
 
-exports.expireSessions = function() {
-    return new Promise( async(resolve, reject) => {
+exports.expireSessions = function () {
+    return new Promise(async (resolve, reject) => {
         try {
             let currentTime = Math.round((new Date()).getTime() / 1000);
-            let activeSession = await update({ session: true, session_expire: { $lte: currentTime}}, { $set: { session: false } }, { multi: true }, 'userSettings')
+            let activeSession = await update({
+                session: true,
+                session_expire: {
+                    $lte: currentTime
+                }
+            }, {
+                $set: {
+                    session: false
+                }
+            }, {
+                multi: true
+            }, 'userSettings')
             return resolve();
-        } catch(error) {
+        } catch (error) {
             return reject(error)
         }
     })
 }
 
-exports.logOut = function() {
-    return new Promise( async (resolve, reject) => {
+exports.logOut = function () {
+    return new Promise(async (resolve, reject) => {
         try {
-            let loggedOutSession = await update( {session: true, userId: user_id}, { $set: { session: false, session_expire: undefined } }, { multi: true }, 'userSettings')
+            let loggedOutSession = await update({
+                session: true,
+                userId: user_id
+            }, {
+                $set: {
+                    session: false,
+                    session_expire: undefined
+                }
+            }, {
+                multi: true
+            }, 'userSettings')
             clearUserData();
             return resolve(true);
         } catch (error) {
@@ -81,38 +115,47 @@ exports.logOut = function() {
     })
 }
 
-var clearUserData = function() {
+var clearUserData = function () {
     user_id = exports.user_id = null
     user_sensors = {};
 }
 
-exports.restoreSession = function(userId) {
+exports.restoreSession = function (userId) {
     return new Promise(async (resolve, reject) => {
         try {
-            let activeSession = await find({ session: true }, 'userSettings')
+            let activeSession = await find({
+                session: true
+            }, 'userSettings')
             if (activeSession.length === 0) {
                 return resolve(false)
             }
             user_id = activeSession[0].userId
             return resolve(true)
-        } catch(error) {
+        } catch (error) {
             return reject(error)
-        } 
+        }
     })
 }
 
 
-exports.loginUser = function(email, password, isRemember) {
+exports.loginUser = function (email, password, isRemember) {
     return new Promise(async (resolve, reject) => {
         try {
-            const user = await find({ email: email, password: password }, 'userInfo')
-            
+            const user = await find({
+                email: email,
+                password: password
+            }, 'userInfo')
+
+            console.log('Inside Login User')
+
             if (user.length === 0) {
                 return reject('Incorrect email or password')
             }
             user_id = user[0]._id
 
-            const setting = await find({ userId: user_id}, 'userSettings')
+            const setting = await find({
+                userId: user_id
+            }, 'userSettings')
             const uSettDoc = {
                 userId: user[0]._id,
                 isRemembered: isRemember,
@@ -122,7 +165,7 @@ exports.loginUser = function(email, password, isRemember) {
             if (setting.length === 0) {
                 uSettDoc.created_at = Math.round((new Date()).getTime() / 1000);
 
-                udb.userSettings.insert(uSettDoc, (error, newDoc)=> {
+                udb.userSettings.insert(uSettDoc, (error, newDoc) => {
                     if (error) {
                         return reject(error)
                     }
@@ -139,7 +182,7 @@ exports.loginUser = function(email, password, isRemember) {
                 })
             }
 
-        } catch(error) {
+        } catch (error) {
             if (error) {
                 return reject(error)
             }
@@ -147,11 +190,11 @@ exports.loginUser = function(email, password, isRemember) {
     })
 }
 
-exports.newUser = function(msg) {
+exports.newUser = function (msg) {
     return new Promise(async (resolve, reject) => {
         try {
             // Document object declaration
-            var uInfoDoc = { 
+            var uInfoDoc = {
                 email: msg.email,
                 password: msg.password,
                 username: msg.username,
@@ -161,7 +204,7 @@ exports.newUser = function(msg) {
             // Insert document into database
             let newDoc = await insert(uInfoDoc, "userInfo")
             return resolve();
-        }catch (error) {
+        } catch (error) {
             console.log(error)
             return reject(error)
         }
@@ -169,10 +212,12 @@ exports.newUser = function(msg) {
 }
 
 //Update Password
-exports.newPassword = function(msg) {
+exports.newPassword = function (msg) {
     return new Promise(async (resolve, reject) => {
         try {
-            const user = await find({ email: msg.email }, 'userInfo')
+            const user = await find({
+                email: msg.email
+            }, 'userInfo')
             var uInfoDoc = {
                 email: msg.email,
                 password: msg.password,
@@ -181,20 +226,20 @@ exports.newPassword = function(msg) {
                 created_at: user[0].created_at
             };
             udb.userInfo.update(user[0], uInfoDoc, {}, (error, passwordReplace) => {
-                if(error) {
+                if (error) {
                     return reject(error)
                 }
                 return resolve(true)
             })
-        } catch(error) {
-            if(error) {
+        } catch (error) {
+            if (error) {
                 return reject(error)
             }
         }
     })
 }
 
-exports.storeSensorData = function(data) {
+exports.storeSensorData = function (data) {
     return new Promise(async (resolve, reject) => {
         try {
             data.createdAt = Math.round(new Date().getTime() / 1000);
@@ -202,128 +247,148 @@ exports.storeSensorData = function(data) {
             let newDoc = await insert(data, "dataCollection");
 
             return resolve()
-        } catch(error) {
+        } catch (error) {
             console.log(`error: ${error}`);
             return reject(error);
         }
     })
 }
 
-var addSensor = exports.addSensor = function(sensorId) {
+var addSensor = exports.addSensor = function (sensorId) {
 
 }
 
-exports.getSummaryData = function(pumpId) {
+exports.getSummaryData = function (pumpId) {
     return new Promise((resolve, reject) => {
         try {
             let userId = user_id;
             udb['dataCollection']
-            .findOne({ userId: userId, pumpId: pumpId })
-            .sort({ createdAt: -1 })      // OR `.sort({ updatedAt: -1 })` to sort by last modification time
-            .limit(1)
-            .exec(function(error, data) {
-                if (error) {
-                    return reject(error)
-                }
-                return resolve(data)
-            });
-        } catch(error) {
+                .findOne({
+                    userId: userId,
+                    pumpId: pumpId
+                })
+                .sort({
+                    createdAt: -1
+                }) // OR `.sort({ updatedAt: -1 })` to sort by last modification time
+                .limit(1)
+                .exec(function (error, data) {
+                    if (error) {
+                        return reject(error)
+                    }
+                    return resolve(data)
+                });
+        } catch (error) {
             console.log(error)
         }
-    }) 
+    })
 }
 
-exports.getRealTime = function(data)  {
+exports.getRealTime = function (data) {
     return new Promise((resolve, reject) => {
-        try{
+        try {
             let userId = user_id;
             let pumpId = data.pumpId;
             let count = 5
             udb['dataCollection']
-            .find({ userId: userId, pumpId: pumpId })
-            .sort({ createdAt: -1 })      // OR `.sort({ updatedAt: -1 })` to sort by last modification time
-            .limit(count)
-            .exec((error, data) => {
-                if (error) {
-                    return reject(error)
-                }
+                .find({
+                    userId: userId,
+                    pumpId: pumpId
+                })
+                .sort({
+                    createdAt: -1
+                }) // OR `.sort({ updatedAt: -1 })` to sort by last modification time
+                .limit(count)
+                .exec((error, data) => {
+                    if (error) {
+                        return reject(error)
+                    }
 
-                let voltageList = new Array();
-                let currentList = new Array();
-                let powerList = new Array();
-                let opTempList = new Array();
-                let suTempList = new Array();
-                let waterBreakerList = new Array();
-                for (i = data.length - 1; i >= 0; i--) {
-                    voltageList.push(data[i].voltage)
-                    currentList.push(data[i].current)
-                    powerList.push(data[i].power)
-                    opTempList.push(data[i].opTemp)
-                    suTempList.push(data[i].suTemp)
-                    waterBreakerList.push(data[i].waterBreaker)
-                }
-                let response =  [
-                    voltageList,
-                    currentList,
-                    powerList,
-                    opTempList,
-                    suTempList,
-                    waterBreakerList
-                ]
-                return resolve(response)
-            });
-        } catch(error) {
+                    let voltageList = new Array();
+                    let currentList = new Array();
+                    let powerList = new Array();
+                    let opTempList = new Array();
+                    let suTempList = new Array();
+                    let waterBreakerList = new Array();
+                    for (i = data.length - 1; i >= 0; i--) {
+                        voltageList.push(data[i].voltage)
+                        currentList.push(data[i].current)
+                        powerList.push(data[i].power)
+                        opTempList.push(data[i].opTemp)
+                        suTempList.push(data[i].suTemp)
+                        waterBreakerList.push(data[i].waterBreaker)
+                    }
+                    let response = [
+                        voltageList,
+                        currentList,
+                        powerList,
+                        opTempList,
+                        suTempList,
+                        waterBreakerList
+                    ]
+                    return resolve(response)
+                });
+        } catch (error) {
             console.log(error)
             return reject(error)
-        } 
+        }
     })
 }
 
-exports.getHistoryData = function(data) {
+exports.getHistoryData = function (data) {
     return new Promise((resolve, reject) => {
         try {
             let userId = user_id;
-            let {pumpId, from, to} = data
+            let {
+                pumpId,
+                from,
+                to
+            } = data
             udb['dataCollection'].find({
-                userId: userId, 
-                pumpId: pumpId, 
-                createdAt: { 
-                    $lte: to,
-                    $gte: from
-                }
-            })
-            .sort({ createdAt: -1 })
-            .exec((error, data) => {
-                if (error) { return reject(error) }
-                if (data.length <= 0) { return resolve() }
-                let voltageList = new Array();
-                let currentList = new Array();
-                let powerList = new Array();
-                let opTempList = new Array();
-                let suTempList = new Array();
-                let waterBreakerList = new Array();
-                let labels = new Array();
-                for (i = data.length - 1; i >= 0; i--) {
-                    labels.push(i.toString())
-                    voltageList.push(data[i].voltage)
-                    currentList.push(data[i].current)
-                    powerList.push(data[i].power)
-                    opTempList.push(data[i].opTemp)
-                    suTempList.push(data[i].suTemp)
-                    waterBreakerList.push(data[i].waterBreaker)
-                }
-                let response =  [
-                    voltageList,
-                    currentList,
-                    powerList,
-                    opTempList,
-                    suTempList,
-                    waterBreakerList,
-                    labels
-                ]
-                return resolve(response)
-            })
-        } catch(error) {
+                    userId: userId,
+                    pumpId: pumpId,
+                    createdAt: {
+                        $lte: to,
+                        $gte: from
+                    }
+                })
+                .sort({
+                    createdAt: -1
+                })
+                .exec((error, data) => {
+                    if (error) {
+                        return reject(error)
+                    }
+                    if (data.length <= 0) {
+                        return resolve()
+                    }
+                    let voltageList = new Array();
+                    let currentList = new Array();
+                    let powerList = new Array();
+                    let opTempList = new Array();
+                    let suTempList = new Array();
+                    let waterBreakerList = new Array();
+                    let labels = new Array();
+                    for (i = data.length - 1; i >= 0; i--) {
+                        labels.push(i.toString())
+                        voltageList.push(data[i].voltage)
+                        currentList.push(data[i].current)
+                        powerList.push(data[i].power)
+                        opTempList.push(data[i].opTemp)
+                        suTempList.push(data[i].suTemp)
+                        waterBreakerList.push(data[i].waterBreaker)
+                    }
+                    let response = [
+                        voltageList,
+                        currentList,
+                        powerList,
+                        opTempList,
+                        suTempList,
+                        waterBreakerList,
+                        labels
+                    ]
+                    return resolve(response)
+                })
+        } catch (error) {
             console.log(error)
             return reject(error)
         }
@@ -331,7 +396,7 @@ exports.getHistoryData = function(data) {
 }
 //wrappers
 
-var find = exports.find = function(object, tableName) {
+var find = exports.find = function (object, tableName) {
     return new Promise((resolve, reject) => {
         udb[tableName].find(object, (error, docs) => {
             if (error) {
@@ -342,8 +407,8 @@ var find = exports.find = function(object, tableName) {
     })
 }
 
-var insert = exports.insert = function(object, tableName) {
-    return new Promise ((resolve, reject) => {
+var insert = exports.insert = function (object, tableName) {
+    return new Promise((resolve, reject) => {
         udb[tableName].insert(object, (error, newDoc) => {
             if (error) {
                 return reject(error)
@@ -353,8 +418,8 @@ var insert = exports.insert = function(object, tableName) {
     })
 }
 
-var update = exports.update = function(query, updateModifier, options, tableName) {
-    return new Promise ((resolve,reject) => {
+var update = exports.update = function (query, updateModifier, options, tableName) {
+    return new Promise((resolve, reject) => {
         udb[tableName].update(query, updateModifier, options, (error, settingReplaced, affectedDocuments, upsert) => {
             if (error) {
                 return reject(error)
@@ -365,7 +430,7 @@ var update = exports.update = function(query, updateModifier, options, tableName
 }
 
 var remove = exports.remove = function (query, options, tableName) {
-    return new Promise ((resolve,reject) => {
+    return new Promise((resolve, reject) => {
         udb[tableName].remove(query, options, (error, numRemoved) => {
             if (error) {
                 return reject(error)
@@ -376,7 +441,7 @@ var remove = exports.remove = function (query, options, tableName) {
 }
 
 var findOne = exports.findOne = function (object, tableName) {
-    return new Promise ((resolve,reject) => {
+    return new Promise((resolve, reject) => {
         udb[tableName].findOne(object, (error, doc) => {
             if (error) {
                 return reject(error)
@@ -387,7 +452,7 @@ var findOne = exports.findOne = function (object, tableName) {
 }
 
 var count = exports.count = function (object, tableName) {
-    return new Promise ((resolve,reject) => {
+    return new Promise((resolve, reject) => {
         udb[tableName].count(object, (error, count) => {
             if (error) {
                 return reject(error)

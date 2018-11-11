@@ -13,7 +13,8 @@ const navbarStyle = theme => ({
     },
     zIndex: 1,
     overflow: "hidden",
-    display: "flex"
+    display: "flex",
+    color: "white"
   },
   hide: {
     display: "none"
@@ -22,7 +23,8 @@ const navbarStyle = theme => ({
     flex: 1
   },
   menuButton: {
-    marginLeft: 12,
+    paddingLeft: 0,
+    marginLeft: 0,
     marginRight: 36
   },
   appBar: {
@@ -41,6 +43,20 @@ const navbarStyle = theme => ({
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.enteringScreen
     })
+  },
+  button: {
+    textAlign: "center",
+    marginTop: theme.spacing.unit,
+    backgroundColor: primaryColor,
+    color: "white",
+    "&:hover": {
+      backgroundColor: "white",
+      color: "black"
+    }
+  },
+  lft: {
+    paddingLeft: 10,
+    paddingRight: 20
   }
 });
 

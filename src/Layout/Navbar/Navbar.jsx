@@ -114,14 +114,18 @@ class Navbar extends Component {
                 open={open}
                 onClose={this.handleClose}
               >
-                <Link style={profileStyle} to="/profile">
-                  <MenuItem onClick={this.handleClose}>Perfil</MenuItem>
+                <Link style={profileStyle} to="/">
+                  <MenuItem
+                    className={classes.button}
+                    onClick={this.handleClose}
+                  >
+                    <AccountCircle className={classes.ltf} />
+                    Profile
+                  </MenuItem>
                 </Link>
-                {/* <Link style={profileStyle} to='/login'> */}
                 <MenuItem>
                   <SignOutButton />
                 </MenuItem>
-                {/* </Link> */}
               </Menu>
             </Toolbar>
           </AppBar>
