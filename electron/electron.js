@@ -25,6 +25,22 @@ var userEmail = ""
 //Verification Code
 var verificationCode = ""
 
+//Node Emailer variables
+const nodemailer = require('nodemailer');
+var transporter = nodemailer.createTransport({
+  service: 'gmail',
+  auth: {
+    user: 'horus.sustaingineering@gmail.com',
+    pass: 'horus4ever!'
+  }
+});
+
+//User Email
+var userEmail = ""
+
+//Verification Code
+var verificationCode = ""
+
 let windows = {};
 
 // [ METHODS ]
