@@ -5,6 +5,23 @@ const url = require('url');
 const datastore = require('./datastore');
 const { default: installExtension, REACT_DEVELOPER_TOOLS } = require('electron-devtools-installer');
 
+
+//Node Emailer variables
+const nodemailer = require('nodemailer');
+var transporter = nodemailer.createTransport({
+  service: 'gmail',
+  auth: {
+    user: 'horus.sustaingineering@gmail.com',
+    pass: 'horus4ever!'
+  }
+});
+
+//User Email
+var userEmail = ""
+
+//Verification Code
+var verificationCode = ""
+
 let windows = {};
 
 // [ METHODS ]
@@ -57,6 +74,7 @@ ipcMain.on('is-active-session', async (e, msg) => {
 
 ipcMain.on('log-out', async (e, msg) => {
   try {
+    user = "";
     await datastore.logOut();
     return e.sender.send('log-out', {"log-out": true});
   } catch(error) {
@@ -79,20 +97,103 @@ ipcMain.on('sign-up', async (e, msg) => {
   }
 })
 
+//TODO:Check
 ipcMain.on('log-in', async (e, msg) => {
   try {
     console.log("Login IPC Bus");
-    let isLoggedIn = await datastore.loginUser(msg.email, msg.password, msg.isRemembered)
+    msg.user = msg.user || msg.email
+    let isLoggedIn = await datastore.loginUser(msg.user, msg.password, msg.isRemembered); //TODO: Ensure msg order is correct
     if (!isLoggedIn) {
-      e.sender.send('log-in', {error: "Incorrect username or password"})
-      return
+      e.sender.send('log-in', {error: "Incorrect username or password"});
+      return;
     }
-      e.sender.send('log-in-app', "Successfully logged in")
+    e.sender.send('log-in-app', "Successfully logged in")/////////// TODO: Check this
   } catch(error) {
     console.log('error', error)
     e.sender.send('log-in', {error: error})
   }
 })
+
+//TODO: Check
+//TODO: Verify it works
+ipcMain.on('update-sidebar', async (e, msg) => {
+  try {
+    let username = await datastore.getUserName();
+    let organization = await datastore.getUserOrganization();
+    if (!username || !organization) {
+      e.sender.send('update-sidebar', {error: "The user is not signed-in."});
+    }
+
+    e.sender.send('update-sidebar', {username: username, organization: organization});
+  } catch (error) {
+    console.log(error);
+    e.sender.send('update-sidebar', {error: error});
+  }
+});
+
+//TODO: Check
+//Verify email
+ipcMain.on('email-exists', async (e, msg) => {
+  try {
+    let emailExists = await datastore.findUser(msg.email);
+    if (!emailExists) {
+      e.sender.send('email-exists', {error:"Email does not exist"});
+      return;
+    }
+    userEmail = msg.email;
+    let randomCode = Math.random().toString(36).substring(7);
+    const mailOptions = {
+      from: 'horus.sustaingineering@gmail.com',
+      to: userEmail,
+      subject: 'Reset your Password Verification Code',
+      html: `
+      <p>
+      Hi,
+        This is your temporary verification code: ` + randomCode + `
+      </p>
+      `,
+    };
+    verificationCode = randomCode;
+    await transporter.sendMail(mailOptions, function (error, info) {
+      if(error) {
+        console.log(error);
+      } else {
+        console.log(info);
+      }
+    });
+    e.sender.send('email-exists', true);
+  } catch(error) {
+    e.sender.send('email-exists', false);
+  }
+})
+
+//TODO: Check
+//Reset Password
+ipcMain.on('new-password', async (e, msg) => {
+  try {
+    //Save new password to the mapped email
+    await datastore.newPassword({email: userEmail, password: msg.password});
+    e.sender.send('new-password', true);///TODO: On front-end, print message
+  } catch(error) {
+    e.sender.send('new-password', false);
+  }
+}) 
+
+//TODO: Check
+//VerifyCode
+ipcMain.on('verify-code', async (e, msg) => {
+  try {
+    //Save new password to the mapped email
+    if(!(msg.code === verificationCode)) {
+      e.sender.send('verify-code', {error: 'Wrong Verification Code entered'});
+      return;
+    }
+    verificationCode = "";
+    e.sender.send('verify-code', true);
+  } catch(error) {
+    e.sender.send('verify-code', false);
+  }
+}) 
 
 // [ TRIGGERS ]
 

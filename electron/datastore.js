@@ -137,21 +137,69 @@ exports.restoreSession = function (userId) {
     })
 }
 
-
-exports.loginUser = function (email, password, isRemember) {
+//TODO: Check
+exports.getUserName = function() {
     return new Promise(async (resolve, reject) => {
         try {
-            const user = await find({
-                email: email,
-                password: password
-            }, 'userInfo')
-
-            console.log('Inside Login User')
-
-            if (user.length === 0) {
-                return reject('Incorrect email or password')
+            if(user_id === null) {
+                return reject("User not signed-in")
             }
-            user_id = user[0]._id
+            return resolve(user_id.username);
+        } catch (error){
+            return reject(error);
+        };
+    });
+};
+
+//TODO: Check
+exports.getUserEmail = function() {
+    return new Promise(async (resolve, reject) => {
+        try {
+            if(user_id === null) {
+                return reject("User not signed-in")
+            }
+            return resolve(user_id.email);
+        } catch (error){
+            return reject(error);
+        };
+    });
+};
+
+//TODO: Check
+exports.getUserOrganization = function() {
+    return new Promise(async (resolve, reject) => {
+        try {
+            if(user_id === null) {
+                return reject("User not signed-in")
+            }
+            return resolve(user_id.organization);
+        } catch (error){
+            return reject(error);
+        };
+    });
+};
+
+//TODO: Check
+exports.loginUser = function(userName, password, isRemember) {
+    return new Promise(async (resolve, reject) => {
+        try {
+            console.log('Inside Login User')
+    
+            let user;
+            var validator = require("email-validator");
+            if(validator.validate(userName)) {
+                user = await find({ email: userName, password: password }, 'userInfo');
+                if (user.length === 0) {
+                    return reject('Incorrect email or password');
+                }
+            }
+            else {
+                user = await find({ username: userName, password: password }, 'userInfo');
+                if(user.length === 0) {
+                    return reject('Incorrect username or password');
+                }
+            }
+            user_id = user[0]._id;
 
             const setting = await find({
                 userId: user_id
@@ -211,6 +259,7 @@ exports.newUser = function (msg) {
     })
 }
 
+//TODO: Check
 //Update Password
 exports.newPassword = function (msg) {
     return new Promise(async (resolve, reject) => {
