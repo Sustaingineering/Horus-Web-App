@@ -5,17 +5,6 @@ const url = require('url');
 const datastore = require('./datastore');
 const { default: installExtension, REACT_DEVELOPER_TOOLS } = require('electron-devtools-installer');
 
-//Node Emailer variables
-const nodemailer = require('nodemailer');
-var transporter = nodemailer.createTransport({
-  service: 'gmail',
-  auth: {
-    user: 'horus.sustaingineering@gmail.com',
-    pass: 'horus4ever!'
-  }
-});
-// Global variable to store the current user's email or username
-let user = "";
 
 //Verification Code
 var verificationCode = ""
@@ -115,6 +104,7 @@ ipcMain.on('sign-up', async (e, msg) => {
 ipcMain.on('log-in', async (e, msg) => {
   try {
     console.log("Login IPC Bus");
+    msg.user = msg.user || msg.email
     let isLoggedIn = await datastore.loginUser(msg.user, msg.password, msg.isRemembered); //TODO: Ensure msg order is correct
     if (!isLoggedIn) {
       e.sender.send('log-in', {error: "Incorrect username or password"});
