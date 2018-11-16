@@ -16,6 +16,10 @@ let udb = {
     userSettings: new Datastore({
         filename: `${__dirname}/datastore/local/userSettings`,
         autoload: true
+    }),
+    passwordTokens: new Datastore({
+        filename: `${__dirname}/datastore/local/passwordTokens`,
+        autoload: true
     })
 };
 
@@ -508,5 +512,56 @@ var count = exports.count = function (object, tableName) {
             }
             return resolve(count);
         })
+    })
+}
+
+var storePasswordToken = exports.storePasswordToken = function(token, email) {
+    return new Promise(async (resolve, reject) => {
+        try{
+        let data = {
+            email: email,
+            token: token,
+            isValid: true,
+        }
+        
+        let validTokens = await find(data, 'passwordTokens');
+        if(validTokens.length > 0){
+            await update({email: email}, {$set: {isValid: false}}, {multi: true}, 'passwordTokens')
+        }
+        data.createdAt = Math.round((new Date()).getTime() / 1000);
+        await insert(data, 'passwordToken');
+        return resolve()
+        }catch(error){
+            console.log('[ERROR]: ', error);
+            return reject(error);
+        }
+    })
+}
+
+var checkPasswordToken = exports.checkPasswordToken = function(token, email) {
+    return new Promise(async (resolve, reject) => {
+        try{
+            let isTokenValid = await find({token, email}, 'storePasswordToken');
+            if (isTokenValid.length === 0) {
+                return resolve(false)
+            }
+            return resolve(true)
+        }catch(error){
+            return reject(error)
+        }
+    })
+}
+
+var clearPasswordTokens = exports.clearPasswordTokens = function( email) {
+    return new Promise(async (resolve, reject) => {
+        try {
+            let tokens = await find({email, isValid: true});
+            if (tokens.length > 0) {
+                await update({email: email}, {$set: {isValid: false}}, {multi: true}, 'passwordTokens')
+            }
+            return resolve()
+        }catch(error) {
+            return reject(error);
+        }
     })
 }

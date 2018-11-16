@@ -35,6 +35,8 @@
     "electron": "^3.0.0",
     "electron-builder": "^20.28.4",
     "electron-devtools-installer": "^2.2.4",
+    "mocha": "^5.2.0",
+    "spectron": "^5.0.0",
     "wait-on": "^3.0.1"
   },
   "build": {
@@ -54,7 +56,8 @@
     "electron-build": "electron-builder",
     "release": "npm run react-build && electron-builder --publish=always",
     "build": "npm run react-build && npm run electron-build",
-    "start": "concurrently \"cross-env BROWSER=none npm run react-start\" \"wait-on http://localhost:3000 && electron .\""
+    "start": "concurrently \"cross-env BROWSER=none npm run react-start\" \"wait-on http://localhost:3000 && electron .\"",
+    "test": "mocha"  
   },
   "browserslist": [
     ">0.2%",
