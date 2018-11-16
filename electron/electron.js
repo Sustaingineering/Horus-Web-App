@@ -4,7 +4,7 @@ const path = require('path');
 const url = require('url');
 const datastore = require('./datastore');
 const { default: installExtension, REACT_DEVELOPER_TOOLS } = require('electron-devtools-installer');
-
+const resetPassword = require('./modules/resetPassword.js');
 
 
 let windows = {};
@@ -102,6 +102,23 @@ ipcMain.on('log-in', async (e, msg) => {
   }
 })
 
+ipcMain.on('generate-password-token', async (e, msg) =>{
+  try{
+    let passwordGenerator = await resetPassword.generatePasswordToken(msg)
+    return e.sender.send('generate-password-token', passwordGenerator);
+  }catch(error) {
+    return e.sender.send('generate-password-token', error);
+  }
+})
+
+ipcMain.on('verify-and-update-password', async (e, msg) => {
+  try{
+    let passwordUpdate = await resetPassword.verifyAndUpdatePassword(msg);
+    return e.sender.send('verify-and-update-password', passwordUpdate);
+  }catch(error) {
+    return e.sender.send('verify-and-update-password', error);
+  }
+}) 
 
 //TODO: Verify it works
 ipcMain.on('update-sidebar', async (e, msg) => {

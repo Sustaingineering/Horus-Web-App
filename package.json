@@ -31,6 +31,9 @@
     "redux": "^4.0.0"
   },
   "devDependencies": {
+    "chai": "^4.2.0",
+    "chai-json": "^1.0.0",
+    "chai-json-pattern": "^1.1.0",
     "concurrently": "^4.0.1",
     "electron": "^3.0.0",
     "electron-builder": "^20.28.4",
@@ -57,7 +60,7 @@
     "release": "npm run react-build && electron-builder --publish=always",
     "build": "npm run react-build && npm run electron-build",
     "start": "concurrently \"cross-env BROWSER=none npm run react-start\" \"wait-on http://localhost:3000 && electron .\"",
-    "test": "mocha"  
+    "test": "mocha"
   },
   "browserslist": [
     ">0.2%",
