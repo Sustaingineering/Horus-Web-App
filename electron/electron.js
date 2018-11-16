@@ -6,21 +6,6 @@ const datastore = require('./datastore');
 const { default: installExtension, REACT_DEVELOPER_TOOLS } = require('electron-devtools-installer');
 
 
-//Node Emailer variables
-const nodemailer = require('nodemailer');
-var transporter = nodemailer.createTransport({
-  service: 'gmail',
-  auth: {
-    user: 'horus.sustaingineering@gmail.com',
-    pass: 'horus4ever!'
-  }
-});
-
-//User Email
-var userEmail = ""
-
-//Verification Code
-var verificationCode = ""
 
 let windows = {};
 
@@ -130,66 +115,6 @@ ipcMain.on('update-sidebar', async (e, msg) => {
   }
 });
 
-//Verify email
-ipcMain.on('email-exists', async (e, msg) => {
-  try {
-    let emailExists = await datastore.findUser(msg.email);
-    if (!emailExists) {
-      e.sender.send('email-exists', {error:"Email does not exist"});
-      return;
-    }
-    userEmail = msg.email;
-    let randomCode = Math.random().toString(36).substring(7);
-    const mailOptions = {
-      from: 'horus.sustaingineering@gmail.com',
-      to: userEmail,
-      subject: 'Reset your Password Verification Code',
-      html: `
-      <p>
-      Hi,
-        This is your temporary verification code: ` + randomCode + `
-      </p>
-      `,
-    };
-    verificationCode = randomCode;
-    await transporter.sendMail(mailOptions, function (error, info) {
-      if(error) {
-        console.log(error);
-      } else {
-        console.log(info);
-      }
-    });
-    e.sender.send('email-exists', "Email exists!");
-  } catch(error) {
-    e.sender.send('email-exists', {error: error}); 
-  }
-})
-
-//Reset Password 
-ipcMain.on('reset-password', async (e, msg) => {
-  try {
-    //Save new password to the mapped email
-    await datastore.newPassword({email: userEmail, password: msg.password});
-    e.sender.send('reset-password', "Password changed!");///TODO: On front-end, print message
-  } catch(error) {
-    e.sender.send('reset-password', {error: error});
-  }
-}) 
-
-//VerifyCode
-ipcMain.on('verify-code', async (e, msg) => {
-  try {
-    //Save new password to the mapped email
-    if(!(msg.code === verificationCode)) {
-      e.sender.send('verify-code', {error: 'Wrong Verification Code entered'});
-      return;
-    }
-    verificationCode = "";
-    e.sender.send('verify-code', "Verified code!");
-  } catch(error) {
-    e.sender.send('verify-code', {error: error});
-  }
-}) 
 
 // [ TRIGGERS ]
 
