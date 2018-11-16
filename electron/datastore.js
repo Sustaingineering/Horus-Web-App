@@ -539,7 +539,7 @@ var storePasswordToken = exports.storePasswordToken = function(token, email) {
 var checkPasswordToken = exports.checkPasswordToken = function(token, email) {
     return new Promise(async (resolve, reject) => {
         try{
-            let isTokenValid = await find({token, email}, 'passwordTokens');
+            let isTokenValid = await find({token, email}, 'storePasswordToken');
             if (isTokenValid.length === 0) {
                 return resolve(false)
             }
