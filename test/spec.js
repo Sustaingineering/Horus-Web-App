@@ -2,7 +2,7 @@ const Application = require('spectron').Application
 const assert = require('assert')
 const electronPath = require('electron') // Require Electron from the binaries included in node_modules.
 const path = require('path')
-
+const resetPassword = require('../electron/modules/resetPassword.js')
 describe('Application launch', function () {
   this.timeout(10000)
 
@@ -37,11 +37,9 @@ describe('Application launch', function () {
     }
   })
 
-  it('shows an initial window', function () {
-    return this.app.client.getWindowCount().then(function (count) {
-      assert.equal(count, 1)
-      // Please note that getWindowCount() will return 2 if `dev tools` are opened.
-      // assert.equal(count, 2)
-    })
+  it('Calls generate password token', function () {
+    resetPassword.generatePasswordToken(null, {email:'felipeballesteros1@gmail.com'})
+      assert.equal(count, 2)
   })
+
 })
