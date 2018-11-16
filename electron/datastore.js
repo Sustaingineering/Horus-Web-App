@@ -50,6 +50,7 @@ var initializeDataStore = exports.initializeDataStore = () => {
 
 exports.findUser = function (email) {
     return new Promise((resolve, reject) => {
+        console.log(email)
         udb.userInfo.find({
             email: email
         }, (error, docs) => {
@@ -462,6 +463,7 @@ var find = exports.find = function (object, tableName) {
 
 var insert = exports.insert = function (object, tableName) {
     return new Promise((resolve, reject) => {
+        console.log(tableName)
         udb[tableName].insert(object, (error, newDoc) => {
             if (error) {
                 return reject(error)
@@ -529,7 +531,7 @@ var storePasswordToken = exports.storePasswordToken = function(token, email) {
             await update({email: email}, {$set: {isValid: false}}, {multi: true}, 'passwordTokens')
         }
         data.createdAt = Math.round((new Date()).getTime() / 1000);
-        await insert(data, 'passwordToken');
+        await insert(data, 'passwordTokens');
         return resolve()
         }catch(error){
             console.log('[ERROR]: ', error);
@@ -541,7 +543,7 @@ var storePasswordToken = exports.storePasswordToken = function(token, email) {
 var checkPasswordToken = exports.checkPasswordToken = function(token, email) {
     return new Promise(async (resolve, reject) => {
         try{
-            let isTokenValid = await find({token, email}, 'storePasswordToken');
+            let isTokenValid = await find({token, email}, 'passwordTokens');
             if (isTokenValid.length === 0) {
                 return resolve(false)
             }
