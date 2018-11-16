@@ -97,7 +97,6 @@ ipcMain.on('sign-up', async (e, msg) => {
   }
 })
 
-//TODO:Check
 ipcMain.on('log-in', async (e, msg) => {
   try {
     console.log("Login IPC Bus");
@@ -114,7 +113,7 @@ ipcMain.on('log-in', async (e, msg) => {
   }
 })
 
-//TODO: Check
+
 //TODO: Verify it works
 ipcMain.on('update-sidebar', async (e, msg) => {
   try {
@@ -131,7 +130,6 @@ ipcMain.on('update-sidebar', async (e, msg) => {
   }
 });
 
-//TODO: Check
 //Verify email
 ipcMain.on('email-exists', async (e, msg) => {
   try {
@@ -161,25 +159,23 @@ ipcMain.on('email-exists', async (e, msg) => {
         console.log(info);
       }
     });
-    e.sender.send('email-exists', true);
+    e.sender.send('email-exists', "Email exists!");
   } catch(error) {
-    e.sender.send('email-exists', false);
+    e.sender.send('email-exists', {error: error}); 
   }
 })
 
-//TODO: Check
-//Reset Password
-ipcMain.on('new-password', async (e, msg) => {
+//Reset Password 
+ipcMain.on('reset-password', async (e, msg) => {
   try {
     //Save new password to the mapped email
     await datastore.newPassword({email: userEmail, password: msg.password});
-    e.sender.send('new-password', true);///TODO: On front-end, print message
+    e.sender.send('reset-password', "Password changed!");///TODO: On front-end, print message
   } catch(error) {
-    e.sender.send('new-password', false);
+    e.sender.send('reset-password', {error: error});
   }
 }) 
 
-//TODO: Check
 //VerifyCode
 ipcMain.on('verify-code', async (e, msg) => {
   try {
@@ -189,9 +185,9 @@ ipcMain.on('verify-code', async (e, msg) => {
       return;
     }
     verificationCode = "";
-    e.sender.send('verify-code', true);
+    e.sender.send('verify-code', "Verified code!");
   } catch(error) {
-    e.sender.send('verify-code', false);
+    e.sender.send('verify-code', {error: error});
   }
 }) 
 
