@@ -51,7 +51,7 @@ var generatePasswordToken = exports.generatePasswordToken = (msg) => {
       return resolve({success:"Verification Email sent"});
     } catch(error) {
       console.log(error)
-      return reject(error)
+      return reject(error) 
     }
   })
 }
@@ -71,7 +71,8 @@ var verifyAndUpdatePassword = exports.verifyAndUpdatePassword = function(msg) {
       await datastore.clearPasswordTokens(msg.email);
       return resolve({success:"Password changed!"});
     } catch(error) {
-      return reject({error: error});
+      return reject({error: error});  
     }
   })
 }
+ 
