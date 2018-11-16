@@ -29,7 +29,7 @@ class SignInPage extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      email: "",
+      username: "",
       password: "",
       error: null,
       openDialog: false,
@@ -48,11 +48,12 @@ class SignInPage extends Component {
 
   login = () => {
     const tpas = this.state.password;
-    const temail = this.state.email;
+    const username = this.state.username;
     const tisRemembered = this.state.isRemembered;
     ipcRenderer.send("log-in", {
       password: tpas,
-      email: temail,
+      username: username,
+      email: username,
       isRemembered: tisRemembered
     });
     console.log("click");
@@ -94,13 +95,13 @@ class SignInPage extends Component {
                     <TextField
                       className={classes.field}
                       autoFocus
-                      autoComplete="email"
-                      type="email"
-                      name="email"
-                      id="email"
-                      label="Email"
+                      autoComplete="username"
+                      type="username"
+                      name="username"
+                      id="username"
+                      label="Username"
                       onChange={this.handleChange}
-                      value={this.state.email}
+                      value={this.state.username}
                       InputProps={{
                         className: classes.input
                       }}
