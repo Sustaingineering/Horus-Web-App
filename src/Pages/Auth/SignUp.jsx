@@ -48,7 +48,8 @@ class SignUpPage extends Component {
     ipcRenderer.on("is-new-user", (e, msg) => {
       if (msg.error) {
         return alert(msg.error);
-      } else {
+      } else if (msg.success) {
+        alert(msg.success);
         const { history } = this.props;
         history.push("/login");
       }
