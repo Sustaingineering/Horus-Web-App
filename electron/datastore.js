@@ -6,7 +6,7 @@ let user_sensors = {};
 
 const DATA_ENV = process.env.DATA_ENV === 'TEST' ? 'test' : 'local'
 
-let udb = {
+const udb = {
     userInfo: new Datastore({
         filename: `${__dirname}/datastore/${DATA_ENV}/userInfo`,
         autoload: true
@@ -17,10 +17,6 @@ let udb = {
     }),
     userSettings: new Datastore({
         filename: `${__dirname}/datastore/${DATA_ENV}/userSettings`,
-        autoload: true
-    }),
-    passwordTokens: new Datastore({
-        filename: `${__dirname}/datastore/${DATA_ENV}/passwordTokens`,
         autoload: true
     }),
     passwordTokens: new Datastore({
