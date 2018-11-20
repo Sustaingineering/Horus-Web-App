@@ -41,7 +41,15 @@ const navbarmenuStyle = theme => ({
     backgroundColor: primaryColor,
     color: "white"
   },
+  settings: {
+    backgroundColor: primaryColor,
+    color: "white",
+    position: "absolute",
+    bottom: 30
+  },
   sidebarDivider: {
+    // position: "absolute",
+    // bottom: 100,
     color: "white",
     backgroundColor: "white",
     width: "50%",
