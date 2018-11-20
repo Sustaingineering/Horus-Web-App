@@ -171,14 +171,13 @@ class NavBarMenu extends Component {
                 </Collapse>
               </List>
               <Divider className={classes.sidebarDivider} />
-              <List className={classes.listItems}>
+              <List className={classes.settings}>
                 <Link style={style} to="/config">
                   <ListItem button onClick={this.handleDrawerClose}>
                     <ListItemIcon>
                       <Settings style={style} />
                     </ListItemIcon>
                     <ListItemText
-                      className={classes.listItems}
                       primary={
                         <Typography type="body2" style={{ color: "#FFFFFF" }}>
                           Config
