@@ -91,7 +91,11 @@ ipcMain.on('sign-up', async (e, msg) => {
       e.sender.send('is-new-user', {error:"User already exists"})
       return
     }
-    await datastore.newUser(msg)
+    else {
+      await datastore.newUser(msg)
+      e.sender.send('is-new-user', {success: "Account successfully created."})
+      console.log("created new user")
+    }
   } catch(error) {
     e.sender.send('is-new-user', false)
   }
@@ -206,7 +210,7 @@ app.on('ready', async () => {
     installExtension(REACT_DEVELOPER_TOOLS).then((name) => {
         console.log(`Added Extension:  ${name}`);
     })
-    .catch((err) => {
+    .catch(() => {
         console.log('An error occurred: ', err);
     });
     console.log(`[ INFO ] Initializing datastore`)
