@@ -1,11 +1,12 @@
-const {app, BrowserWindow, ipcMain} = require('electron');
+const {app, BrowserWindow, ipcMain, Menu} = require('electron');
 const isDev = require('electron-is-dev');
 const path = require('path');
 const url = require('url');
 const datastore = require('./datastore');
 const { default: installExtension, REACT_DEVELOPER_TOOLS } = require('electron-devtools-installer');
 const resetPassword = require('./modules/resetPassword.js');
-
+// Menu
+const { template } = require('./appMenu.js')
 
 let windows = {};
 
@@ -15,9 +16,14 @@ function createWindow() {
   console.log('[ INFO ] Creating Window')
   // Create the browser window.
   windows.mainWindow = new BrowserWindow({
-    width: 900,
-    height: 680,
-    show: false
+    width: 1024,
+    height: 728,
+    minWidth: 600, // set a min width!
+    minHeight: 300, // and a min height!
+    // Remove the window frame from windows applications
+    frame: false,
+    // Hide the titlebar from MacOS applications while keeping the stop lights
+    titleBarStyle: 'hidden',
   });
 
   // Lozd the index.html of the app.
@@ -118,7 +124,7 @@ ipcMain.on('verify-and-update-password', async (e, msg) => {
   }catch(error) {
     return e.sender.send('verify-and-update-password', error);
   }
-}) 
+})
 
 //TODO: Verify it works
 ipcMain.on('update-sidebar', async (e, msg) => {
@@ -181,3 +187,13 @@ app.on('activate', () => {
     createWindow();
   }
 });
+
+/**
+ * Create titleBar menu
+ */
+ipcMain.on('display-app-menu', (e, arg) => {
+  const appMenu = Menu.buildFromTemplate(template)
+  if(windows.mainWindow) {
+    appMenu.popup(windows.mainWindow, arg.x, arg.y)
+  }
+})

@@ -23,7 +23,6 @@ import { mainTheme } from "../../assets/jss/mainStyle";
 // Electron
 const electron = window.require("electron");
 const ipcRenderer = electron.ipcRenderer;
-// const fs = electron.remote.require("fs");
 
 class SignInPage extends Component {
   constructor(props) {

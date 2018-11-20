@@ -6,7 +6,6 @@ import { Route } from "react-router-dom";
 import contentStyles from "./contentStyle";
 import { withStyles } from "@material-ui/core/styles";
 // Components
-import Dashboard from "./Dashboard/Dashboard";
 import Sensor from "./Dashboard/Sensor";
 import Profile from "./Profile/Profile";
 import NavBar from "../Layout/Navbar/Navbar";
