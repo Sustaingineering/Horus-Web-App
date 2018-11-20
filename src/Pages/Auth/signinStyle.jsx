@@ -1,5 +1,6 @@
 // SignIn Styles
 import { primaryColor, backgroundColor } from "../../assets/jss/mainStyle";
+import { inherits } from "util";
 
 const signinStyle = theme => ({
   root: {
@@ -31,7 +32,7 @@ const signinStyle = theme => ({
     width: "100%", // Fix IE11 issue.
     marginTop: theme.spacing.unit,
     color: "white",
-    borderBottomColor: "white"
+    borderBottomColor: "white",
   },
   field: {
     color: "white",
@@ -53,6 +54,22 @@ const signinStyle = theme => ({
       color: "black"
     }
   },
+  forgotPassword: {
+    margin: "0, auto",
+    color: "white",
+    display: "block",
+    marginTop: "12px",
+    marginLeft: "auto",
+    marginRight: "auto",
+    textTransform: "capitalize",
+    fontSize: "14.5px",
+    fontWeight: "450",
+    "&:hover": {
+      backgroundColor: "inherit",
+      color: "rgb(82, 205, 204)",
+      
+    }
+  },
   iconBack: {
     minHeight: "30px",
     width: "auto"
@@ -64,7 +81,7 @@ const signinStyle = theme => ({
     flexDirection: "column",
     alignItems: "center",
     padding: `${theme.spacing.unit * 2}px ${theme.spacing.unit * 3}px ${theme
-      .spacing.unit * 3}px`
+      .spacing.unit * 1.5}px`
   },
   avatar: {
     margin: theme.spacing.unit,
