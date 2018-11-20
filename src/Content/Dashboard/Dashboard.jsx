@@ -20,14 +20,6 @@ import { mainTheme } from "../../assets/jss/mainStyle";
 const electron = window.require("electron");
 const ipcRenderer = electron.ipcRenderer;
 
-function TabContainer(props) {
-  return (
-    <Typography component="div" style={{ padding: 8 * 3 }}>
-      {props.children}
-    </Typography>
-  );
-}
-
 class Dashboard extends Component {
   state = {
     value: 0,
@@ -113,7 +105,7 @@ class Dashboard extends Component {
         <MuiThemeProvider theme={mainTheme}>
           <div className={classes.root}>
             <Typography variant="display1" color="primary" gutterBottom>
-              Dashboard
+              {this.props.sensorName + " Dashboard"}
             </Typography>
             <MonitoringData />
             <br />
@@ -132,7 +124,7 @@ class Dashboard extends Component {
               <Tab className={classes.tab} label="Summary" />
             </Tabs>
             {value === 0 && (
-              <TabContainer>
+              <Fragment>
                 <Grid container spacing={24}>
                   <Grid item xs={12} sm={12} md={6}>
                     <Chart
@@ -171,10 +163,10 @@ class Dashboard extends Component {
                     />
                   </Grid>
                 </Grid>
-              </TabContainer>
+              </Fragment>
             )}
             {value === 1 && (
-              <TabContainer>
+              <Fragment>
                 <Grid container spacing={24}>
                   <Grid item xs={12} sm={12} md={6}>
                     <HistoryChart
@@ -213,9 +205,9 @@ class Dashboard extends Component {
                     />
                   </Grid>
                 </Grid>
-              </TabContainer>
+              </Fragment>
             )}
-            {value === 2 && <TabContainer>Summary</TabContainer>}
+            {value === 2 && <Fragment>Summary</Fragment>}
           </div>
         </MuiThemeProvider>
       </Fragment>
