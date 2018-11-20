@@ -24,7 +24,7 @@ let udb = {
         autoload: true
     }),
     passwordTokens: new Datastore({
-        filename: `${__dirname}/datastore/local/passwordTokens`,
+        filename: `${__dirname}/datastore/${DATA_ENV}/passwordTokens`,
         autoload: true
     })
 };
