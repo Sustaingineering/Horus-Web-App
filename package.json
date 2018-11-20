@@ -31,10 +31,15 @@
     "redux": "^4.0.0"
   },
   "devDependencies": {
+    "chai": "^4.2.0",
+    "chai-json": "^1.0.0",
+    "chai-json-pattern": "^1.1.0",
     "concurrently": "^4.0.1",
     "electron": "^3.0.0",
     "electron-builder": "^20.28.4",
     "electron-devtools-installer": "^2.2.4",
+    "mocha": "^5.2.0",
+    "spectron": "^5.0.0",
     "wait-on": "^3.0.1"
   },
   "build": {
@@ -54,7 +59,9 @@
     "electron-build": "electron-builder",
     "release": "npm run react-build && electron-builder --publish=always",
     "build": "npm run react-build && npm run electron-build",
-    "start": "concurrently \"cross-env BROWSER=none npm run react-start\" \"wait-on http://localhost:3000 && electron .\""
+    "start": "export DATA_ENV='LOCAL' && concurrently \"cross-env BROWSER=none npm run react-start\" \"wait-on http://localhost:3000 && electron .\"",
+    "test": "export DATA_ENV='TEST' && rm -rf ./electron/datastore/test/ && mocha ./test/tests.js",
+    "posttest": "rm -rf ./electron/datastore/test"
   },
   "browserslist": [
     ">0.2%",

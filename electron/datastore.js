@@ -4,17 +4,23 @@ const _ = require('lodash');
 var user_id = exports.user_id = null;
 let user_sensors = {};
 
-let udb = {
+const DATA_ENV = process.env.DATA_ENV === 'TEST' ? 'test' : 'local'
+
+const udb = {
     userInfo: new Datastore({
-        filename: `${__dirname}/datastore/local/userInfo`,
+        filename: `${__dirname}/datastore/${DATA_ENV}/userInfo`,
         autoload: true
     }),
     dataCollection: new Datastore({
-        filename: `${__dirname}/datastore/local/dataCollection`,
+        filename: `${__dirname}/datastore/${DATA_ENV}/dataCollection`,
         autoload: true
     }),
     userSettings: new Datastore({
-        filename: `${__dirname}/datastore/local/userSettings`,
+        filename: `${__dirname}/datastore/${DATA_ENV}/userSettings`,
+        autoload: true
+    }),
+    passwordTokens: new Datastore({
+        filename: `${__dirname}/datastore/${DATA_ENV}/passwordTokens`,
         autoload: true
     })
 };
@@ -182,9 +188,7 @@ exports.getUserOrganization = function() {
 //TODO: Check
 exports.loginUser = function(userName, password, isRemember) {
     return new Promise(async (resolve, reject) => {
-        try {
-            console.log('Inside Login User')
-    
+        try {    
             let user;
             var validator = require("email-validator");
             if(validator.validate(userName)) {
@@ -508,5 +512,69 @@ var count = exports.count = function (object, tableName) {
             }
             return resolve(count);
         })
+    })
+}
+
+var storePasswordToken = exports.storePasswordToken = function(token, email) {
+    return new Promise(async (resolve, reject) => {
+        try{
+        let data = {
+            email: email,
+            isValid: true,
+        }
+        
+        let validTokens = await find(data, 'passwordTokens');
+        if(validTokens.length > 0){
+            await update({email: email}, {$set: {isValid: false}}, {multi: true}, 'passwordTokens')
+        }
+        data.token = token
+        data.createdAt = Math.round((new Date()).getTime() / 1000);
+        await insert(data, 'passwordTokens');
+        return resolve()
+        }catch(error){
+            console.log('[ERROR]: ', error);
+            return reject(error);
+        }
+    })
+}
+
+var checkPasswordToken = exports.checkPasswordToken = function(token, email) {
+    return new Promise(async (resolve, reject) => {
+        try{
+            let isTokenValid = await find({token, email}, 'passwordTokens');
+            if (isTokenValid.length === 0) {
+                return resolve(false)
+            }
+            return resolve(true)
+        }catch(error){
+            return reject(error)
+        }
+    })
+}
+
+//Delete the password token at some point
+
+var clearPasswordTokens = exports.clearPasswordTokens = function( email) {
+    return new Promise(async (resolve, reject) => {
+        try {
+            let tokens = await find({email, isValid: true}, 'passwordTokens');
+            if (tokens.length > 0) {
+                await update({email: email}, {$set: {isValid: false}}, {multi: true}, 'passwordTokens')
+            }
+            return resolve()
+        }catch(error) {
+            return reject(error);
+        }
+    })
+}
+
+var getPasswordToken = exports.getPasswordToken = function(msg) {
+    return new Promise(async (resolve,reject) => {
+        try{
+            let token = await find({email: msg.email, isValid: true}, 'passwordTokens');
+            return resolve(token)
+        }catch(error) {
+            return reject(error)
+        }
     })
 }
