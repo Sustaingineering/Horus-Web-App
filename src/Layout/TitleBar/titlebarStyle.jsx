@@ -31,17 +31,25 @@ const titlebarStyle = theme => ({
     flexGrow: 3,
     width: "30%"
   },
+  menu_button_cont: {
+    position: "relative",
+    top: 0,
+    margin: 0,
+    padding: 0,
+    width: 40,
+    height: 30,
+    backgroundColor: "#1e1e2d",
+    border: "none"
+  },
   menu_button: {
     WebkitAppRegion: "no-drag",
-    backgroundColor: "#344675",
-    marginLeft: 10,
-    marginRight: 10,
-    width: 20,
-    height: 20,
-    border: "none",
-    borderRadius: 100,
+    backgroundColor: "#1e1e2d",
+    color: "white",
+    width: 40,
+    height: 30,
+    // borderRadius: 100,
     "&:hover": {
-      backgroundColor: "grey"
+      backgroundColor: "#344675"
     }
   },
   minimize_button: {
@@ -54,7 +62,7 @@ const titlebarStyle = theme => ({
     border: "none",
     borderRadius: 100,
     "&:hover": {
-      backgroundColor: "grey"
+      backgroundColor: "#344675"
     }
   },
   min_max_button: {
@@ -67,7 +75,7 @@ const titlebarStyle = theme => ({
     border: "none",
     borderRadius: 100,
     "&:hover": {
-      backgroundColor: "grey"
+      backgroundColor: "#344675"
     }
   },
   close_button: {
@@ -80,7 +88,7 @@ const titlebarStyle = theme => ({
     border: "none",
     borderRadius: 100,
     "&:hover": {
-      backgroundColor: "grey"
+      backgroundColor: "#344675"
     }
   }
 });

@@ -1,7 +1,8 @@
 import React, { Component, Fragment } from "react";
 import { withStyles } from "@material-ui/core/styles";
 import titlebarStyle from "./titlebarStyle.jsx";
-
+// Icons
+import MenuIcon from "@material-ui/icons/Menu";
 // Electron
 const electron = window.require("electron");
 const ipcRenderer = electron.ipcRenderer;
@@ -62,10 +63,12 @@ class TitleBar extends Component {
         <div className={classes.title_bar}>
           <div className={classes.menu_button_container}>
             <button
+              className={classes.menu_button_cont}
               id="menu-button"
-              className={classes.menu_button}
               onClick={this.displayMenu.bind(this)}
-            />
+            >
+              <MenuIcon className={classes.menu_button} />
+            </button>
           </div>
           <div className={classes.app_name_container}>
             <p>Horus</p>
