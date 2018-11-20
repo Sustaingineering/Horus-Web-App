@@ -16,9 +16,6 @@ class Sensor extends Component {
       <Fragment>
         <MuiThemeProvider theme={mainTheme}>
           <div className={classes.root}>
-            <Typography variant="display1" color="primary" gutterBottom>
-              {this.props.sensorName}
-            </Typography>
             <Dashboard sensorName={this.props.sensorName} />
           </div>
         </MuiThemeProvider>

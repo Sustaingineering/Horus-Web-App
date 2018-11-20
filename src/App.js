@@ -63,8 +63,7 @@ class App extends Component {
           <Route path="/" exact component={LandingPage} />
           <Route path="/login" exact component={SignInPage} />
           <Route path="/signup" exact component={SignUpPage} />
-          <Redirect from="/dashboard" to="/login" />
-          <Redirect from="/signup" to="/login" />
+          <Redirect from="/" to="/login" />
         </Switch>
       </Fragment>
     );
