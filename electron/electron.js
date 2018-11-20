@@ -207,12 +207,8 @@ app.on('ready', async () => {
   try{
     createWindow();
     console.log(`[ INFO ] Initializing React Dev Tools`);
-    installExtension(REACT_DEVELOPER_TOOLS).then((name) => {
-        console.log(`Added Extension:  ${name}`);
-    })
-    .catch(() => {
-        console.log('An error occurred: ', err);
-    });
+    let name = await  installExtension(REACT_DEVELOPER_TOOLS)
+    console.log(`[INFO] Added Extension: ${name}`);
     console.log(`[ INFO ] Initializing datastore`)
     await datastore.initializeDataStore()
     console.log(`[ INFO ] checking active sessions`)
