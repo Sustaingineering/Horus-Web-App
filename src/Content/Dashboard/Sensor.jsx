@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from "react";
 import PropTypes from "prop-types";
 // Material UI Components
-import { withStyles, Typography, MuiThemeProvider } from "@material-ui/core";
+import { withStyles, MuiThemeProvider } from "@material-ui/core";
 //Style
 import dashboardStyle from "./dashboardStyle";
 import { mainTheme } from "../../assets/jss/mainStyle";

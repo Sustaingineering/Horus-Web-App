@@ -3,6 +3,7 @@
 import { drawerWidth, primaryColor } from "../../assets/jss/mainStyle";
 
 const navbarmenuStyle = theme => ({
+  sidebar: {},
   drawerPaper: {
     whiteSpace: "nowrap",
     width: drawerWidth,
@@ -10,7 +11,9 @@ const navbarmenuStyle = theme => ({
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.enteringScreen
     }),
-    backgroundColor: primaryColor
+    backgroundColor: primaryColor,
+    position: "fixed",
+    top: 30
   },
   drawerPaperClose: {
     overflowX: "hidden",
