@@ -8,6 +8,7 @@ import Content from "./Content/Content";
 // SignIn Component
 import SignInPage from "./Pages/Auth/SignIn";
 import SignUpPage from "./Pages/Auth/SignUp";
+import ForgotPassword from "./Pages/Auth/ForgotPassword"
 // Date Picker
 import DateFnsUtils from "material-ui-pickers/utils/date-fns-utils";
 import MuiPickersUtilsProvider from "material-ui-pickers/MuiPickersUtilsProvider";
@@ -63,6 +64,7 @@ class App extends Component {
           <Route path="/" exact component={LandingPage} />
           <Route path="/login" exact component={SignInPage} />
           <Route path="/signup" exact component={SignUpPage} />
+          <Route path="/forgotPassword" exact component={ForgotPassword} />
           <Redirect from="/dashboard" to="/login" />
           <Redirect from="/signup" to="/login" />
         </Switch>
