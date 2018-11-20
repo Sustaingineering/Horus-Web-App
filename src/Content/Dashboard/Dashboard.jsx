@@ -37,7 +37,28 @@ class Dashboard extends Component {
     tempData: []
   };
 
+  tick = () => {
+    ipcRenderer.on("get-sensor-data" + this.props.sensorName, (e, msg) => {
+      if (msg.error) {
+        // return alert(msg.error);
+      } else {
+        // return alert(msg);
+      }
+    });
+    const voltageDummyData = [{ name: "11/9/18", voltage: 174 }];
+    const currentDummyData = [{ name: "11/9/18", current: 734 }];
+    const powerDummyData = [{ name: "11/9/18", power: 4 }];
+    const tempDummyData = [{ name: "11/9/18", opTemp: 74, suTemp: 2.2 }];
+    this.setState({
+      voltageData: voltageDummyData,
+      currentData: currentDummyData,
+      powerData: powerDummyData,
+      tempData: tempDummyData
+    });
+  };
+
   componentWillMount = () => {
+    this.interval = setInterval(this.tick.bind(this), 1000);
     ipcRenderer.on("get-sensor-data" + this.props.sensorName, (e, msg) => {
       if (msg.error) {
         // return alert(msg.error);
@@ -73,6 +94,10 @@ class Dashboard extends Component {
       powerData: powerDummyData,
       tempData: tempDummyData
     });
+  };
+
+  componentWillUnmount = () => {
+    clearInterval(this.interval);
   };
 
   handleChange = (event, value) => {
