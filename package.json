@@ -59,8 +59,9 @@
     "electron-build": "electron-builder",
     "release": "npm run react-build && electron-builder --publish=always",
     "build": "npm run react-build && npm run electron-build",
-    "start": "concurrently \"cross-env BROWSER=none npm run react-start\" \"wait-on http://localhost:3000 && electron .\"",
-    "test": "mocha"
+    "start": "export DATA_ENV='LOCAL' && concurrently \"cross-env BROWSER=none npm run react-start\" \"wait-on http://localhost:3000 && electron .\"",
+    "test": "export DATA_ENV='TEST' && rm -rf ./electron/datastore/test/ && mocha ./test/tests.js",
+    "posttest": "rm -rf ./electron/datastore/test"
   },
   "browserslist": [
     ">0.2%",

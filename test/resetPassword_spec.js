@@ -40,19 +40,27 @@ describe('Application launch', function () {
   // })
 
   it('Calls generate password token', async function() {
-    let passwordReset = await resetPassword.generatePasswordToken({email:'felipeballesteros1@gmail.com'})
+    let passwordReset = await resetPassword.generatePasswordToken({email: TEST_DATA.user.email})
     assert.equal(passwordReset.success, 'Verification Email sent', 'The verification email was sent')
   })
 
   it('Validates and changes password for a user', async function() {
-    let passwordToken = await datastore.getPasswordToken('felipeballesteros1@gmail.com');
-    let passwordReset = await resetPassword.verifyAndUpdatePassword({email: 'felipeballesteros1@gmail.com', token: passwordToken[0].token, password:"1692Ubc!"});
+    let passwordToken = await datastore.getPasswordToken({email: TEST_DATA.user.email});
+    let passwordReset = await resetPassword.verifyAndUpdatePassword({email: TEST_DATA.user.email, token: passwordToken[0].token, password: TEST_DATA.user.newPassword});
     assert.equal(passwordReset.success, 'Password changed!')
   })
 
   it('Attempts and fails to change password given a wrong token', async function() {
-    let passwordReset = await resetPassword.verifyAndUpdatePassword({email: 'felipeballesteros1@gmail.com', token: 'wrong token', password:"1692Ubc!"});
+    let passwordReset = await resetPassword.verifyAndUpdatePassword({email: TEST_DATA.user.email, token: 'wrong token', password: TEST_DATA.user.password});
     assert.equal(passwordReset.error, 'Wrong Verification Code entered')
   })
 
 })
+
+const TEST_DATA = {
+  user: {
+    email: 'test@gmail.com',
+    password: 'testpass123',
+    newPassword: 'newPass'
+  }
+}

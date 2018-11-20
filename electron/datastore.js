@@ -4,21 +4,23 @@ const _ = require('lodash');
 var user_id = exports.user_id = null;
 let user_sensors = {};
 
+const DATA_ENV = process.env.DATA_ENV === 'TEST' ? 'test' : 'local'
+
 let udb = {
     userInfo: new Datastore({
-        filename: `${__dirname}/datastore/local/userInfo`,
+        filename: `${__dirname}/datastore/${DATA_ENV}/userInfo`,
         autoload: true
     }),
     dataCollection: new Datastore({
-        filename: `${__dirname}/datastore/local/dataCollection`,
+        filename: `${__dirname}/datastore/${DATA_ENV}/dataCollection`,
         autoload: true
     }),
     userSettings: new Datastore({
-        filename: `${__dirname}/datastore/local/userSettings`,
+        filename: `${__dirname}/datastore/${DATA_ENV}/userSettings`,
         autoload: true
     }),
     passwordTokens: new Datastore({
-        filename: `${__dirname}/datastore/local/passwordTokens`,
+        filename: `${__dirname}/datastore/${DATA_ENV}/passwordTokens`,
         autoload: true
     })
 };
@@ -550,6 +552,8 @@ var checkPasswordToken = exports.checkPasswordToken = function(token, email) {
     })
 }
 
+//Delete the password token at some point
+
 var clearPasswordTokens = exports.clearPasswordTokens = function( email) {
     return new Promise(async (resolve, reject) => {
         try {
@@ -564,10 +568,10 @@ var clearPasswordTokens = exports.clearPasswordTokens = function( email) {
     })
 }
 
-var getPasswordToken = exports.getPasswordToken = function(email) {
+var getPasswordToken = exports.getPasswordToken = function(msg) {
     return new Promise(async (resolve,reject) => {
         try{
-            let token = await find({email: email, isValid: true}, 'passwordTokens');
+            let token = await find({email: msg.email, isValid: true}, 'passwordTokens');
             return resolve(token)
         }catch(error) {
             return reject(error)
