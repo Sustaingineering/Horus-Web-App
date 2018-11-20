@@ -147,6 +147,15 @@ class SignInPage extends Component {
                       Register
                     </Button>
                   </Link>
+                  <Link className={classes.noDeco} to="/forgotPassword">
+                    <Button
+                      size="small"
+                      className={classes.forgotPassword}
+                      disableRipple="true"
+                    >
+                      Forgot Password
+                    </Button>
+                  </Link>
                 </form>
               </Paper>
               <ErrorDialog
