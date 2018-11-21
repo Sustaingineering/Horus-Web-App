@@ -66,7 +66,7 @@ var verifyAndUpdatePassword = exports.verifyAndUpdatePassword = function(msg) {
       if(!isTokenValid) {
         return resolve({error: 'Wrong Verification Code entered'});
       }
-      //Reset passoword
+      //Reset password
       await datastore.newPassword({email: msg.email, password: msg.password});
       await datastore.clearPasswordTokens(msg.email);
       return resolve({success:"Password changed!"});
