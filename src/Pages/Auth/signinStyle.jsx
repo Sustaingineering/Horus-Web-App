@@ -32,7 +32,7 @@ const signinStyle = theme => ({
     width: "100%", // Fix IE11 issue.
     marginTop: theme.spacing.unit,
     color: "white",
-    borderBottomColor: "white",
+    borderBottomColor: "white"
   },
   field: {
     color: "white",
@@ -66,8 +66,7 @@ const signinStyle = theme => ({
     fontWeight: "450",
     "&:hover": {
       backgroundColor: "inherit",
-      color: "rgb(82, 205, 204)",
-      
+      color: "rgb(82, 205, 204)"
     }
   },
   iconBack: {
@@ -89,7 +88,36 @@ const signinStyle = theme => ({
   },
   title: {
     color: "white"
-  }
+  },
+  titleForgotPassword: {
+    color: "white",
+    marginLeft: "auto",
+    marginRight: "auto",
+    marginTop: "20px",
+    marginBottom: "20px",
+    textAlign: "center"
+  },
+  paperForgotPassword: {
+    backgroundColor: backgroundColor,
+    marginTop: theme.spacing.unit * 3,
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    padding: `${theme.spacing.unit * 0}px ${theme.spacing.unit * 3}px ${theme
+      .spacing.unit * 6}px`
+  },
+  avatarForgotPassword: {
+    marginTop: "30px",
+    backgroundColor: primaryColor,
+    width: 50,
+    height: 50
+  },
+  formHidden: {
+    width: "100%", // Fix IE11 issue.
+    marginTop: theme.spacing.unit,
+    color: "white",
+    borderBottomColor: "white",
+  },
 });
 
 export default signinStyle;
