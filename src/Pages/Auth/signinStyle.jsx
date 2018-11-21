@@ -32,7 +32,7 @@ const signinStyle = theme => ({
     width: "100%", // Fix IE11 issue.
     marginTop: theme.spacing.unit,
     color: "white",
-    borderBottomColor: "white"
+    borderBottomColor: "white",
   },
   field: {
     color: "white",
