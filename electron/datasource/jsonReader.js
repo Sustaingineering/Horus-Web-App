@@ -1,15 +1,20 @@
+//Testing purposes
+
 //Read json file and run the next function using lambda
 fs = require('fs');
 jsonlines = require('jsonlines');
 
 exports.readJSONFile = function(file) {
 	return new Promise((resolve) => {
-		const readStream = fs.createReadStream('../../test-json.json') //TODO: Check filename
-			.pipe(csv({headers : true}))
+		const readStream = fs.createReadStream('../../test-json.jsonl') //TODO: Check filename
+			.pipe(jsonlines.parse())
 			.on('data', data => {
+                console.log(data);
 			})		
 			.on('end', data => {
-				return resolve(users)
-		})
-	})
-}
+				console.log('Done');
+		});
+	});
+};
+
+let example = this.readJSONFile();
