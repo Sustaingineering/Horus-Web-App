@@ -23,7 +23,7 @@ function createWindow() {
     // Remove the window frame from windows applications
     frame: false,
     // Hide the titlebar from MacOS applications while keeping the stop lights
-    titleBarStyle: 'hidden',
+    // titleBarStyle: 'hidden',
   });
 
   // Lozd the index.html of the app.
