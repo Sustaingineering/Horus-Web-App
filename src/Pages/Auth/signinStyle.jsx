@@ -130,6 +130,11 @@ const signinStyle = theme => ({
       backgroundColor: "white",
       color: "black"
     }
+  },
+  skipAhead: {
+    textDecoration: "none",
+    width: "100%",
+    color: "rgb(82, 205, 204)"
   }
 });
 

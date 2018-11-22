@@ -24,7 +24,7 @@ import { mainTheme } from "../../assets/jss/mainStyle";
 // Electron
 const electron = window.require("electron");
 const ipcRenderer = electron.ipcRenderer;
-const {getCurrentWindow} = electron.remote;
+const { getCurrentWindow } = electron.remote;
 
 class NewPassword extends Component {
   constructor(props) {
@@ -51,6 +51,14 @@ class NewPassword extends Component {
 
   handleChange = event => {
     this.setState({ [event.target.name]: event.target.value });
+  };
+
+  handleOnKeyPress = e => {
+    const key = e.keyCode || e.which;
+    if (key === 13) {
+      e.preventDefault();
+      return this.handleVerifyAndUpdatePassword();
+    }
   };
 
   handleVerifyAndUpdatePassword = () => {
@@ -121,6 +129,7 @@ class NewPassword extends Component {
                       name="email"
                       id="email"
                       label="Email"
+                      onKeyPress={this.handleOnKeyPress}
                       onChange={this.handleChange}
                       value={this.state.email}
                       InputProps={{
@@ -140,6 +149,7 @@ class NewPassword extends Component {
                       name="verificationCode"
                       id="verificationCode"
                       label="Verification Code"
+                      onKeyPress={this.handleOnKeyPress}
                       onChange={this.handleChange}
                       value={this.state.verificationCode}
                       InputProps={{
@@ -160,6 +170,7 @@ class NewPassword extends Component {
                       name="newPassword"
                       id="newPassword"
                       label="New Password"
+                      onKeyPress={this.handleOnKeyPress}
                       onChange={this.handleChange}
                       value={this.state.newPassword}
                       InputProps={{

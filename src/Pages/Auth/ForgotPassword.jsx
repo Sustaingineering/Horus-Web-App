@@ -51,6 +51,14 @@ class ForgotPassword extends Component {
     this.setState({ [event.target.name]: event.target.value });
   };
 
+  handleOnKeyPress = e => {
+    const key = e.keyCode || e.which;
+    if (key === 13) {
+      e.preventDefault();
+      return this.handleSendVerificationCode();
+    }
+  };
+
   handleSendVerificationCode = () => {
     const email = this.state.email;
     if (email === "") {
@@ -90,7 +98,7 @@ class ForgotPassword extends Component {
                 </Avatar>
                 <Typography
                   variant="headline"
-                  className={classes.titleForgotAndNewPassword} 
+                  className={classes.titleForgotAndNewPassword}
                 >
                   Don't worry, we got you covered
                 </Typography>
@@ -98,7 +106,18 @@ class ForgotPassword extends Component {
                   variant="body2"
                   className={classes.titleForgotAndNewPassword}
                 >
-                  Please write your email below to retrieve your password.
+                  Please write your email, and a verification code will be sent
+                  to you.
+                </Typography>
+                <Typography
+                  variant="body2"
+                  className={classes.titleForgotAndNewPassword}
+                >
+                  (Already have a verification code?
+                  <Link to="/newPassword" className={classes.skipAhead}>
+                    <span> Skip ahead</span>
+                  </Link>
+                  )
                 </Typography>
                 <form className={classes.form}>
                   <FormControl margin="normal" required fullWidth>
@@ -110,6 +129,7 @@ class ForgotPassword extends Component {
                       name="email"
                       id="email"
                       label="Email"
+                      onKeyPress={this.handleOnKeyPress}
                       onChange={this.handleChange}
                       value={this.state.email}
                       InputProps={{
@@ -126,6 +146,7 @@ class ForgotPassword extends Component {
                   variant="contained"
                   onClick={this.handleSendVerificationCode}
                   color="primary"
+                  type="button"
                 >
                   Send
                 </Button>
