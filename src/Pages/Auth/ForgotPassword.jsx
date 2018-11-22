@@ -90,7 +90,7 @@ class ForgotPassword extends Component {
                 </Avatar>
                 <Typography
                   variant="headline"
-                  className={classes.titleForgotAndNewPassword}
+                  className={classes.titleForgotAndNewPassword} 
                 >
                   Don't worry, we got you covered
                 </Typography>
