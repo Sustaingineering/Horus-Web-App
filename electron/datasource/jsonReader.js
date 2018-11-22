@@ -15,6 +15,6 @@ exports.readJSONFile = function(file) {
 				console.log('Done');
 		});
 	});
-};
+}
 
 let example = this.readJSONFile();
