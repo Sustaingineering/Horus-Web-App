@@ -48,6 +48,7 @@ const signinStyle = theme => ({
   submit: {
     marginTop: theme.spacing.unit * 3,
     backgroundColor: primaryColor,
+    marginBottom: theme.spacing.unit * 1,
     color: "white",
     "&:hover": {
       backgroundColor: "white",
@@ -89,15 +90,15 @@ const signinStyle = theme => ({
   title: {
     color: "white"
   },
-  titleForgotPassword: {
+  titleForgotAndNewPassword: {
     color: "white",
     marginLeft: "auto",
     marginRight: "auto",
     marginTop: "20px",
-    marginBottom: "20px",
+    marginBottom: "10px",
     textAlign: "center"
   },
-  paperForgotPassword: {
+  paperForgotAndNewPassword: {
     backgroundColor: backgroundColor,
     marginTop: theme.spacing.unit * 3,
     display: "flex",
@@ -106,7 +107,7 @@ const signinStyle = theme => ({
     padding: `${theme.spacing.unit * 0}px ${theme.spacing.unit * 3}px ${theme
       .spacing.unit * 6}px`
   },
-  avatarForgotPassword: {
+  avatarForgotAndNewPassword: {
     marginTop: "30px",
     backgroundColor: primaryColor,
     width: 50,
@@ -116,8 +117,20 @@ const signinStyle = theme => ({
     width: "100%", // Fix IE11 issue.
     marginTop: theme.spacing.unit,
     color: "white",
-    borderBottomColor: "white",
+    borderBottomColor: "white"
   },
+  submitForgotAndNewPassword: {
+    marginTop: theme.spacing.unit * 3,
+    backgroundColor: primaryColor,
+    color: "white",
+    marginLeft: "auto",
+    marginRight: "auto",
+    display: "block",
+    "&:hover": {
+      backgroundColor: "white",
+      color: "black"
+    }
+  }
 });
 
 export default signinStyle;

@@ -56,7 +56,6 @@ class SignInPage extends Component {
       email: username,
       isRemembered: tisRemembered
     });
-    console.log("click");
   };
 
   dialogPromptOpen = message => {
@@ -132,7 +131,7 @@ class SignInPage extends Component {
                     fullWidth
                     className={classes.submit}
                     variant="contained"
-                    onClick={() => this.login()}
+                    onClick={this.login}
                     color="primary"
                   >
                     Sign in

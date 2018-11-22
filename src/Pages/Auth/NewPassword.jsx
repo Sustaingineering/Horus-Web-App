@@ -24,13 +24,15 @@ import { mainTheme } from "../../assets/jss/mainStyle";
 // Electron
 const electron = window.require("electron");
 const ipcRenderer = electron.ipcRenderer;
-// const fs = electron.remote.require("fs");
+const {getCurrentWindow} = electron.remote;
 
-class ForgotPassword extends Component {
+class NewPassword extends Component {
   constructor(props) {
     super(props);
     this.state = {
       email: "",
+      verificationCode: "",
+      newPassword: "",
       error: null,
       openDialog: false
     };
@@ -51,26 +53,34 @@ class ForgotPassword extends Component {
     this.setState({ [event.target.name]: event.target.value });
   };
 
-  handleSendVerificationCode = () => {
+  handleVerifyAndUpdatePassword = () => {
     const email = this.state.email;
-    if (email === "") {
-      return alert("Blank email. Please write your email");
+    const verificationCode = this.state.verificationCode;
+    const newPassword = this.state.newPassword;
+    const msg = {
+      email: email,
+      verificationCode: verificationCode,
+      newPassword: newPassword
+    };
+    if (email === "" || verificationCode === "" || newPassword === "") {
+      return alert("Please fill all blank fields");
     }
-    ipcRenderer.send("generate-password-token", {
-      email: email
+    ipcRenderer.send("verify-and-update-password", {
+      email: msg.email,
+      token: msg.verificationCode,
+      password: msg.newPassword
     });
   };
 
   componentDidMount = async () => {
-    ipcRenderer.on("generate-password-token", (e, msg) => {
+    ipcRenderer.on("verify-and-update-password", (e, msg) => {
       if (msg.error) {
         alert(msg.error);
       } else {
-        alert(
-          msg.success + ". Please check your email for the verification code."
-        );
+        alert(msg.success);
         const { history } = this.props;
-        history.push("/newPassword");
+        history.push("/login");
+        getCurrentWindow().reload();
       }
     });
   };
@@ -92,13 +102,14 @@ class ForgotPassword extends Component {
                   variant="headline"
                   className={classes.titleForgotAndNewPassword}
                 >
-                  Don't worry, we got you covered
+                  Almost there! Just one more step
                 </Typography>
                 <Typography
                   variant="body2"
                   className={classes.titleForgotAndNewPassword}
                 >
-                  Please write your email below to retrieve your password.
+                  Please provide your email, verification code, and your new
+                  password on the fields below.
                 </Typography>
                 <form className={classes.form}>
                   <FormControl margin="normal" required fullWidth>
@@ -121,13 +132,53 @@ class ForgotPassword extends Component {
                     />
                   </FormControl>
                 </form>
+                <form className={classes.form}>
+                  <FormControl margin="normal" required fullWidth>
+                    <TextField
+                      className={classes.field}
+                      autoComplete="verificationCode"
+                      name="verificationCode"
+                      id="verificationCode"
+                      label="Verification Code"
+                      onChange={this.handleChange}
+                      value={this.state.verificationCode}
+                      InputProps={{
+                        className: classes.input
+                      }}
+                      InputLabelProps={{
+                        className: classes.input
+                      }}
+                    />
+                  </FormControl>
+                </form>
+                <form className={classes.form}>
+                  <FormControl margin="normal" required fullWidth>
+                    <TextField
+                      className={classes.field}
+                      autoComplete="newPassword"
+                      type="password"
+                      name="newPassword"
+                      id="newPassword"
+                      label="New Password"
+                      onChange={this.handleChange}
+                      value={this.state.newPassword}
+                      InputProps={{
+                        className: classes.input
+                      }}
+                      InputLabelProps={{
+                        className: classes.input
+                      }}
+                    />
+                  </FormControl>
+                </form>
                 <Button
                   className={classes.submitForgotAndNewPassword}
                   variant="contained"
-                  onClick={this.handleSendVerificationCode}
+                  onClick={this.handleVerifyAndUpdatePassword}
                   color="primary"
+                  type="button"
                 >
-                  Send
+                  Submit
                 </Button>
                 <Grid container spacing={24}>
                   <Grid item xs={6}>
@@ -167,8 +218,8 @@ class ForgotPassword extends Component {
   }
 }
 
-ForgotPassword.propTypes = {
+NewPassword.propTypes = {
   classes: PropTypes.object.isRequired
 };
 
-export default withRouter(withStyles(signinStyle)(ForgotPassword));
+export default withRouter(withStyles(signinStyle)(NewPassword));
