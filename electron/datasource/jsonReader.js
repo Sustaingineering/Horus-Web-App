@@ -1,5 +1,5 @@
 //Testing purposes
-
+//Run node jsonReader.js to print contents of test-json.jsonl file to console
 //Read json file and run the next function using lambda
 fs = require('fs');
 jsonlines = require('jsonlines');

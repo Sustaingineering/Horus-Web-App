@@ -18,11 +18,11 @@ const DATA_TYPE_SUMARY = 'DATA_TYPE_SUMARY';
 const DATA_TYPE_REAL_TIME = 'DATA_TYPE_REAL_TIME';
 const DATA_TYPE_STATS = 'DATA_TYPE_STATS';
 
-//TODO: JSON PARSER
+//TODO: TEST JSON PARSER
 try {
   fs.watch('../../test-json.jsonl', () => {
     fs.stat('../../test-json.jsonl', (err, stats) => {
-      if (stats.size === 0) { return }
+      if (stats.size === 0) { return; }
       if (err) throw err;
       fs.createReadStream('../../test-json.jsonl', {
         start: startByte,
@@ -31,32 +31,12 @@ try {
         .pipe(jsonlines.parse())
         .on('data', async data => {
           startByte = stats.size;
-          if (data.length !== 7) {
-            return
-          }
           if (!initiatedRead) {
-            lastRead = {
-              voltage: data[0],
-              current: data[1],
-              power: data[2],
-              opTemp: data[3],
-              suTemp: data[4],
-              waterBreaker: data[5],
-              pumpId: data[6]
-            }
+            lastRead = data;
             return
-          }
-          var dataObject = {
-            voltage: data[0],
-            current: data[1],
-            power: data[2],
-            opTemp: data[3],
-            suTemp: data[4],
-            waterBreaker: data[5],
-            pumpId: data[6]
           }
           try {
-              await datastore.storeSensorData(dataObject)
+              await datastore.storeSensorData(data)
               needsUpdate = true
             } catch(error) {
               console.log(error)
