@@ -6,7 +6,8 @@ jsonlines = require('jsonlines');
 
 exports.readJSONFile = function(file) {
 	return new Promise((resolve) => {
-		const readStream = fs.createReadStream('../../test-json.jsonl') //TODO: Check filename
+		let file = require('path').resolve(__dirname, '../../test-json.jsonl'); //TODO: Check filename
+		const readStream = fs.createReadStream(file) 
 			.pipe(jsonlines.parse())
 			.on('data', data => {
                 console.log(data);

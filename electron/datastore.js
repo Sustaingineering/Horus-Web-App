@@ -292,11 +292,12 @@ exports.newPassword = function (msg) {
     })
 }
 
+//Updated to deal with JSON format
 exports.storeSensorData = function (data) {
     return new Promise(async (resolve, reject) => {
         try {
             data.createdAt = Math.round(new Date().getTime() / 1000);
-            data.userId = user_id;
+            data.userId = data.number;
             let newDoc = await insert(data, "dataCollection");
 
             return resolve()

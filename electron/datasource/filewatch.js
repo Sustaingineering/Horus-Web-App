@@ -20,11 +20,12 @@ const DATA_TYPE_STATS = 'DATA_TYPE_STATS';
 
 //TODO: TEST JSON PARSER
 try {
-  fs.watch('../../test-json.jsonl', () => {
-    fs.stat('../../test-json.jsonl', (err, stats) => {
+  let file = require('path').resolve(__dirname, '../../test-json.jsonl');
+  fs.watch(file, () => {
+    fs.stat(file, (err, stats) => {
       if (stats.size === 0) { return; }
       if (err) throw err;
-      fs.createReadStream('../../test-json.jsonl', {
+      fs.createReadStream(file, {
         start: startByte,
         end: stats.size
       })
@@ -36,6 +37,7 @@ try {
             return
           }
           try {
+              console.log(data);
               await datastore.storeSensorData(data)
               needsUpdate = true
             } catch(error) {
