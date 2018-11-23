@@ -153,7 +153,7 @@ app.on('ready', async () => {
     console.log(`[INFO] Added Extension: ${name}`);
     console.log(`[ INFO ] Initializing datastore`)
     await datastore.initializeDataStore()
-    console.log(`[ INFO ] Reading Data from JSON File`)
+    console.log(`[ INFO ] Starting File Watch Thread`)
     require('./datasource/filewatch.js')
     console.log(`[ INFO ] checking active sessions`)
     await checkActiveSession()

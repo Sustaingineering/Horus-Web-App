@@ -37,7 +37,6 @@ try {
             return
           }
           try {
-              console.log(data);
               await datastore.storeSensorData(data)
               needsUpdate = true
             } catch(error) {
