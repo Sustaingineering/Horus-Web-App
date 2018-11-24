@@ -64,7 +64,7 @@ ipcMain.on('log-out', async (e, msg) => {
     return e.sender.send('log-out', {"log-out": true});
   } catch(error) {
     console.log(`[ ERROR ] log-out: ${error}`)
-    return e.sender.send('lod-out', {"error": error});
+    return e.sender.send('log-out', {"error": error});
   }
 })
 

@@ -5,3 +5,4 @@
 
 require(`./auth_spec.js`)
 require(`./resetPassword_spec.js`)
+require(`./datastore_spec.js`)

@@ -1,5 +1,6 @@
 // SignIn Styles
 import { primaryColor, backgroundColor } from "../../assets/jss/mainStyle";
+import { inherits } from "util";
 
 const signinStyle = theme => ({
   root: {
@@ -47,10 +48,26 @@ const signinStyle = theme => ({
   submit: {
     marginTop: theme.spacing.unit * 3,
     backgroundColor: primaryColor,
+    marginBottom: theme.spacing.unit * 1,
     color: "white",
     "&:hover": {
       backgroundColor: "white",
       color: "black"
+    }
+  },
+  forgotPassword: {
+    margin: "0, auto",
+    color: "white",
+    display: "block",
+    marginTop: "12px",
+    marginLeft: "auto",
+    marginRight: "auto",
+    textTransform: "capitalize",
+    fontSize: "14.5px",
+    fontWeight: "450",
+    "&:hover": {
+      backgroundColor: "inherit",
+      color: "rgb(82, 205, 204)"
     }
   },
   iconBack: {
@@ -64,7 +81,7 @@ const signinStyle = theme => ({
     flexDirection: "column",
     alignItems: "center",
     padding: `${theme.spacing.unit * 2}px ${theme.spacing.unit * 3}px ${theme
-      .spacing.unit * 3}px`
+      .spacing.unit * 1.5}px`
   },
   avatar: {
     margin: theme.spacing.unit,
@@ -72,6 +89,52 @@ const signinStyle = theme => ({
   },
   title: {
     color: "white"
+  },
+  titleForgotAndNewPassword: {
+    color: "white",
+    marginLeft: "auto",
+    marginRight: "auto",
+    marginTop: "20px",
+    marginBottom: "10px",
+    textAlign: "center"
+  },
+  paperForgotAndNewPassword: {
+    backgroundColor: backgroundColor,
+    marginTop: theme.spacing.unit * 3,
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    padding: `${theme.spacing.unit * 0}px ${theme.spacing.unit * 3}px ${theme
+      .spacing.unit * 6}px`
+  },
+  avatarForgotAndNewPassword: {
+    marginTop: "30px",
+    backgroundColor: primaryColor,
+    width: 50,
+    height: 50
+  },
+  formHidden: {
+    width: "100%", // Fix IE11 issue.
+    marginTop: theme.spacing.unit,
+    color: "white",
+    borderBottomColor: "white"
+  },
+  submitForgotAndNewPassword: {
+    marginTop: theme.spacing.unit * 3,
+    backgroundColor: primaryColor,
+    color: "white",
+    marginLeft: "auto",
+    marginRight: "auto",
+    display: "block",
+    "&:hover": {
+      backgroundColor: "white",
+      color: "black"
+    }
+  },
+  skipAhead: {
+    textDecoration: "none",
+    width: "100%",
+    color: "rgb(82, 205, 204)"
   }
 });
 
