@@ -38,27 +38,116 @@ describe('DataStore Functionality Testing', function () {
     //   }
     // })
 
-    // findUser Function 
-    it('Find User Test Fail on empty Database', async function() {
-      let findUser = await datastore.findUser(TEST_DATA.user.email)
-      assert.equal(findUser, false);
-    })
-    
-    it('Find User Test Pass on empty Database', async function() {
-      await datastore.newUser(TEST_DATA.user);
-      let findUser = await datastore.findUser(TEST_DATA.user.email)
-      assert.equal(findUser, true);
-    })
+    // functions specific for testing
 
-  })
+    const TEST_DATA = {
+      user: {
+          email: 'test2@gmail.com',
+          password: 'testpass123',
+          username: 'test',
+          organization: 'UBC'
+      }
+    }
 
-
-
-  const TEST_DATA = {
+  const TEST_DATA2 = {
     user: {
-        email: 'test2@gmail.com',
+        email: 'test3@gmail.com',
+        password: 'testpass123',
+        username: 'test',
+        organization: 'UBC'
+    }
+  }
+
+  const TEST_DATA3 = {
+    user: {
+        email: 'test4@gmail.com',
         password: 'testpass123',
         username: 'test',
         organization: 'UBC'
     }
 }
+
+    // initializeDataStore Fail
+
+    // initializeDataStore Pass
+    // it('findUser Pass on Database containing a single value', async function() {
+    //   await datastore.initializeDataStore()
+      
+    //   assert.equal(success, true);
+    // })
+/**
+ * FindUser Functionality Test 
+ */
+
+    it('findUser fail on empty Database', async function() {
+      let findUser = await datastore.findUser(TEST_DATA.user.email)
+      assert.equal(findUser, false);
+    })
+
+    it('findUser fail on Database containing multiple values', async function() {
+      await datastore.newUser(TEST_DATA.user);
+      await datastore.newUser(TEST_DATA2.user);
+      await datastore.newUser(TEST_DATA3.user);
+      let findUser = await datastore.findUser('nomail@gmail.com')
+      assert.equal(findUser, false);
+    })
+    
+    it('findUser Pass on Database containing a single value', async function() {
+      await datastore.newUser(TEST_DATA.user);
+      let findUser = await datastore.findUser(TEST_DATA.user.email)
+      assert.equal(findUser, true);
+    })
+
+    it('findUser Pass on Database containing multiple values', async function() {
+      await datastore.newUser(TEST_DATA.user);
+      await datastore.newUser(TEST_DATA2.user);
+      await datastore.newUser(TEST_DATA3.user);
+      let findUser = await datastore.findUser(TEST_DATA.user.email)
+      assert.equal(findUser, true);
+    })
+
+    // getUserSensors Pass
+
+    // getUserSensors Fail
+
+
+
+
+
+    it('Test for expire session', async function() {
+      await datastore.expireSessions();
+    })
+
+    // logOut Fail
+    it('logout fail', async function() {
+      await datastore.newUser(TEST_DATA.user);
+      let findUser = await datastore.findUser(TEST_DATA.user.email)
+      assert.equal(findUser, true);
+    })
+
+    // logOut Pass
+
+    // clearUserData Fail
+
+    // clearUserData Pass
+
+    // restoreSession Fail
+
+    // restoreSession Pass
+
+    // getUserName Fail
+
+    // getUserName Pass
+
+    // getUserEmail Fail
+
+    // getUserEmail Pass
+
+    // getUserOrganization Fail
+
+    // getUserOrganization Pass
+
+    
+
+
+  })
