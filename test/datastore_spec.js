@@ -38,7 +38,6 @@ describe('DataStore Functionality Testing', function () {
     //   }
     // })
 
-    // functions specific for testing
 
     const TEST_DATA = {
       user: {
@@ -48,33 +47,59 @@ describe('DataStore Functionality Testing', function () {
           organization: 'UBC'
       }
     }
-
-  const TEST_DATA2 = {
+    
+    const TEST_DATA2 = {
     user: {
         email: 'test3@gmail.com',
         password: 'testpass123',
         username: 'test',
         organization: 'UBC'
     }
-  }
-
-  const TEST_DATA3 = {
+    }
+    
+    const TEST_DATA3 = {
     user: {
         email: 'test4@gmail.com',
         password: 'testpass123',
         username: 'test',
         organization: 'UBC'
     }
-}
+    }
+
+
+    // initializeDataStore Pass
+    it('initializeDataStore Success', async function() {
+      await datastore.initializeDataStore()
+
+      let find = await datastore.find({_id: "0000000000000001"}, 'userInfo');
+      var id = [ { _id: '0000000000000001' } ]
+      assert.equal(JSON.stringify(find), JSON.stringify(id));
+    })
 
     // initializeDataStore Fail
 
-    // initializeDataStore Pass
-    // it('findUser Pass on Database containing a single value', async function() {
-    //   await datastore.initializeDataStore()
-      
-    //   assert.equal(success, true);
-    // })
+    it ('insert success', async function() {
+
+    })
+
+    //if this test fails, it can be either insert or find that failed
+    it('insert and find function success', async function() {
+      var l = await datastore.insert(TEST_DATA2.user, "userInfo");
+      let Email = await datastore.find({email: TEST_DATA2.user.email}, 'userInfo');
+      // need to get the first object as find function returns an array of objects 
+      let a = Email[0];
+      let Password = await datastore.find({password: TEST_DATA2.user.password}, 'userInfo');
+      let b = Password[0];
+      let Username = await datastore.find({username: TEST_DATA2.user.username}, 'userInfo');
+      let c = Username[0];
+      let Organization = await datastore.find({organization: TEST_DATA2.user.organization}, 'userInfo');
+      let d = Organization[0];
+      assert.equal(JSON.stringify(a), JSON.stringify(l));
+      assert.equal(JSON.stringify(b), JSON.stringify(l));
+      assert.equal(JSON.stringify(c), JSON.stringify(l));
+      assert.equal(JSON.stringify(d), JSON.stringify(l));
+    })
+
 /**
  * FindUser Functionality Test 
  */
@@ -85,8 +110,6 @@ describe('DataStore Functionality Testing', function () {
     })
 
     it('findUser fail on Database containing multiple values', async function() {
-      await datastore.newUser(TEST_DATA.user);
-      await datastore.newUser(TEST_DATA2.user);
       await datastore.newUser(TEST_DATA3.user);
       let findUser = await datastore.findUser('nomail@gmail.com')
       assert.equal(findUser, false);
@@ -99,9 +122,6 @@ describe('DataStore Functionality Testing', function () {
     })
 
     it('findUser Pass on Database containing multiple values', async function() {
-      await datastore.newUser(TEST_DATA.user);
-      await datastore.newUser(TEST_DATA2.user);
-      await datastore.newUser(TEST_DATA3.user);
       let findUser = await datastore.findUser(TEST_DATA.user.email)
       assert.equal(findUser, true);
     })
@@ -110,19 +130,13 @@ describe('DataStore Functionality Testing', function () {
 
     // getUserSensors Fail
 
-
-
-
-
     it('Test for expire session', async function() {
       await datastore.expireSessions();
     })
 
     // logOut Fail
     it('logout fail', async function() {
-      await datastore.newUser(TEST_DATA.user);
-      let findUser = await datastore.findUser(TEST_DATA.user.email)
-      assert.equal(findUser, true);
+     
     })
 
     // logOut Pass
@@ -150,4 +164,4 @@ describe('DataStore Functionality Testing', function () {
     
 
 
-  })
+  });

@@ -60,8 +60,7 @@
     "release": "npm run react-build && electron-builder --publish=always",
     "build": "npm run react-build && npm run electron-build",
     "start": "export DATA_ENV='LOCAL' && concurrently \"cross-env BROWSER=none npm run react-start\" \"wait-on http://localhost:3000 && electron .\"",
-    "test": "export DATA_ENV='TEST' && rm -rf ./electron/datastore/test/ && mocha ./test/tests.js",
-    "posttest": "rm -rf ./electron/datastore/test"
+    "test": "export DATA_ENV='TEST' && rm -rf ./electron/datastore/test/ && mocha ./test/tests.js"
   },
   "browserslist": [
     ">0.2%",
