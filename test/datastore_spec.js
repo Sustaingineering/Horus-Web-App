@@ -68,7 +68,7 @@ describe('DataStore Functionality Testing', function () {
 
 
     // initializeDataStore Pass
-    it('initializeDataStore Success', async function() {
+    it('initializeDataStore pass', async function() {
       await datastore.initializeDataStore()
 
       let find = await datastore.find({_id: "0000000000000001"}, 'userInfo');
@@ -78,27 +78,63 @@ describe('DataStore Functionality Testing', function () {
 
     // initializeDataStore Fail
 
-    it ('insert success', async function() {
+    // insert fail?
 
-    })
+    // find fail
 
     //if this test fails, it can be either insert or find that failed
-    it('insert and find function success', async function() {
+    it('insert and find function pass', async function() {
       var l = await datastore.insert(TEST_DATA2.user, "userInfo");
       let Email = await datastore.find({email: TEST_DATA2.user.email}, 'userInfo');
       // need to get the first object as find function returns an array of objects 
       let a = Email[0];
-      let Password = await datastore.find({password: TEST_DATA2.user.password}, 'userInfo');
-      let b = Password[0];
-      let Username = await datastore.find({username: TEST_DATA2.user.username}, 'userInfo');
-      let c = Username[0];
-      let Organization = await datastore.find({organization: TEST_DATA2.user.organization}, 'userInfo');
-      let d = Organization[0];
       assert.equal(JSON.stringify(a), JSON.stringify(l));
-      assert.equal(JSON.stringify(b), JSON.stringify(l));
-      assert.equal(JSON.stringify(c), JSON.stringify(l));
-      assert.equal(JSON.stringify(d), JSON.stringify(l));
     })
+
+    it('update function pass', async function() {
+      const data = {email: "123@gmail.com"}
+      await datastore.insert(data, 'userInfo');
+      let x = await datastore.update(data, {email: "456@gmail.com"}, {}, "userInfo")
+      assert.equal(x, 1);
+    })
+
+    it('update function fail', async function() {
+      const data = {password: "123"}
+      let x = await datastore.update(data, {password: "12345"}, {}, "userInfo")
+      assert.equal(x, 0);
+    })
+
+    it('remove function pass for single object', async function(){
+      const data = {email: "123@gmail.com"}
+      await datastore.insert(data, 'userInfo');
+      let x = await datastore.remove(data, {}, 'userInfo');
+      assert.equal(x, 1);
+    })
+
+    it('remove function fail for single object', async function(){
+      const data = {email: "123@gmail.com"}
+      let x = await datastore.remove(data, {}, 'userInfo');
+      assert.equal(x, 0);
+    })
+
+    it('remove function pass for multiple objects', async function(){
+      const data = {pie: "apple pie", color: "blue"}
+      const data2 = {pie: "pie", color: "blue"}
+      await datastore.insert(data, 'userInfo');
+      await datastore.insert(data2, 'userInfo');
+      let x = await datastore.remove({color: "blue"}, {multi: true}, 'userInfo');
+      assert.equal(x, 2);
+    })
+
+    it('remove function fail for multiple objects', async function(){
+      const data = {pie: "apple pie", color: "blue"}
+      const data2 = {pie: "pie", color: "blue"}
+      await datastore.insert(data, 'userInfo');
+      await datastore.insert(data2, 'userInfo');
+      let x = await datastore.remove({type: "fire"}, {multi: true}, 'userInfo');
+      assert.equal(x, 0);
+    })
+
 
 /**
  * FindUser Functionality Test 
