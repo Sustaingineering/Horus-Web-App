@@ -61,6 +61,8 @@ try {
   console.log(error)
 }
 
+/*
+TODO: Move to electron.js ???
 ipcMain.on('is-data-updated', async (e, msg) => {
   try { 
     if (!needsUpdate) {
@@ -88,6 +90,7 @@ ipcMain.on('is-data-updated', async (e, msg) => {
     e.sender.send('is-data-updated', false)
   }
 })
+*/
 
 /*
 Function that Parses csv files

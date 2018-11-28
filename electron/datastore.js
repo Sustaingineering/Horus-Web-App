@@ -313,6 +313,11 @@ var addSensor = exports.addSensor = function (sensorId) {
 
 }
 
+//Testing Purposes
+exports.initializeUserId = function (userID) {
+    user_id = userID;
+} 
+
 exports.getSummaryData = function (pumpId) {
     return new Promise((resolve, reject) => {
         try {
