@@ -9,7 +9,7 @@ datastore.initializeUserId("test");
 const filewatch = require('../electron/datasource/filewatch.js');
 
 
-let writeJSONFile = function() {
+var writeJSONFile = function() {
     return new Promise((resolve, reject) => {
         try {
             let writeStream = fs.createWriteStream(file, { 'flags': 'a', 'encoding': null, 'mode': 0666 });
@@ -25,24 +25,28 @@ let writeJSONFile = function() {
 	})
 }
 
-describe('Application launch', async function () {
+var waitForDBData = async () => {
+    return new Promise((resolve, reject) => {
+        try {
+            setTimeout(async () =>{
+                let newDBEntry = await datastore.getSummaryData('1');
+                return resolve(newDBEntry);
+            }, 2000);
+        } catch(error) {
+            console.log(error);
+            return reject(error);
+        }
+    });
+}
+
+describe('Filewatch Test', async function () {
     this.timeout(10000);
-    it('Starts the JSON Parser and writes to the JSON File to verify new Database entries', async function() {
+    it('Starts the JSON Parser and writes to the JSON File to verify new Database entry', async function() {
         let write = await writeJSONFile();
-        let newDBEntry = await promiseWrapper()
-        assert.equal(newDBEntry.data, TEST_DATA.data);
+        let newDBEntry = await waitForDBData();
+        assert.deepStrictEqual(newDBEntry.data, TEST_DATA.data);
     });
 });
-
-var promiseWrapper = async () => {
-    return new Promise((resolve, reject) => {
-        setTimeout(async () =>{
-            let newDBEntry = await datastore.getSummaryData('1');
-            console.log(newDBEntry);
-            return resolve(newDBEntry);
-        }, 2000)
-    })
-}
 
 const TEST_DATA = {
     number: '+16041234567',
