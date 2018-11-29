@@ -29,13 +29,20 @@ describe('Application launch', async function () {
     this.timeout(10000);
     it('Starts the JSON Parser and writes to the JSON File to verify new Database entries', async function() {
         let write = await writeJSONFile();
+        let newDBEntry = await promiseWrapper()
+        assert.equal(newDBEntry.data, TEST_DATA.data);
+    });
+});
+
+var promiseWrapper = async () => {
+    return new Promise((resolve, reject) => {
         setTimeout(async () =>{
             let newDBEntry = await datastore.getSummaryData('1');
             console.log(newDBEntry);
-            assert.equal(newDBEntry, TEST_DATA);
+            return resolve(newDBEntry);
         }, 2000)
-    });
-});
+    })
+}
 
 const TEST_DATA = {
     number: '+16041234567',
