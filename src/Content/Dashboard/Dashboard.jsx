@@ -37,16 +37,16 @@ class Dashboard extends Component {
         // return alert(msg);
       }
     });
-    const voltageDummyData = [{ name: "11/9/18", voltage: 174 }];
-    const currentDummyData = [{ name: "11/9/18", current: 734 }];
-    const powerDummyData = [{ name: "11/9/18", power: 4 }];
-    const tempDummyData = [{ name: "11/9/18", opTemp: 74, suTemp: 2.2 }];
-    this.setState({
-      voltageData: voltageDummyData,
-      currentData: currentDummyData,
-      powerData: powerDummyData,
-      tempData: tempDummyData
-    });
+    // const voltageDummyData = [{ name: "11/9/18", voltage: 174 }];
+    // const currentDummyData = [{ name: "11/9/18", current: 4 }];
+    // const powerDummyData = [{ name: "11/9/18", power: 4 }];
+    // const tempDummyData = [{ name: "11/9/18", opTemp: 74, suTemp: 2.2 }];
+    // this.setState({
+    //   voltageData: voltageDummyData,
+    //   currentData: currentDummyData,
+    //   powerData: powerDummyData,
+    //   tempData: tempDummyData
+    // });
   };
 
   componentWillMount = () => {
@@ -64,9 +64,9 @@ class Dashboard extends Component {
       { name: "11/9/18", voltage: 184 }
     ];
     const currentDummyData = [
-      { name: "11/9/18", current: 734 },
-      { name: "11/9/18", current: 740 },
-      { name: "11/9/18", current: 800 }
+      { name: "11/9/18", current: 4 },
+      { name: "11/9/18", current: 2 },
+      { name: "11/9/18", current: 8 }
     ];
     const powerDummyData = [
       { name: "11/9/18", power: 4 },
