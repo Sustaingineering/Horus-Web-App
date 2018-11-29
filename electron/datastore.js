@@ -325,7 +325,7 @@ exports.getSummaryData = function (pumpId) {
             udb['dataCollection']
                 .findOne({
                     userId: userId,
-                    data: {pumpId: pumpId}
+                    "data.pumpId": pumpId
                 })
                 .sort({
                     createdAt: -1
@@ -352,7 +352,7 @@ exports.getRealTime = function (data) {
             udb['dataCollection']
                 .find({
                     userId: userId,
-                    data: {pumpId: pumpId}
+                    "data.pumpId": pumpId
                 })
                 .sort({
                     createdAt: -1

@@ -5,6 +5,8 @@
 
 # testing
 /coverage
+test-json.jsonl
+test-csv.csv
 
 # production
 /build

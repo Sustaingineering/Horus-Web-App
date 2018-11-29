@@ -25,12 +25,15 @@ let writeJSONFile = function() {
 	})
 }
 
-describe('Application launch', function () {
+describe('Application launch', async function () {
     this.timeout(10000);
     it('Starts the JSON Parser and writes to the JSON File to verify new Database entries', async function() {
         let write = await writeJSONFile();
-        let newDBEntry = await datastore.getSummaryData('1');
-        assert.equal(newDBEntry.data, TEST_DATA);
+        setTimeout(async () =>{
+            let newDBEntry = await datastore.getSummaryData('1');
+            console.log(newDBEntry);
+            assert.equal(newDBEntry, TEST_DATA);
+        }, 2000)
     });
 });
 
