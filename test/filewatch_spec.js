@@ -31,7 +31,7 @@ var waitForDBData = async () => {
             setTimeout(async () =>{
                 let newDBEntry = await datastore.getSummaryData('1');
                 return resolve(newDBEntry);
-            }, 2000);
+            }, 1000);
         } catch(error) {
             console.log(error);
             return reject(error);
@@ -45,6 +45,9 @@ describe('Filewatch Test', async function () {
         let write = await writeJSONFile();
         let newDBEntry = await waitForDBData();
         assert.deepStrictEqual(newDBEntry.data, TEST_DATA.data);
+        setTimeout(() =>{
+            process.exit();
+        }, 1000);
     });
 });
 
