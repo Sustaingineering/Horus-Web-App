@@ -30,7 +30,6 @@ var initializeDataStore = exports.initializeDataStore = () => {
         udb.userInfo.find({
             _id: '0000000000000001'
         }, (error, docs) => {
-            console.log('res', error, docs)
             if (error) {
                 return reject(error)
             }
