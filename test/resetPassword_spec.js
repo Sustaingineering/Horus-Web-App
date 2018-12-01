@@ -5,7 +5,7 @@ const resetPassword = require('../electron/modules/resetPassword.js')
 const assert = require('chai').assert;
 const datastore = require('../electron/datastore.js');
 
-describe('Application launch', function () {
+describe('Account Functionality Testing', function () {
   this.timeout(10000)
 
   // beforeEach(function () {
@@ -42,6 +42,11 @@ describe('Application launch', function () {
   it('Calls generate password token', async function() {
     let passwordReset = await resetPassword.generatePasswordToken({email: TEST_DATA.user.email})
     assert.equal(passwordReset.success, 'Verification Email sent', 'The verification email was sent')
+  })
+
+  it('Email Does not exist', async function(){
+    let passwordReset = await resetPassword.generatePasswordToken({email: "randomEmail"})
+    assert.equal(passwordReset.error, "Email does not exist")
   })
 
   it('Validates and changes password for a user', async function() {
