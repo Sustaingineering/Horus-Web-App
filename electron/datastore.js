@@ -406,7 +406,7 @@ exports.getHistoryData = function (data) {
             } = data
             udb['dataCollection'].find({
                     userId: userId,
-                    data: {pumpId: pumpId},
+                    "data.pumpId": pumpId,
                     //TODO: Check created At new format
                     createdAt: {
                         $lte: to,
