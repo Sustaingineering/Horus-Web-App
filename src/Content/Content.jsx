@@ -6,7 +6,6 @@ import { Route } from "react-router-dom";
 import contentStyles from "./contentStyle";
 import { withStyles } from "@material-ui/core/styles";
 // Components
-import Dashboard from "./Dashboard/Dashboard";
 import Sensor from "./Dashboard/Sensor";
 import Profile from "./Profile/Profile";
 import NavBar from "../Layout/Navbar/Navbar";
@@ -48,8 +47,8 @@ class Content extends Component {
         <div className={classes.root}>
           <NavBar />
           <div className={classes.container}>
-            <Route path="/" exact component={Dashboard} />
-            <Route path="/dashboard" exact component={Dashboard} />
+            <Route path="/" exact render={() => <h1>Home</h1>} />
+            <Route path="/dashboard" exact render={() => <h1>Home</h1>} />
             {this.state.sensorsList.map(sensor => (
               <Route
                 path={"/" + sensor.name}

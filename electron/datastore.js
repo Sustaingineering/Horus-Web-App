@@ -30,7 +30,6 @@ var initializeDataStore = exports.initializeDataStore = () => {
         udb.userInfo.find({
             _id: '0000000000000001'
         }, (error, docs) => {
-            console.log('res', error, docs)
             if (error) {
                 return reject(error)
             }
@@ -482,13 +481,14 @@ var insert = exports.insert = function (object, tableName) {
     })
 }
 
+// note this creates a new object with the same id as the one altered
 var update = exports.update = function (query, updateModifier, options, tableName) {
     return new Promise((resolve, reject) => {
-        udb[tableName].update(query, updateModifier, options, (error, settingReplaced, affectedDocuments, upsert) => {
+        udb[tableName].update(query, updateModifier, options, (error, numAffected, affectedDocuments, upsert) => {
             if (error) {
                 return reject(error)
             }
-            return resolve(settingReplaced, affectedDocuments, upsert);
+            return resolve(numAffected, affectedDocuments, upsert);
         })
     })
 }

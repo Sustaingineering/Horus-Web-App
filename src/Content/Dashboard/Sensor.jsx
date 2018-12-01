@@ -1,7 +1,7 @@
 import React, { Component, Fragment } from "react";
 import PropTypes from "prop-types";
 // Material UI Components
-import { withStyles, Typography, MuiThemeProvider } from "@material-ui/core";
+import { withStyles, MuiThemeProvider } from "@material-ui/core";
 //Style
 import dashboardStyle from "./dashboardStyle";
 import { mainTheme } from "../../assets/jss/mainStyle";
@@ -16,9 +16,6 @@ class Sensor extends Component {
       <Fragment>
         <MuiThemeProvider theme={mainTheme}>
           <div className={classes.root}>
-            <Typography variant="display1" color="primary" gutterBottom>
-              {this.props.sensorName}
-            </Typography>
             <Dashboard sensorName={this.props.sensorName} />
           </div>
         </MuiThemeProvider>

@@ -1,4 +1,3 @@
-const {ipcMain} = require('electron');
 //Node Emailer variables
 const nodemailer = require('nodemailer');
 const datastore = require('../datastore');

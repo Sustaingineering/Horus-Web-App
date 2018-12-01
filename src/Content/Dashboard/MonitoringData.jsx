@@ -50,7 +50,7 @@ function MonitoringData(props) {
                   Load Voltage
                 </Typography>
                 <Typography color="primary" variant="headline">
-                  {voltajeInt}
+                  {/* {voltajeInt} */}140V
                 </Typography>
               </Grid>
             </Grid>
@@ -72,7 +72,7 @@ function MonitoringData(props) {
                   Load Current
                 </Typography>
                 <Typography color="primary" variant="headline">
-                  {voltajeInt}
+                  {/* {voltajeInt} */}8A
                 </Typography>
               </Grid>
             </Grid>
@@ -94,7 +94,7 @@ function MonitoringData(props) {
                   Power Absorbed
                 </Typography>
                 <Typography color="primary" variant="headline">
-                  {voltajeInt}
+                  {/* {voltajeInt} */}1120W
                 </Typography>
               </Grid>
             </Grid>
@@ -116,7 +116,7 @@ function MonitoringData(props) {
                   Operating Temperature
                 </Typography>
                 <Typography color="primary" variant="headline">
-                  {voltajeInt}
+                  {/* {voltajeInt} */}28C
                 </Typography>
               </Grid>
             </Grid>
@@ -138,7 +138,7 @@ function MonitoringData(props) {
                   Surface Temperature
                 </Typography>
                 <Typography color="primary" variant="headline">
-                  {voltajeInt}
+                  {/* {voltajeInt} */}35C
                 </Typography>
               </Grid>
             </Grid>
@@ -160,7 +160,7 @@ function MonitoringData(props) {
                   Water Breaker
                 </Typography>
                 <Typography color="primary" variant="headline">
-                  {voltajeInt}
+                  {/* {voltajeInt} */}0
                 </Typography>
               </Grid>
             </Grid>
