@@ -7,7 +7,6 @@ import Button from "@material-ui/core/Button";
 // Styles
 import { withStyles, MuiThemeProvider } from "@material-ui/core/styles";
 import { mainTheme, primaryColor } from "../../assets/jss/mainStyle";
-
 const styles = theme => ({
   button: {
     marginTop: theme.spacing.unit,

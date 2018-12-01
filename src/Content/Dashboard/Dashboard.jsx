@@ -20,14 +20,6 @@ import { mainTheme } from "../../assets/jss/mainStyle";
 const electron = window.require("electron");
 const ipcRenderer = electron.ipcRenderer;
 
-function TabContainer(props) {
-  return (
-    <Typography component="div" style={{ padding: 8 * 3 }}>
-      {props.children}
-    </Typography>
-  );
-}
-
 class Dashboard extends Component {
   state = {
     value: 0,
@@ -37,7 +29,28 @@ class Dashboard extends Component {
     tempData: []
   };
 
+  tick = () => {
+    ipcRenderer.on("get-sensor-data" + this.props.sensorName, (e, msg) => {
+      if (msg.error) {
+        // return alert(msg.error);
+      } else {
+        // return alert(msg);
+      }
+    });
+    // const voltageDummyData = [{ name: "11/9/18", voltage: 174 }];
+    // const currentDummyData = [{ name: "11/9/18", current: 4 }];
+    // const powerDummyData = [{ name: "11/9/18", power: 4 }];
+    // const tempDummyData = [{ name: "11/9/18", opTemp: 74, suTemp: 2.2 }];
+    // this.setState({
+    //   voltageData: voltageDummyData,
+    //   currentData: currentDummyData,
+    //   powerData: powerDummyData,
+    //   tempData: tempDummyData
+    // });
+  };
+
   componentWillMount = () => {
+    this.interval = setInterval(this.tick.bind(this), 1000);
     ipcRenderer.on("get-sensor-data" + this.props.sensorName, (e, msg) => {
       if (msg.error) {
         // return alert(msg.error);
@@ -51,9 +64,9 @@ class Dashboard extends Component {
       { name: "11/9/18", voltage: 184 }
     ];
     const currentDummyData = [
-      { name: "11/9/18", current: 734 },
-      { name: "11/9/18", current: 740 },
-      { name: "11/9/18", current: 800 }
+      { name: "11/9/18", current: 4 },
+      { name: "11/9/18", current: 2 },
+      { name: "11/9/18", current: 8 }
     ];
     const powerDummyData = [
       { name: "11/9/18", power: 4 },
@@ -75,6 +88,10 @@ class Dashboard extends Component {
     });
   };
 
+  componentWillUnmount = () => {
+    clearInterval(this.interval);
+  };
+
   handleChange = (event, value) => {
     this.setState({ value });
   };
@@ -88,7 +105,7 @@ class Dashboard extends Component {
         <MuiThemeProvider theme={mainTheme}>
           <div className={classes.root}>
             <Typography variant="display1" color="primary" gutterBottom>
-              Dashboard
+              {this.props.sensorName + " Dashboard"}
             </Typography>
             <MonitoringData />
             <br />
@@ -107,7 +124,7 @@ class Dashboard extends Component {
               <Tab className={classes.tab} label="Summary" />
             </Tabs>
             {value === 0 && (
-              <TabContainer>
+              <Fragment>
                 <Grid container spacing={24}>
                   <Grid item xs={12} sm={12} md={6}>
                     <Chart
@@ -146,10 +163,10 @@ class Dashboard extends Component {
                     />
                   </Grid>
                 </Grid>
-              </TabContainer>
+              </Fragment>
             )}
             {value === 1 && (
-              <TabContainer>
+              <Fragment>
                 <Grid container spacing={24}>
                   <Grid item xs={12} sm={12} md={6}>
                     <HistoryChart
@@ -188,9 +205,9 @@ class Dashboard extends Component {
                     />
                   </Grid>
                 </Grid>
-              </TabContainer>
+              </Fragment>
             )}
-            {value === 2 && <TabContainer>Summary</TabContainer>}
+            {value === 2 && <Fragment>Summary</Fragment>}
           </div>
         </MuiThemeProvider>
       </Fragment>
