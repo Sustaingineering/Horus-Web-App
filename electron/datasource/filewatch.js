@@ -61,36 +61,20 @@ try {
   console.log(error)
 }
 
-/*
-TODO: Move to electron.js ???
-ipcMain.on('is-data-updated', async (e, msg) => {
+
+//TODO: Move to electron.js ???
+ipcMain.on('get-sensor-data', async (e, msg) => {
   try { 
     if (!needsUpdate) {
       return
     }
-    var data = {};
-    switch(msg.dataType) {
-      case DATA_TYPE_HISTORY:
-        setting.to = to;
-        setting.from = from;
-        break
-      case DATA_TYPE_SUMARY:
-        data = await datastore.getSummaryData(msg.pump_id)
-        e.sender.send('is-data-updated', {data: data})
-        break
-      case DATA_TYPE_REAL_TIME:
-        data = await datastore.getRealTime({pumpId: msg.pump_id})
-        e.sender.send('is-data-updated', {data: data})
-        break
-      default:
-        break;
-    }
+    let data = await datastore.getRealTime({pumpId: msg.sensorId})
+    e.sender.send('get-sensor-data', {data: data})
     needsUpdate = false
   } catch(error) {
-    e.sender.send('is-data-updated', false)
+    e.sender.send('get-sensor-data', false)
   }
 })
-*/
 
 /*
 Function that Parses csv files

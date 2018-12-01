@@ -30,61 +30,27 @@ class Dashboard extends Component {
   };
 
   tick = () => {
-    ipcRenderer.on("get-sensor-data" + this.props.sensorName, (e, msg) => {
-      if (msg.error) {
-        // return alert(msg.error);
-      } else {
-        // return alert(msg);
-      }
-    });
-    // const voltageDummyData = [{ name: "11/9/18", voltage: 174 }];
-    // const currentDummyData = [{ name: "11/9/18", current: 4 }];
-    // const powerDummyData = [{ name: "11/9/18", power: 4 }];
-    // const tempDummyData = [{ name: "11/9/18", opTemp: 74, suTemp: 2.2 }];
-    // this.setState({
-    //   voltageData: voltageDummyData,
-    //   currentData: currentDummyData,
-    //   powerData: powerDummyData,
-    //   tempData: tempDummyData
-    // });
+    ipcRenderer.send("get-sensor-data", ( {sensorId: this.props.sensorName}));
   };
 
   componentWillMount = () => {
     this.interval = setInterval(this.tick.bind(this), 1000);
-    ipcRenderer.on("get-sensor-data" + this.props.sensorName, (e, msg) => {
+    ipcRenderer.on("get-sensor-data", (e, msg) => {
+      console.log('renderer',msg.data[0], msg.data);
       if (msg.error) {
         // return alert(msg.error);
       } else {
-        // return alert(msg);
+        const voltageDummyData = msg.data[0];
+        const currentDummyData = msg.data[1];
+        const powerDummyData = msg.data[2];
+        const tempDummyData = msg.data[3];
+        this.setState({
+          voltageData: voltageDummyData,
+          currentData: currentDummyData,
+          powerData: powerDummyData,
+          tempData: tempDummyData
+        });
       }
-    });
-    const voltageDummyData = [
-      { name: "11/9/18", voltage: 174 },
-      { name: "11/9/18", voltage: 134 },
-      { name: "11/9/18", voltage: 184 }
-    ];
-    const currentDummyData = [
-      { name: "11/9/18", current: 4 },
-      { name: "11/9/18", current: 2 },
-      { name: "11/9/18", current: 8 }
-    ];
-    const powerDummyData = [
-      { name: "11/9/18", power: 4 },
-      { name: "11/9/18", power: 5 },
-      { name: "11/9/18", power: 8 }
-    ];
-    const tempDummyData = [
-      { name: "11/9/18", opTemp: 74, suTemp: 2.2 },
-      { name: "12/9/18", opTemp: 64, suTemp: 0.7 },
-      { name: "13/9/18", opTemp: 12, suTemp: 1.6 },
-      { name: "14/9/18", opTemp: 79, suTemp: 0.8 },
-      { name: "15/9/18", opTemp: 82, suTemp: 5.1 }
-    ];
-    this.setState({
-      voltageData: voltageDummyData,
-      currentData: currentDummyData,
-      powerData: powerDummyData,
-      tempData: tempDummyData
     });
   };
 

@@ -26,6 +26,7 @@ function createWindow() {
     // titleBarStyle: 'hidden',
   });
 
+  //windows.mainWindow.webContents.openDevTools()
   // Lozd the index.html of the app.
   windows.mainWindow.loadURL(isDev ?
     'http://localhost:3000' :
