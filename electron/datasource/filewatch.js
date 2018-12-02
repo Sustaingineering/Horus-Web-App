@@ -61,20 +61,13 @@ try {
   console.log(error)
 }
 
+exports.getNeedsUpdate = () => {
+  return needsUpdate
+}
 
-//TODO: Move to electron.js ???
-ipcMain.on('get-sensor-data', async (e, msg) => {
-  try { 
-    if (!needsUpdate) {
-      return
-    }
-    let data = await datastore.getRealTime({pumpId: msg.sensorId})
-    e.sender.send('get-sensor-data', {data: data})
-    needsUpdate = false
-  } catch(error) {
-    e.sender.send('get-sensor-data', false)
-  }
-})
+exports.setNeedsUpdate = (val) => {
+  needsUpdate = val
+}
 
 /*
 Function that Parses csv files
