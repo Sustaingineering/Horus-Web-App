@@ -342,12 +342,12 @@ exports.getSummaryData = function (pumpId) {
     })
 }
 
-exports.getRealTime = function (data) {
+exports.getRealTime = function (data, n) {
     return new Promise((resolve, reject) => {
         try {
             let userId = user_id;
             let pumpId = data.pumpId;
-            let count = 5
+            let count = n ? n : 5;
             udb['dataCollection']
                 .find({
                     userId: userId,
@@ -370,12 +370,12 @@ exports.getRealTime = function (data) {
                     let waterBreakerList = new Array();
                     for (i = data.length - 1; i >= 0; i--) {
                         //Update Data Referencing from NEW JSON File
-                        voltageList.push(data[i].data.loadVoltage)
-                        currentList.push(data[i].data.loadCurrent)
-                        powerList.push(data[i].data.power)
-                        opTempList.push(data[i].data.atmosphericTemperature)
-                        suTempList.push(data[i].data.solarPanelTemperature)
-                        waterBreakerList.push(data[i].data.waterBreakerFlag)
+                        voltageList.push({ name: data[i].createdAt, voltage: data[i].data.loadVoltage })
+                        currentList.push({ name: data[i].createdAt, current: data[i].data.loadCurrent })
+                        powerList.push({ name: data[i].createdAt, power: data[i].data.power })
+                        opTempList.push({ name: data[i].createdAt, opTemp: data[i].data.atmosphericTemperature })
+                        suTempList.push({ name: data[i].createdAt, suTemp: data[i].data.solarPanelTemperature })
+                        waterBreakerList.push({ name: data[i].createdAt, waterBreaker: data[i].data.waterBreakerFlag })
                     }
                     let response = [
                         voltageList,
