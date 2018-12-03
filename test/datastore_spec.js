@@ -66,7 +66,6 @@ describe('DataStore Functionality Testing', function () {
     }
     }
 
-
     // initializeDataStore Pass
     it('initializeDataStore pass', async function() {
       await datastore.initializeDataStore()
@@ -80,8 +79,6 @@ describe('DataStore Functionality Testing', function () {
 
     // insert fail?
 
-    // find fail
-
     //if this test fails, it can be either insert or find that failed
     it('insert and find function pass', async function() {
       var l = await datastore.insert(TEST_DATA2.user, "userInfo");
@@ -90,6 +87,32 @@ describe('DataStore Functionality Testing', function () {
       let a = Email[0];
       assert.equal(JSON.stringify(a), JSON.stringify(l));
     })
+
+    it('find function fail', async function() {
+      var l = await datastore.insert(TEST_DATA2.user, "userInfo");
+      let Email = await datastore.find({email: "does not exist"}, 'userInfo');
+      // need to get the first object as find function returns an array of objects 
+      let a = Email[0];
+      assert.equal(JSON.stringify(a), undefined);
+    })
+    
+    it('find function for multiple matches pass', async function() {
+      const data = {email: "123@hotmail.com", _id: "12345"}
+      const data1 = {email: "123@hotmail.com", _id: "23456"}
+      var x = await datastore.insert(data, "userInfo");
+      var y = await datastore.insert(data1, "userInfo");
+      
+      let Email = await datastore.find({email: "123@hotmail.com"}, 'userInfo');
+
+      let a = Email[0];
+      let b = Email[1];
+      assert.equal(JSON.stringify(a), JSON.stringify(x));
+      assert.equal(JSON.stringify(b), JSON.stringify(y));
+    })
+
+/**
+ * Update Functionality Tests 
+ */
 
     it('update function pass', async function() {
       const data = {email: "123@gmail.com"}
@@ -103,6 +126,10 @@ describe('DataStore Functionality Testing', function () {
       let x = await datastore.update(data, {password: "12345"}, {}, "userInfo")
       assert.equal(x, 0);
     })
+
+/**
+ * Remove Functionality Tests
+ */
 
     it('remove function pass for single object', async function(){
       const data = {email: "123@gmail.com"}
@@ -135,9 +162,39 @@ describe('DataStore Functionality Testing', function () {
       assert.equal(x, 0);
     })
 
+/**
+ * FindOne Functionality Tests
+ */
+
+    it('findOne function pass', async function() {
+      const data = {pie: "banana"}
+      const data1 = {pie: "strawberry"}
+      let c = await datastore.insert(data, 'userInfo');
+              await datastore.insert(data1, 'userInfo');
+      let x = await datastore.findOne({pie: "banana"}, "userInfo")
+      assert.equal(JSON.stringify(c), JSON.stringify(x));
+    })
+
+    it('findOne function fail', async function() {
+      const data = {pie: "banana"}
+      const data1 = {pie: "strawberry"}
+      let c = await datastore.insert(data, 'userInfo');
+      await datastore.insert(data1, 'userInfo');
+      let x = await datastore.findOne({pie: "orange"}, "userInfo")
+      assert.equal(null, x);
+    })
+
+    it('findOne function pass on specific doc', async function() {
+      const data = {pie: "banana", status: "hot"}
+      const data1 = {pie: "banana", status: "cold"}
+      let c = await datastore.insert(data, 'userInfo');
+              await datastore.insert(data1, 'userInfo');
+      let x = await datastore.findOne({pie: "banana", status: "hot"}, "userInfo")
+      assert.equal(JSON.stringify(c), JSON.stringify(x));
+    })
 
 /**
- * FindUser Functionality Test 
+ * FindUser Functionality Tests 
  */
 
     it('findUser fail on empty Database', async function() {
@@ -160,6 +217,32 @@ describe('DataStore Functionality Testing', function () {
     it('findUser Pass on Database containing multiple values', async function() {
       let findUser = await datastore.findUser(TEST_DATA.user.email)
       assert.equal(findUser, true);
+    })
+
+/**
+ * Count Functionality Tests 
+ */
+
+    it('Count Pass value doesnt exist', async function() {
+      let data = {planet: "earth", status: "good"}
+      let count = await datastore.count(data, "userInfo")
+      assert.equal(count, 0);
+    })
+
+    it('Count Pass single value', async function() {
+      let data = {planet: "earth", status: "good"}
+      await datastore.insert(data, "userInfo");
+      let count = await datastore.count(data, "userInfo")
+      assert.equal(count, 1);
+    })
+
+    it('Count Pass multiple values', async function() {
+      let data = {planet: "jupiter", status: "good"}
+      let data1 = {planet: "mars", status: "good"}
+      await datastore.insert(data, "userInfo");
+      await datastore.insert(data1, "userInfo");
+      let count = await datastore.count({status: "good"}, "userInfo")
+      assert.equal(count, 3);
     })
 
     // getUserSensors Pass
