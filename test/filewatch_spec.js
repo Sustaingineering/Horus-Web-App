@@ -56,7 +56,7 @@ const TEST_DATA = {
     date: '27/11/18',
     time: '22:24:30-28',
     data: {
-        pumpId: '1111111',
+        pumpId: '1',
         loadVoltage: '120',
         loadCurrent: '30',
         power: '60',

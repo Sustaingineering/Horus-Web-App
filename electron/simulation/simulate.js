@@ -1,6 +1,6 @@
 const fs = require('fs');
 const jsonlines = require('jsonlines');
-const file = require('path').resolve(__dirname, '../test-json.jsonl');
+const file = require('path').resolve(__dirname, '../../test-json.jsonl');
 const MAX_TIME = 5000;
 const config = require('./simulate_config.json');
 let timer = null;
@@ -27,7 +27,6 @@ function writeFile() {
     }
     fileval = JSON.stringify(fileVal)
     writeJSONFile(fileVal)
-    console.log('Cant stop me now!', fileVal);
   }
 
   
