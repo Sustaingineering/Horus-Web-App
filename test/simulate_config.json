@@ -1,0 +1,28 @@
+{
+    "dataFields":{
+        "loadVoltage": {
+            "max": 200,
+            "min": 100
+        },
+        "loadCurrent": {
+            "max": 10,
+            "min": 0
+        },
+        "power": {
+            "max": 10,
+            "min": 0
+        },
+        "atmosphericTemperature": {
+            "max": 10,
+            "min": 0
+        },
+        "solarPanelTemperature": {
+            "max": 10,
+            "min": 0
+        },
+        "waterBreakerFlag":{
+            "max": 10,
+            "min": 0
+        }
+    }
+}
