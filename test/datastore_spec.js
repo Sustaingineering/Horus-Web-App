@@ -58,12 +58,12 @@ describe('DataStore Functionality Testing', function () {
     }
     
     const TEST_DATA3 = {
-    user: {
-        email: 'test4@gmail.com',
-        password: 'testpass123',
-        username: 'test',
-        organization: 'UBC'
-    }
+      user: {
+          email: 'test4@gmail.com',
+          password: 'testpass123',
+          username: 'test',
+          organization: 'UBC'
+      }
     }
 
     // initializeDataStore Pass
@@ -78,6 +78,14 @@ describe('DataStore Functionality Testing', function () {
     // initializeDataStore Fail
 
     // insert fail?
+    it('insert fail', async function() {
+      try {
+      await datastore.insert(TEST_DATA2.user, "nonExistingDataStore");
+      assert.fail("should not get here");
+      } catch (e){
+        // expected result
+      }
+    })
 
     //if this test fails, it can be either insert or find that failed
     it('insert and find function pass', async function() {
@@ -244,13 +252,60 @@ describe('DataStore Functionality Testing', function () {
       let count = await datastore.count({status: "good"}, "userInfo")
       assert.equal(count, 3);
     })
+  
+/**
+ * StorePasswordToken Functionality Tests 
+ */
+
+    it('StorePasswordToken pass', async function() {
+      
+    })
 
     // getUserSensors Pass
 
     // getUserSensors Fail
 
+    it('Login User Success', async function() {
+      await datastore.newUser(TEST_DATA.user);
+      let newUser = await datastore.findUser(TEST_DATA.user.email);
+      assert.equal(newUser, true, 'User created successfully');
+    })
+
+    it('login user fail', async function(){
+      let x = {
+        email: 'happy@gmail.com',
+        password: 'testpass123',
+        username: 'test',
+      }
+      let response = await datastore.newUser(x);
+      assert.equal(response, undefined);
+    })
+
+    it('new Password pass', async function(){
+      let msg = {
+        email: 'happy@gmail.com',
+        password: 'newPass',
+      }
+      let response = await datastore.newPassword(msg);
+      assert.equal(response, true);
+    })
+
+    it('new Password fail with non-existing email', async function(){
+      let msg = {
+        email: 'nonExistingEmail@gmail.com',
+        password: 'newPass',
+      }
+      try {
+        await datastore.newPassword(msg);
+        assert.fail("should not get here");
+      } catch (e) {
+        // expected result
+      }
+    })
+
     it('Test for expire session', async function() {
       await datastore.expireSessions();
+      
     })
 
     // logOut Fail
