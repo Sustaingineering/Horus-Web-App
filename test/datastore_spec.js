@@ -3,6 +3,7 @@ const electronPath = require('electron') // Require Electron from the binaries i
 const path = require('path')
 const datastore = require('../electron/datastore.js')
 const assert = require('chai').assert;
+const log = require('../electron/modules/loginlogout.js')
 
 describe('DataStore Functionality Testing', function () {
     this.timeout(10000)
@@ -265,13 +266,13 @@ describe('DataStore Functionality Testing', function () {
 
     // getUserSensors Fail
 
-    it('Login User Success', async function() {
+    it('new User Success', async function() {
       await datastore.newUser(TEST_DATA.user);
       let newUser = await datastore.findUser(TEST_DATA.user.email);
       assert.equal(newUser, true, 'User created successfully');
     })
 
-    it('login user fail', async function(){
+    it('new user fail', async function(){
       let x = {
         email: 'happy@gmail.com',
         password: 'testpass123',
