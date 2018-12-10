@@ -5,7 +5,8 @@ const url = require('url');
 const datastore = require('./datastore');
 const { default: installExtension, REACT_DEVELOPER_TOOLS } = require('electron-devtools-installer');
 const resetPassword = require('./modules/resetPassword.js');
-const filewatch = require('./datasource/filewatch.js')
+const filewatch = require('./datasource/filewatch.js');
+const log = require('./modules/loginlogout.js');
 // Menu
 const { template } = require('./appMenu.js')
 
