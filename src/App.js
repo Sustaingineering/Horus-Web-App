@@ -13,11 +13,12 @@ import NewPassword from "./Pages/Auth/NewPassword"
 // Date Picker
 import DateFnsUtils from "material-ui-pickers/utils/date-fns-utils";
 import MuiPickersUtilsProvider from "material-ui-pickers/MuiPickersUtilsProvider";
+import TitleBar from "./Layout/TitleBar/titlebar.jsx";
 
-import "./App.css";
-
+// Electron
 const electron = window.require("electron");
 const ipcRenderer = electron.ipcRenderer;
+const remote = electron.remote;
 
 class App extends Component {
   constructor(props) {
@@ -50,6 +51,30 @@ class App extends Component {
     });
   };
 
+  displayMenu = event => {
+    ipcRenderer.send("display-app-menu", {
+      x: event.x,
+      y: event.y
+    });
+  };
+
+  minimizeMenu = () => {
+    remote.getCurrentWindow().minimize();
+  };
+
+  min_maxMenu = () => {
+    const currentWindow = remote.getCurrentWindow();
+    if (currentWindow.isMaximized()) {
+      currentWindow.unmaximize();
+    } else {
+      currentWindow.maximize();
+    }
+  };
+
+  closeApp = () => {
+    remote.app.quit();
+  };
+
   render() {
     const renderPlatform = this.state.authUser ? (
       <Fragment>
@@ -74,15 +99,14 @@ class App extends Component {
     );
 
     return (
-      <BrowserRouter>
-        <MuiPickersUtilsProvider utils={DateFnsUtils}>
-          <Switch>
-            {/* <Route path='/' exact component={LandingPage}/> */}
-            {/* <Route render={() => <h1>404 not found</h1>}/> */}
-          </Switch>
-          {renderPlatform}
-        </MuiPickersUtilsProvider>
-      </BrowserRouter>
+      <Fragment>
+        <TitleBar />
+        <BrowserRouter>
+          <MuiPickersUtilsProvider utils={DateFnsUtils}>
+            {renderPlatform}
+          </MuiPickersUtilsProvider>
+        </BrowserRouter>
+      </Fragment>
     );
   }
 }

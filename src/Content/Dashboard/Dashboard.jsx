@@ -20,14 +20,6 @@ import { mainTheme } from "../../assets/jss/mainStyle";
 const electron = window.require("electron");
 const ipcRenderer = electron.ipcRenderer;
 
-function TabContainer(props) {
-  return (
-    <Typography component="div" style={{ padding: 8 * 3 }}>
-      {props.children}
-    </Typography>
-  );
-}
-
 class Dashboard extends Component {
   state = {
     value: 0,
@@ -37,42 +29,33 @@ class Dashboard extends Component {
     tempData: []
   };
 
+  tick = () => {
+    ipcRenderer.send("get-sensor-data", ( {sensorId: this.props.sensorName}));
+  };
+
   componentWillMount = () => {
-    ipcRenderer.on("get-sensor-data" + this.props.sensorName, (e, msg) => {
+    this.interval = setInterval(this.tick.bind(this), 1000);
+    ipcRenderer.on("get-sensor-data", (e, msg) => {
+      console.log('renderer',msg.data[0], msg.data);
       if (msg.error) {
         // return alert(msg.error);
       } else {
-        // return alert(msg);
+        const voltageDummyData = msg.data[0];
+        const currentDummyData = msg.data[1];
+        const powerDummyData = msg.data[2];
+        const tempDummyData = msg.data[3];
+        this.setState({
+          voltageData: voltageDummyData,
+          currentData: currentDummyData,
+          powerData: powerDummyData,
+          tempData: tempDummyData
+        });
       }
     });
-    const voltageDummyData = [
-      { name: "11/9/18", voltage: 174 },
-      { name: "11/9/18", voltage: 134 },
-      { name: "11/9/18", voltage: 184 }
-    ];
-    const currentDummyData = [
-      { name: "11/9/18", current: 734 },
-      { name: "11/9/18", current: 740 },
-      { name: "11/9/18", current: 800 }
-    ];
-    const powerDummyData = [
-      { name: "11/9/18", power: 4 },
-      { name: "11/9/18", power: 5 },
-      { name: "11/9/18", power: 8 }
-    ];
-    const tempDummyData = [
-      { name: "11/9/18", opTemp: 74, suTemp: 2.2 },
-      { name: "12/9/18", opTemp: 64, suTemp: 0.7 },
-      { name: "13/9/18", opTemp: 12, suTemp: 1.6 },
-      { name: "14/9/18", opTemp: 79, suTemp: 0.8 },
-      { name: "15/9/18", opTemp: 82, suTemp: 5.1 }
-    ];
-    this.setState({
-      voltageData: voltageDummyData,
-      currentData: currentDummyData,
-      powerData: powerDummyData,
-      tempData: tempDummyData
-    });
+  };
+
+  componentWillUnmount = () => {
+    clearInterval(this.interval);
   };
 
   handleChange = (event, value) => {
@@ -88,7 +71,7 @@ class Dashboard extends Component {
         <MuiThemeProvider theme={mainTheme}>
           <div className={classes.root}>
             <Typography variant="display1" color="primary" gutterBottom>
-              Dashboard
+              {this.props.sensorName + " Dashboard"}
             </Typography>
             <MonitoringData />
             <br />
@@ -107,7 +90,7 @@ class Dashboard extends Component {
               <Tab className={classes.tab} label="Summary" />
             </Tabs>
             {value === 0 && (
-              <TabContainer>
+              <Fragment>
                 <Grid container spacing={24}>
                   <Grid item xs={12} sm={12} md={6}>
                     <Chart
@@ -146,10 +129,10 @@ class Dashboard extends Component {
                     />
                   </Grid>
                 </Grid>
-              </TabContainer>
+              </Fragment>
             )}
             {value === 1 && (
-              <TabContainer>
+              <Fragment>
                 <Grid container spacing={24}>
                   <Grid item xs={12} sm={12} md={6}>
                     <HistoryChart
@@ -188,9 +171,9 @@ class Dashboard extends Component {
                     />
                   </Grid>
                 </Grid>
-              </TabContainer>
+              </Fragment>
             )}
-            {value === 2 && <TabContainer>Summary</TabContainer>}
+            {value === 2 && <Fragment>Summary</Fragment>}
           </div>
         </MuiThemeProvider>
       </Fragment>

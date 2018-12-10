@@ -1,4 +1,3 @@
-const {ipcMain} = require('electron');
 //Node Emailer variables
 const nodemailer = require('nodemailer');
 const datastore = require('../datastore');
@@ -66,7 +65,7 @@ var verifyAndUpdatePassword = exports.verifyAndUpdatePassword = function(msg) {
       if(!isTokenValid) {
         return resolve({error: 'Wrong Verification Code entered'});
       }
-      //Reset password
+      //Reset passoword
       await datastore.newPassword({email: msg.email, password: msg.password});
       await datastore.clearPasswordTokens(msg.email);
       return resolve({success:"Password changed!"});

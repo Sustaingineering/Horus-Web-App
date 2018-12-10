@@ -1,11 +1,13 @@
-const {app, BrowserWindow, ipcMain} = require('electron');
+const {app, BrowserWindow, ipcMain, Menu} = require('electron');
 const isDev = require('electron-is-dev');
 const path = require('path');
 const url = require('url');
 const datastore = require('./datastore');
 const { default: installExtension, REACT_DEVELOPER_TOOLS } = require('electron-devtools-installer');
 const resetPassword = require('./modules/resetPassword.js');
-
+const filewatch = require('./datasource/filewatch.js')
+// Menu
+const { template } = require('./appMenu.js')
 
 let windows = {};
 
@@ -15,11 +17,17 @@ function createWindow() {
   console.log('[ INFO ] Creating Window')
   // Create the browser window.
   windows.mainWindow = new BrowserWindow({
-    width: 900,
-    height: 680,
-    show: false
+    width: 1024,
+    height: 728,
+    minWidth: 600, // set a min width!
+    minHeight: 300, // and a min height!
+    // Remove the window frame from windows applications
+    frame: false,
+    // Hide the titlebar from MacOS applications while keeping the stop lights
+    // titleBarStyle: 'hidden',
   });
 
+  //windows.mainWindow.webContents.openDevTools()
   // Lozd the index.html of the app.
   windows.mainWindow.loadURL(isDev ?
     'http://localhost:3000' :
@@ -64,7 +72,21 @@ ipcMain.on('log-out', async (e, msg) => {
     return e.sender.send('log-out', {"log-out": true});
   } catch(error) {
     console.log(`[ ERROR ] log-out: ${error}`)
-    return e.sender.send('log-out', {"error": error});
+    return e.sender.send('lod-out', {"error": error});
+  }
+})
+
+
+ipcMain.on('get-sensor-data', async (e, msg) => {
+  try { 
+    if (!filewatch.getNeedsUpdate()) {
+      return
+    }
+    let data = await datastore.getRealTime({pumpId: msg.sensorId})
+    e.sender.send('get-sensor-data', {data: data})
+    filewatch.setNeedsUpdate(false)
+  } catch(error) {
+    e.sender.send('get-sensor-data', false)
   }
 })
 
@@ -118,7 +140,7 @@ ipcMain.on('verify-and-update-password', async (e, msg) => {
   }catch(error) {
     return e.sender.send('verify-and-update-password', error);
   }
-}) 
+})
 
 //TODO: Verify it works
 ipcMain.on('update-sidebar', async (e, msg) => {
@@ -153,6 +175,8 @@ app.on('ready', async () => {
     console.log(`[INFO] Added Extension: ${name}`);
     console.log(`[ INFO ] Initializing datastore`)
     await datastore.initializeDataStore()
+    console.log(`[ INFO ] Starting File Watch Thread`)
+    //TODO: file watch thread should be in its own function, that function should be called here
     console.log(`[ INFO ] checking active sessions`)
     await checkActiveSession()
   } catch(error) {
@@ -181,3 +205,13 @@ app.on('activate', () => {
     createWindow();
   }
 });
+
+/**
+ * Create titleBar menu
+ */
+ipcMain.on('display-app-menu', (e, arg) => {
+  const appMenu = Menu.buildFromTemplate(template)
+  if(windows.mainWindow) {
+    appMenu.popup(windows.mainWindow, arg.x, arg.y)
+  }
+})

@@ -30,7 +30,6 @@ var initializeDataStore = exports.initializeDataStore = () => {
         udb.userInfo.find({
             _id: '0000000000000001'
         }, (error, docs) => {
-            console.log('res', error, docs)
             if (error) {
                 return reject(error)
             }
@@ -292,10 +291,12 @@ exports.newPassword = function (msg) {
     })
 }
 
+//Updated to deal with JSON format
 exports.storeSensorData = function (data) {
     return new Promise(async (resolve, reject) => {
         try {
             data.createdAt = Math.round(new Date().getTime() / 1000);
+            //TODO: Check for new User ID
             data.userId = user_id;
             let newDoc = await insert(data, "dataCollection");
 
@@ -311,6 +312,11 @@ var addSensor = exports.addSensor = function (sensorId) {
 
 }
 
+//Testing Purposes
+exports.initializeUserId = function (userID) {
+    user_id = userID;
+} 
+
 exports.getSummaryData = function (pumpId) {
     return new Promise((resolve, reject) => {
         try {
@@ -318,7 +324,7 @@ exports.getSummaryData = function (pumpId) {
             udb['dataCollection']
                 .findOne({
                     userId: userId,
-                    pumpId: pumpId
+                    "data.pumpId": pumpId
                 })
                 .sort({
                     createdAt: -1
@@ -336,16 +342,16 @@ exports.getSummaryData = function (pumpId) {
     })
 }
 
-exports.getRealTime = function (data) {
+exports.getRealTime = function (data, n) {
     return new Promise((resolve, reject) => {
         try {
             let userId = user_id;
             let pumpId = data.pumpId;
-            let count = 5
+            let count = n ? n : 5;
             udb['dataCollection']
                 .find({
                     userId: userId,
-                    pumpId: pumpId
+                    "data.pumpId": pumpId
                 })
                 .sort({
                     createdAt: -1
@@ -363,12 +369,13 @@ exports.getRealTime = function (data) {
                     let suTempList = new Array();
                     let waterBreakerList = new Array();
                     for (i = data.length - 1; i >= 0; i--) {
-                        voltageList.push(data[i].voltage)
-                        currentList.push(data[i].current)
-                        powerList.push(data[i].power)
-                        opTempList.push(data[i].opTemp)
-                        suTempList.push(data[i].suTemp)
-                        waterBreakerList.push(data[i].waterBreaker)
+                        //Update Data Referencing from NEW JSON File
+                        voltageList.push({ name: data[i].createdAt, voltage: data[i].data.loadVoltage })
+                        currentList.push({ name: data[i].createdAt, current: data[i].data.loadCurrent })
+                        powerList.push({ name: data[i].createdAt, power: data[i].data.power })
+                        opTempList.push({ name: data[i].createdAt, opTemp: data[i].data.atmosphericTemperature })
+                        suTempList.push({ name: data[i].createdAt, suTemp: data[i].data.solarPanelTemperature })
+                        waterBreakerList.push({ name: data[i].createdAt, waterBreaker: data[i].data.waterBreakerFlag })
                     }
                     let response = [
                         voltageList,
@@ -398,7 +405,8 @@ exports.getHistoryData = function (data) {
             } = data
             udb['dataCollection'].find({
                     userId: userId,
-                    pumpId: pumpId,
+                    "data.pumpId": pumpId,
+                    //TODO: Check created At new format
                     createdAt: {
                         $lte: to,
                         $gte: from
@@ -423,12 +431,13 @@ exports.getHistoryData = function (data) {
                     let labels = new Array();
                     for (i = data.length - 1; i >= 0; i--) {
                         labels.push(i.toString())
-                        voltageList.push(data[i].voltage)
-                        currentList.push(data[i].current)
-                        powerList.push(data[i].power)
-                        opTempList.push(data[i].opTemp)
-                        suTempList.push(data[i].suTemp)
-                        waterBreakerList.push(data[i].waterBreaker)
+                        //Update Data Referencing from NEW JSON File
+                        voltageList.push(data[i].data.loadVoltage)
+                        currentList.push(data[i].data.loadCurrent)
+                        powerList.push(data[i].data.power)
+                        opTempList.push(data[i].data.atmosphericTemperature)
+                        suTempList.push(data[i].data.solarPanelTemperature)
+                        waterBreakerList.push(data[i].data.waterBreakerFlag)
                     }
                     let response = [
                         voltageList,
@@ -447,6 +456,7 @@ exports.getHistoryData = function (data) {
         }
     })
 }
+
 //wrappers
 
 var find = exports.find = function (object, tableName) {

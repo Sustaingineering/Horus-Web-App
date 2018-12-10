@@ -84,111 +84,112 @@ class NavBarMenu extends Component {
 
     return (
       <Fragment>
-        <MuiThemeProvider theme={mainTheme}>
-          <Drawer
-            variant="permanent"
-            classes={{
-              paper: classNames(
-                classes.drawerPaper,
-                !this.props.open && classes.drawerPaperClose
-              )
-            }}
-            open={this.props.openMenu}
-          >
-            <div className={classes.toolbar}>
-              <IconButton
-                className={classes.chevron}
-                onClick={this.handleDrawerClose.bind(this)}
-              >
-                {theme.direction === "rtl" ? (
-                  <ChevronRightIcon />
-                ) : (
-                  <ChevronLeftIcon />
-                )}
-              </IconButton>
-            </div>
-            <List>
-              <Link style={style} to="/dashboard">
-                <ListItem button onClick={this.handleDrawerClose}>
+        <div className={classes.root}>
+          <MuiThemeProvider theme={mainTheme}>
+            <Drawer
+              variant="permanent"
+              classes={{
+                paper: classNames(
+                  classes.drawerPaper,
+                  !this.props.open && classes.drawerPaperClose
+                )
+              }}
+              open={this.props.openMenu}
+            >
+              <div className={classes.toolbar}>
+                <IconButton
+                  className={classes.chevron}
+                  onClick={this.handleDrawerClose.bind(this)}
+                >
+                  {theme.direction === "rtl" ? (
+                    <ChevronRightIcon />
+                  ) : (
+                    <ChevronLeftIcon />
+                  )}
+                </IconButton>
+              </div>
+              <List>
+                <Link style={style} to="/dashboard">
+                  <ListItem button onClick={this.handleDrawerClose}>
+                    <ListItemIcon>
+                      <Dashboard style={style} />
+                    </ListItemIcon>
+                    <ListItemText
+                      className={classes.listItems}
+                      primary={
+                        <Typography type="body2" style={{ color: "#FFFFFF" }}>
+                          Dashboard
+                        </Typography>
+                      }
+                    />
+                  </ListItem>
+                </Link>
+
+                <ListItem style={style} button onClick={this.handleClick}>
                   <ListItemIcon>
-                    <Dashboard style={style} />
+                    <GraphicEQ style={style} />
                   </ListItemIcon>
                   <ListItemText
-                    className={classes.listItems}
+                    key="SensorList"
+                    inset
                     primary={
                       <Typography type="body2" style={{ color: "#FFFFFF" }}>
-                        Dashboard
+                        Sensor
                       </Typography>
                     }
                   />
+                  {this.state.open ? <ExpandLess /> : <ExpandMore />}
                 </ListItem>
-              </Link>
 
-              <ListItem style={style} button onClick={this.handleClick}>
-                <ListItemIcon>
-                  <GraphicEQ style={style} />
-                </ListItemIcon>
-                <ListItemText
-                  key="SensorList"
-                  inset
-                  primary={
-                    <Typography type="body2" style={{ color: "#FFFFFF" }}>
-                      Sensor
-                    </Typography>
-                  }
-                />
-                {this.state.open ? <ExpandLess /> : <ExpandMore />}
-              </ListItem>
-
-              <Collapse in={this.state.open} timeout="auto" unmountOnExit>
-                <List component="div" disablePadding>
-                  {this.state.sensorsList.map(sensor => (
-                    <Link key={sensor.name} style={style} to={sensor.name}>
-                      <ListItem
-                        key={sensor.name}
-                        button
-                        onClick={this.handleDrawerClose}
-                      >
-                        <ListItemIcon>
-                          <Dashboard style={style} />
-                        </ListItemIcon>
-                        <ListItemText
-                          className={classes.listItems}
-                          primary={
-                            <Typography
-                              type="body2"
-                              style={{ color: "#FFFFFF" }}
-                            >
-                              {sensor.name}
-                            </Typography>
-                          }
-                        />
-                      </ListItem>
-                    </Link>
-                  ))}
-                </List>
-              </Collapse>
-            </List>
-            <Divider className={classes.sidebarDivider} />
-            <List className={classes.listItems}>
-              <Link style={style} to="/config">
-                <ListItem button onClick={this.handleDrawerClose}>
-                  <ListItemIcon>
-                    <Settings style={style} />
-                  </ListItemIcon>
-                  <ListItemText
-                    className={classes.listItems}
-                    primary={
-                      <Typography type="body2" style={{ color: "#FFFFFF" }}>
-                        Config
-                      </Typography>
-                    }
-                  />
-                </ListItem>
-              </Link>
-            </List>
-          </Drawer>
-        </MuiThemeProvider>
+                <Collapse in={this.state.open} timeout="auto" unmountOnExit>
+                  <List component="div" disablePadding>
+                    {this.state.sensorsList.map(sensor => (
+                      <Link key={sensor.name} style={style} to={sensor.name}>
+                        <ListItem
+                          key={sensor.name}
+                          button
+                          onClick={this.handleDrawerClose}
+                        >
+                          <ListItemIcon>
+                            <Dashboard style={style} />
+                          </ListItemIcon>
+                          <ListItemText
+                            className={classes.listItems}
+                            primary={
+                              <Typography
+                                type="body2"
+                                style={{ color: "#FFFFFF" }}
+                              >
+                                {sensor.name}
+                              </Typography>
+                            }
+                          />
+                        </ListItem>
+                      </Link>
+                    ))}
+                  </List>
+                </Collapse>
+              </List>
+              <Divider className={classes.sidebarDivider} />
+              <List className={classes.settings}>
+                <Link style={style} to="/config">
+                  <ListItem button onClick={this.handleDrawerClose}>
+                    <ListItemIcon>
+                      <Settings style={style} />
+                    </ListItemIcon>
+                    <ListItemText
+                      primary={
+                        <Typography type="body2" style={{ color: "#FFFFFF" }}>
+                          Config
+                        </Typography>
+                      }
+                    />
+                  </ListItem>
+                </Link>
+              </List>
+            </Drawer>
+          </MuiThemeProvider>
+        </div>
       </Fragment>
     );
   }

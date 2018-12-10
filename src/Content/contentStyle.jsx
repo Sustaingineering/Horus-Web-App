@@ -5,7 +5,8 @@ import { backgroundColor } from "../assets/jss/mainStyle";
 const contentStyle = theme => ({
   root: {
     position: "relative",
-    minHeight: "calc(100vh - 70px)",
+    minHeight: "calc(100vh - 160px)",
+    paddingTop: 60,
     paddingBottom: "30px",
     backgroundColor: backgroundColor
   },
