@@ -4,6 +4,7 @@ const datastore = require('../datastore');
 
 //JSON Lines 
 const jsonlines = require('jsonlines');
+var parser = jsonlines.parse({ emitInvalidLines: true })
 
 var startByte = 0;
 var initiatedRead = false;
@@ -29,8 +30,8 @@ try {
         start: startByte,
         end: stats.size
       })
-        .pipe(jsonlines.parse())
-        .on('data', async data => {
+      .pipe(jsonlines.parse({ emitInvalidLines: true }))
+      .on('data', async data => {
           startByte = stats.size;
           if (!initiatedRead) {
             lastRead = data;
@@ -60,6 +61,12 @@ try {
 } catch(error) {
   console.log(error)
 }
+
+parser.on('invalid-line', function (err) {
+  console.log('Got text:', err.source)
+})
+
+
 
 exports.getNeedsUpdate = () => {
   return needsUpdate
