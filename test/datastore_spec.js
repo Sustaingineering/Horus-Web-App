@@ -5,7 +5,7 @@ const datastore = require('../electron/datastore.js')
 const assert = require('chai').assert;
 const log = require('../electron/modules/loginlogout.js')
 
-describe('DataStore Functionality Testing', function () {
+describe('Datastore Wrapper Functions Testing', function () {
     this.timeout(10000)
   
     // beforeEach(function () {
@@ -90,11 +90,12 @@ describe('DataStore Functionality Testing', function () {
 
     //if this test fails, it can be either insert or find that failed
     it('insert and find function pass', async function() {
-      var l = await datastore.insert(TEST_DATA2.user, "userInfo");
-      let Email = await datastore.find({email: TEST_DATA2.user.email}, 'userInfo');
+      const data = {email: "bob@gmail.com", _id: "9Bf2fRTvStycMig4"}
+      var l = await datastore.insert(data, "userInfo");
+      let Email = await datastore.find({email: data.email}, 'userInfo');
       // need to get the first object as find function returns an array of objects 
       let a = Email[0];
-      assert.equal(JSON.stringify(a), JSON.stringify(l));
+      assert.equal(JSON.stringify(data), JSON.stringify(l));
     })
 
     it('find function fail', async function() {
@@ -106,8 +107,8 @@ describe('DataStore Functionality Testing', function () {
     })
     
     it('find function for multiple matches pass', async function() {
-      const data = {email: "123@hotmail.com", _id: "12345"}
-      const data1 = {email: "123@hotmail.com", _id: "23456"}
+      const data = {email: "123@hotmail.com", _id: "9B1WdRTvStycVGg4"}
+      const data1 = {email: "123@hotmail.com", _id: "9B1WdRTvStsdVg4"}
       var x = await datastore.insert(data, "userInfo");
       var y = await datastore.insert(data1, "userInfo");
       
@@ -115,8 +116,8 @@ describe('DataStore Functionality Testing', function () {
 
       let a = Email[0];
       let b = Email[1];
-      assert.equal(JSON.stringify(a), JSON.stringify(x));
-      assert.equal(JSON.stringify(b), JSON.stringify(y));
+      assert.equal(JSON.stringify(a), JSON.stringify(y));
+      assert.equal(JSON.stringify(b), JSON.stringify(x));
     })
 
 /**
@@ -264,45 +265,7 @@ describe('DataStore Functionality Testing', function () {
 
     // getUserSensors Pass
 
-    // getUserSensors Fail
-
-    it('new User Success', async function() {
-      await datastore.newUser(TEST_DATA.user);
-      let newUser = await datastore.findUser(TEST_DATA.user.email);
-      assert.equal(newUser, true, 'User created successfully');
-    })
-
-    it('new user fail', async function(){
-      let x = {
-        email: 'happy@gmail.com',
-        password: 'testpass123',
-        username: 'test',
-      }
-      let response = await datastore.newUser(x);
-      assert.equal(response, undefined);
-    })
-
-    it('new Password pass', async function(){
-      let msg = {
-        email: 'happy@gmail.com',
-        password: 'newPass',
-      }
-      let response = await datastore.newPassword(msg);
-      assert.equal(response, true);
-    })
-
-    it('new Password fail with non-existing email', async function(){
-      let msg = {
-        email: 'nonExistingEmail@gmail.com',
-        password: 'newPass',
-      }
-      try {
-        await datastore.newPassword(msg);
-        assert.fail("should not get here");
-      } catch (e) {
-        // expected result
-      }
-    })
+    // getUserSensors Fail\
 
     it('Test for expire session', async function() {
       await datastore.expireSessions();
