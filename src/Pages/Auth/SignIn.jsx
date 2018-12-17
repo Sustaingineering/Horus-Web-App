@@ -50,6 +50,7 @@ class SignInPage extends Component {
     const tpas = this.state.password;
     const username = this.state.username;
     const tisRemembered = this.state.isRemembered;
+    console.log("sending")
     ipcRenderer.send("log-in", {
       password: tpas,
       username: username,
