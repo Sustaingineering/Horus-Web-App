@@ -1,7 +1,7 @@
 const datastore = require('../datastore');
 
 //TODO: Check
-var loginUser = exports.loginUser = function(userName, password, isRemember) {
+exports.loginUser = function(userName, password, isRemember) {
     return new Promise(async (resolve, reject) => {
         try {    
             let user;
@@ -31,24 +31,13 @@ var loginUser = exports.loginUser = function(userName, password, isRemember) {
             }
             if (setting.length === 0) {
                 uSettDoc.created_at = Math.round((new Date()).getTime() / 1000);
-
-                udb.userSettings.insert(uSettDoc, (error, newDoc) => {
-                    if (error) {
-                        return reject(error)
-                    }
+                    await datastore.insert(uSettDoc, "userSettings")
                     return resolve(true);
-                });
             } else {
                 uSettDoc.updated_at = Math.round((new Date()).getTime() / 1000);
-
-                udb.userSettings.update(setting[0], uSettDoc, {}, (error, settingReplaced) => {
-                    if (error) {
-                        return reject(error)
-                    }
-                    return resolve(true)
-                })
+                    await datastore.update(setting[0], uSettDoc, {}, "userSettings");
+                    return resolve(true);
             }
-
         } catch (error) {
             if (error) {
                 return reject(error)
@@ -57,7 +46,7 @@ var loginUser = exports.loginUser = function(userName, password, isRemember) {
     })
 }
 
-var logOut = exports.logOut = function () {
+exports.logOut = function () {
     return new Promise(async (resolve, reject) => {
         try {
             let loggedOutSession = await datastore.update({
@@ -71,7 +60,7 @@ var logOut = exports.logOut = function () {
             }, {
                 multi: true
             }, 'userSettings')
-            clearUserData();
+            datastore.clearUserData();
             return resolve(true);
         } catch (error) {
             return reject(error);

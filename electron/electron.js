@@ -69,7 +69,7 @@ ipcMain.on('is-active-session', async (e, msg) => {
 ipcMain.on('log-out', async (e, msg) => {
   try {
     user = "";
-    await datastore.logOut();
+    await log.logOut();
     return e.sender.send('log-out', {"log-out": true});
   } catch(error) {
     console.log(`[ ERROR ] log-out: ${error}`)
@@ -113,7 +113,7 @@ ipcMain.on('log-in', async (e, msg) => {
   try {
     console.log("Login IPC Bus");
     msg.user = msg.user || msg.email
-    let isLoggedIn = await datastore.loginUser(msg.user, msg.password, msg.isRemembered); //TODO: Ensure msg order is correct
+    let isLoggedIn = await log.loginUser(msg.user, msg.password, msg.isRemembered); //TODO: Ensure msg order is correct
     if (!isLoggedIn) {
       e.sender.send('log-in', {error: "Incorrect username or password"});
       return;
