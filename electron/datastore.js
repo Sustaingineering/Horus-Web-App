@@ -22,6 +22,10 @@ const udb = {
     passwordTokens: new Datastore({
         filename: `${__dirname}/datastore/${DATA_ENV}/passwordTokens`,
         autoload: true
+    }),
+    userSensors: new Datastore({
+        filename: `${__dirname}/datastore/${DATA_ENV}/userSensors`,
+        autoload: true
     })
 };
 
@@ -241,6 +245,23 @@ exports.loginUser = function(userName, password, isRemember) {
     })
 }
 
+exports.findUserSensor = function(userId, sensorId) {
+    return new Promise(async (resolve, reject) => {
+        try {
+            //Query database for sensor and user id
+            const sensor = await find({
+                userId: userId,
+                sensorId: sensorId
+            }, 'userSensors');
+            if(sensor.length === 0) {return resolve(false)}
+            return resolve(true)
+        } catch (error){
+            console.log(error);
+            return reject(error);
+        }  
+    })
+}
+
 exports.newUser = function (msg) {
     return new Promise(async (resolve, reject) => {
         try {
@@ -308,8 +329,19 @@ exports.storeSensorData = function (data) {
     })
 }
 
-var addSensor = exports.addSensor = function (sensorId) {
-
+var addUserSensor = exports.addUserSensor = function (userId, sensorId) {
+    return new Promise(async (resolve, reject) => {
+        try {
+            let data = {}
+            data.userId = userId;
+            data.sensorId = sensorId;
+            data.createdAt = Math.round(new Date().getTime() / 1000);
+            await insert(data, 'userSensors');
+            return resolve();
+        } catch(error) {
+            return reject(error)
+        }
+    })
 }
 
 //Testing Purposes

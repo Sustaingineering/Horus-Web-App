@@ -14,7 +14,7 @@ var get = exports.get = (key) => {
             if (value) {
                 return resolve(value)
             }
-            return reject(false)
+            return resolve(false)
         } catch (error) {
             console.log(error)
             return reject(error)
