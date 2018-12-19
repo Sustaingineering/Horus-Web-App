@@ -58,7 +58,7 @@ var insertSensorToCache = exports.insertSensorToCache = (userId, sensorId) => {
             if (result) {
                 return resolve(result)
             }
-            return reject(false)
+            return resolve(false)
         } catch (error) {
             console.log(error)
             return reject(error)
