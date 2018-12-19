@@ -1,5 +1,6 @@
 const Datastore = require('nedb');
 const _ = require('lodash');
+const sensors = require('./modules/sensors.js');
 
 var user_id = exports.user_id = null;
 let user_sensors = {};
@@ -316,6 +317,7 @@ exports.newPassword = function (msg) {
 exports.storeSensorData = function (data) {
     return new Promise(async (resolve, reject) => {
         try {
+            sensors.identifySensor(user_id, data.data.pumpId)
             data.createdAt = Math.round(new Date().getTime() / 1000);
             //TODO: Check for new User ID
             data.userId = user_id;
