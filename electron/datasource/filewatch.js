@@ -66,8 +66,6 @@ parser.on('invalid-line', function (err) {
   console.log('Got text:', err.source)
 })
 
-
-
 exports.getNeedsUpdate = () => {
   return needsUpdate
 }

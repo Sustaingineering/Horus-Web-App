@@ -1,5 +1,6 @@
 const Datastore = require('nedb');
 const _ = require('lodash');
+const sensors = require('./modules/sensors.js');
 
 var user_id = exports.user_id = null;
 let user_sensors = {};
@@ -21,6 +22,10 @@ const udb = {
     }),
     passwordTokens: new Datastore({
         filename: `${__dirname}/datastore/${DATA_ENV}/passwordTokens`,
+        autoload: true
+    }),
+    userSensors: new Datastore({
+        filename: `${__dirname}/datastore/${DATA_ENV}/userSensors`,
         autoload: true
     })
 };
@@ -68,9 +73,13 @@ exports.findUser = function (email) {
 exports.getUserSensors = function (userId) {
     return new Promise((resolve, reject) => {
         try {
-
+            let sensors = await find({
+                userId: userId
+            }, 'userSensors')
+            return resolve(sensors)
         } catch (error) {
-
+            console.log(error);
+            return reject(error);
         }
     })
 }
@@ -241,6 +250,23 @@ exports.loginUser = function(userName, password, isRemember) {
     })
 }
 
+exports.findUserSensor = function(userId, sensorId) {
+    return new Promise(async (resolve, reject) => {
+        try {
+            //Query database for sensor and user id
+            const sensor = await find({
+                userId: userId,
+                sensorId: sensorId
+            }, 'userSensors');
+            if(sensor.length === 0) {return resolve(false)}
+            return resolve(true)
+        } catch (error){
+            console.log(error);
+            return reject(error);
+        }  
+    })
+}
+
 exports.newUser = function (msg) {
     return new Promise(async (resolve, reject) => {
         try {
@@ -295,6 +321,7 @@ exports.newPassword = function (msg) {
 exports.storeSensorData = function (data) {
     return new Promise(async (resolve, reject) => {
         try {
+            sensors.identifySensor(user_id, data.data.pumpId)
             data.createdAt = Math.round(new Date().getTime() / 1000);
             //TODO: Check for new User ID
             data.userId = user_id;
@@ -308,8 +335,19 @@ exports.storeSensorData = function (data) {
     })
 }
 
-var addSensor = exports.addSensor = function (sensorId) {
-
+exports.addUserSensor = function (userId, sensorId) {
+    return new Promise(async (resolve, reject) => {
+        try {
+            let data = {}
+            data.userId = userId;
+            data.sensorId = sensorId;
+            data.createdAt = Math.round(new Date().getTime() / 1000);
+            await insert(data, 'userSensors');
+            return resolve();
+        } catch(error) {
+            return reject(error)
+        }
+    })
 }
 
 //Testing Purposes
