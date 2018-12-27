@@ -79,9 +79,6 @@ ipcMain.on('log-out', async (e, msg) => {
 
 ipcMain.on('get-sensor-data', async (e, msg) => {
   try { 
-    if (!filewatch.getNeedsUpdate()) {
-      return
-    }
     let data = await datastore.getRealTime({pumpId: msg.sensorId})
     e.sender.send('get-sensor-data', {data: data})
     filewatch.setNeedsUpdate(false)

@@ -71,7 +71,7 @@ exports.findUser = function (email) {
 }
 
 exports.getUserSensors = function (userId) {
-    return new Promise((resolve, reject) => {
+    return new Promise(async (resolve, reject) => {
         try {
             let sensors = await find({
                 userId: userId
