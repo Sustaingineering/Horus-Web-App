@@ -1,18 +1,33 @@
 //Node Emailer variables
 const nodemailer = require('nodemailer');
 const datastore = require('../datastore');
+
+//Google Account
+// var transporter = nodemailer.createTransport({
+//   service: 'gmail',
+//   auth: {
+//     user: 'horus.sustaingineering@gmail.com',
+//     pass: 'horus4ever!'
+//   }
+// });
+//Outlook Account
 var transporter = nodemailer.createTransport({
-  service: 'gmail',
+  service: 'outlook',
   auth: {
-    user: 'horus.sustaingineering@gmail.com',
+    user: 'horus.sustaingineering@outlook.com',
     pass: 'horus4ever!'
   }
 });
 
 //Verification Code
 
+//Choose between Google and Outlook account
+// const emailTemplate = {
+//   from: 'horus.sustaingineering@gmail.com',
+//   subject: 'Reset your Password Verification Code',
+// };
 const emailTemplate = {
-  from: 'horus.sustaingineering@gmail.com',
+  from: 'horus.sustaingineering@outlook.com',
   subject: 'Reset your Password Verification Code',
 };
 
