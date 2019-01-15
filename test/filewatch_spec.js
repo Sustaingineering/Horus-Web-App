@@ -39,17 +39,17 @@ var waitForDBData = async () => {
     });
 }
 
-describe('Filewatch Test', async function () {
-    this.timeout(10000);
-    it('Starts the JSON Parser and writes to the JSON File to verify new Database entry', async function() {
-        let write = await writeJSONFile();
-        let newDBEntry = await waitForDBData();
-        assert.deepStrictEqual(newDBEntry.data, TEST_DATA.data);
-        setTimeout(() =>{
-            process.exit();
-        }, 1000);
-    });
-});
+// describe('Filewatch Test', async function () {
+//     this.timeout(10000);
+//     it('Starts the JSON Parser and writes to the JSON File to verify new Database entry', async function() {
+//         let write = await writeJSONFile();
+//         let newDBEntry = await waitForDBData();
+//         assert.deepStrictEqual(newDBEntry.data, TEST_DATA.data);
+//         setTimeout(() =>{
+//             process.exit();
+//         }, 1000);
+//     });
+// });
 
 const TEST_DATA = {
     number: '+16041234567',

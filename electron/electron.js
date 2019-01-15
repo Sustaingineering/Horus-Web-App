@@ -100,7 +100,7 @@ ipcMain.on('sign-up', async (e, msg) => {
       return
     }
     else {
-      await datastore.newUser(msg)
+      await log.newUser(msg)
       e.sender.send('is-new-user', {success: "Account successfully created."})
       console.log("created new user")
     }
