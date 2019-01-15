@@ -67,6 +67,8 @@ describe('Datastore Wrapper Functions Testing', function () {
       }
     }
 
+    const FAKE_EMAIL = 'nomail@gmail.com';
+
     // initializeDataStore Pass
     it('initializeDataStore pass', async function() {
       await datastore.initializeDataStore()
@@ -74,6 +76,7 @@ describe('Datastore Wrapper Functions Testing', function () {
       let find = await datastore.find({_id: "0000000000000001"}, 'userInfo');
       var id = [ { _id: '0000000000000001' } ]
       assert.equal(JSON.stringify(find), JSON.stringify(id));
+
     })
 
     // initializeDataStore Fail
@@ -213,13 +216,13 @@ describe('Datastore Wrapper Functions Testing', function () {
     })
 
     it('findUser fail on Database containing multiple values', async function() {
-      await datastore.newUser(TEST_DATA3.user);
-      let findUser = await datastore.findUser('nomail@gmail.com')
+      await log.newUser(TEST_DATA3.user);
+      let findUser = await datastore.findUser(FAKE_EMAIL)
       assert.equal(findUser, false);
     })
     
     it('findUser Pass on Database containing a single value', async function() {
-      await datastore.newUser(TEST_DATA.user);
+      await log.newUser(TEST_DATA.user);
       let findUser = await datastore.findUser(TEST_DATA.user.email)
       assert.equal(findUser, true);
     })
@@ -260,7 +263,34 @@ describe('Datastore Wrapper Functions Testing', function () {
  */
 
     it('StorePasswordToken pass', async function() {
-      
+      await datastore.storePasswordToken(1000 , TEST_DATA.user.email)
+      let data = {
+        email: TEST_DATA.user.email,
+        isValid: true,
+        token: 1000,
+
+      }
+      let result = await datastore.find(data, 'passwordTokens');
+      // console.log(JSON.stringify(result[0].email))
+      assert.isTrue(result[0].email === TEST_DATA.user.email && result[0].isValid && result[0].token == 1000)
+    })
+
+    it('StorePasswordToken using existing email', async function() {
+      await datastore.storePasswordToken(1050 , TEST_DATA.user.email)
+      let data = {
+        email: TEST_DATA.user.email,
+        isValid: true,
+        token: 1050,
+      }
+      let oldData = {
+        email: TEST_DATA.user.email,
+        isValid: false,
+        token: 1000,
+      }
+      let result = await datastore.find(data, 'passwordTokens');
+      let result2 = await datastore.find(oldData, 'passwordTokens');
+      assert.isTrue(result[0].email === TEST_DATA.user.email && result[0].isValid && result[0].token == 1050)
+      assert.isTrue(result2[0].email === TEST_DATA.user.email && !result2[0].isValid)
     })
 
     // getUserSensors Pass
@@ -268,7 +298,7 @@ describe('Datastore Wrapper Functions Testing', function () {
     // getUserSensors Fail\
 
     it('Test for expire session', async function() {
-      await datastore.expireSessions();
+      // await datastore.expireSessions();
       
     })
 

@@ -1,3 +1,5 @@
+// login/logout and signin functions
+
 const datastore = require('../datastore');
 
 //TODO: Check
@@ -64,6 +66,27 @@ exports.logOut = function () {
             return resolve(true);
         } catch (error) {
             return reject(error);
+        }
+    })
+}
+
+exports.newUser = function (msg) {
+    return new Promise(async (resolve, reject) => {
+        try {
+            // Document object declaration
+            var uInfoDoc = {
+                email: msg.email,
+                password: msg.password,
+                username: msg.username,
+                organization: msg.organization,
+                created_at: Math.round((new Date()).getTime() / 1000),
+            };
+            // Insert document into database
+            await datastore.insert(uInfoDoc, "userInfo")
+            return resolve();
+        } catch (error) {
+            console.log(error)
+            return reject(error)
         }
     })
 }

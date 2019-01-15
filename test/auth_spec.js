@@ -1,5 +1,6 @@
 const assert = require('chai').assert;
 const datastore = require('../electron/datastore.js');
+const log = require('../electron/modules/loginlogout.js')
 
 
 describe('Authentication Functionality Testing', function () {
@@ -7,7 +8,7 @@ describe('Authentication Functionality Testing', function () {
 
 
   it('new User Success', async function() {
-    await datastore.newUser(TEST_DATA.user);
+    await log.newUser(TEST_DATA.user);
     let newUser = await datastore.findUser(TEST_DATA.user.email);
     assert.equal(newUser, true, 'User created successfully');
   })
@@ -18,7 +19,7 @@ describe('Authentication Functionality Testing', function () {
       password: 'testpass123',
       username: 'test',
     }
-    let response = await datastore.newUser(x);
+    let response = await log.newUser(x);
     assert.equal(response, undefined);
   })
 

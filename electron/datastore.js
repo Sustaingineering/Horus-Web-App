@@ -171,27 +171,6 @@ exports.getUserOrganization = function() {
     });
 };
 
-exports.newUser = function (msg) {
-    return new Promise(async (resolve, reject) => {
-        try {
-            // Document object declaration
-            var uInfoDoc = {
-                email: msg.email,
-                password: msg.password,
-                username: msg.username,
-                organization: msg.organization,
-                created_at: Math.round((new Date()).getTime() / 1000),
-            };
-            // Insert document into database
-            let newDoc = await insert(uInfoDoc, "userInfo")
-            return resolve();
-        } catch (error) {
-            console.log(error)
-            return reject(error)
-        }
-    })
-}
-
 //TODO: Check
 //Update Password
 exports.newPassword = function (msg) {
