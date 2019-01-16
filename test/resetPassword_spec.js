@@ -59,7 +59,6 @@ describe('Account Functionality Testing', function () {
     let passwordReset = await resetPassword.verifyAndUpdatePassword({email: TEST_DATA.user.email, token: 'wrong token', password: TEST_DATA.user.password});
     assert.equal(passwordReset.error, 'Wrong Verification Code entered')
   })
-
 })
 
 const TEST_DATA = {

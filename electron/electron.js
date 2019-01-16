@@ -5,7 +5,8 @@ const url = require('url');
 const datastore = require('./datastore');
 const { default: installExtension, REACT_DEVELOPER_TOOLS } = require('electron-devtools-installer');
 const resetPassword = require('./modules/resetPassword.js');
-const filewatch = require('./datasource/filewatch.js')
+const filewatch = require('./datasource/filewatch.js');
+const log = require('./modules/loginlogout.js');
 // Menu
 const { template } = require('./appMenu.js')
 
@@ -68,7 +69,7 @@ ipcMain.on('is-active-session', async (e, msg) => {
 ipcMain.on('log-out', async (e, msg) => {
   try {
     user = "";
-    await datastore.logOut();
+    await log.logOut();
     return e.sender.send('log-out', {"log-out": true});
   } catch(error) {
     console.log(`[ ERROR ] log-out: ${error}`)
@@ -96,7 +97,7 @@ ipcMain.on('sign-up', async (e, msg) => {
       return
     }
     else {
-      await datastore.newUser(msg)
+      await log.newUser(msg)
       e.sender.send('is-new-user', {success: "Account successfully created."})
       console.log("created new user")
     }
@@ -109,7 +110,7 @@ ipcMain.on('log-in', async (e, msg) => {
   try {
     console.log("Login IPC Bus");
     msg.user = msg.user || msg.email
-    let isLoggedIn = await datastore.loginUser(msg.user, msg.password, msg.isRemembered); //TODO: Ensure msg order is correct
+    let isLoggedIn = await log.loginUser(msg.user, msg.password, msg.isRemembered); //TODO: Ensure msg order is correct
     if (!isLoggedIn) {
       e.sender.send('log-in', {error: "Incorrect username or password"});
       return;
