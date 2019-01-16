@@ -171,7 +171,23 @@ exports.getUserOrganization = function() {
     });
 };
 
-//TODO: Check
+exports.findUserSensor = function(userId, sensorId) {
+    return new Promise(async (resolve, reject) => {
+        try {
+            //Query database for sensor and user id
+            const sensor = await find({
+                userId: userId,
+                sensorId: sensorId
+            }, 'userSensors');
+            if(sensor.length === 0) {return resolve(false)}
+            return resolve(true)
+        } catch (error){
+            console.log(error);
+            return reject(error);
+        }  
+    })
+}
+
 //Update Password
 exports.newPassword = function (msg) {
     return new Promise(async (resolve, reject) => {
