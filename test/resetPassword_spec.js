@@ -64,7 +64,7 @@ describe('Account Functionality Testing', function () {
 
 const TEST_DATA = {
   user: {
-    email: 'test@gmail.com',
+    email: 'horus.sustaingineering@gmail.com',
     password: 'testpass123',
     newPassword: 'newPass'
   }

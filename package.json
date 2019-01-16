@@ -68,7 +68,10 @@
     "build": "npm run react-build && npm run electron-build",
     "start": "export DATA_ENV='LOCAL' && concurrently \"cross-env BROWSER=none npm run react-start\" \"wait-on http://localhost:3000 && electron .\"",
     "test": "export DATA_ENV='TEST' && cp test-json.jsonl test-jsoncopy.jsonl && mocha ./test/tests.js",
-    "posttest": "rm -rf ./electron/datastore/test && cp test-jsoncopy.jsonl test-json.jsonl && rm test-jsoncopy.jsonl"
+    "posttest": "rm -rf ./electron/datastore/test && cp test-jsoncopy.jsonl test-json.jsonl && rm test-jsoncopy.jsonl",
+    "start-win": "set \"DATA_ENV=LOCAL\" && concurrently \"cross-env BROWSER=none npm run react-start\" \"wait-on http://localhost:3000 && electron .\"",
+    "test-win": "set \"DATA_ENV=TEST\" && cp test-json.jsonl test-jsoncopy.jsonl && mocha ./test/tests.js",
+    "posttest-win": "rm -rf ./electron/datastore/test && cp test-jsoncopy.jsonl test-json.jsonl && rm test-jsoncopy.jsonl"
   },
   "browserslist": [
     ">0.2%",

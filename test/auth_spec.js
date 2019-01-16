@@ -16,7 +16,7 @@ describe('Application launch', function () {
 
 const TEST_DATA = {
     user: {
-        email: 'test@gmail.com',
+        email: 'horus.sustaingineering@gmail.com',
         password: 'testpass123',
         username: 'test',
         organization: 'UBC'
