@@ -25,7 +25,7 @@ describe('Authentication Functionality Testing', function () {
 
   it('new Password pass', async function(){
     let msg = {
-      email: 'test@gmail.com',
+      email: TEST_DATA.user.email,
       password: 'newPass',
     }
     let response = await datastore.newPassword(msg);
@@ -47,7 +47,7 @@ describe('Authentication Functionality Testing', function () {
 
   it('new Password with same password', async function(){
     let msg = {
-      email: 'test@gmail.com',
+      email: TEST_DATA.user.email,
       password: 'testpass123',
     }
     let response = await datastore.newPassword(msg);
