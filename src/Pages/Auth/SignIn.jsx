@@ -29,8 +29,8 @@ class SignInPage extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      username: "",
-      password: "",
+      username: "admin@gmail.com",
+      password: "root",
       error: null,
       openDialog: false,
       isRemembered: false
@@ -50,7 +50,7 @@ class SignInPage extends Component {
     const tpas = this.state.password;
     const username = this.state.username;
     const tisRemembered = this.state.isRemembered;
-    console.log("sending")
+    console.log("sending");
     ipcRenderer.send("log-in", {
       password: tpas,
       username: username,
