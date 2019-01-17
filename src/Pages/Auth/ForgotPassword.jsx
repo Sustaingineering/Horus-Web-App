@@ -97,20 +97,20 @@ class ForgotPassword extends Component {
                   <EmailIcon />
                 </Avatar>
                 <Typography
-                  variant="headline"
+                  variant="h5"
                   className={classes.titleForgotAndNewPassword}
                 >
                   Don't worry, we got you covered
                 </Typography>
                 <Typography
-                  variant="body2"
+                  variant="body1"
                   className={classes.titleForgotAndNewPassword}
                 >
                   Please write your email, and a verification code will be sent
                   to you.
                 </Typography>
                 <Typography
-                  variant="body2"
+                  variant="body1"
                   className={classes.titleForgotAndNewPassword}
                 >
                   (Already have a verification code?

@@ -30,13 +30,13 @@ class Dashboard extends Component {
   };
 
   tick = () => {
-    ipcRenderer.send("get-sensor-data", ( {sensorId: this.props.sensorName}));
+    ipcRenderer.send("get-sensor-data", { sensorId: this.props.sensorName });
   };
 
   componentWillMount = () => {
     this.interval = setInterval(this.tick.bind(this), 1000);
     ipcRenderer.on("get-sensor-data", (e, msg) => {
-      console.log('renderer',msg.data[0], msg.data);
+      console.log("renderer", msg.data[0], msg.data);
       if (msg.error) {
         // return alert(msg.error);
       } else {
@@ -70,7 +70,7 @@ class Dashboard extends Component {
       <Fragment>
         <MuiThemeProvider theme={mainTheme}>
           <div className={classes.root}>
-            <Typography variant="display1" color="primary" gutterBottom>
+            <Typography variant="h4" color="primary" gutterBottom>
               {this.props.sensorName + " Dashboard"}
             </Typography>
             <MonitoringData />

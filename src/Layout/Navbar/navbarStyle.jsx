@@ -26,8 +26,10 @@ const navbarStyle = theme => ({
     flex: 1
   },
   menuButton: {
+    position: 'relative',
+    left: -15,
     marginLeft: 0,
-    marginRight: 36
+    marginRight: 20
   },
   appBar: {
     backgroundColor: primaryColor,

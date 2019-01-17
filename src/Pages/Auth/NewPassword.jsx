@@ -107,13 +107,13 @@ class NewPassword extends Component {
                   <EmailIcon />
                 </Avatar>
                 <Typography
-                  variant="headline"
+                  variant="h5"
                   className={classes.titleForgotAndNewPassword}
                 >
                   Almost there! Just one more step
                 </Typography>
                 <Typography
-                  variant="body2"
+                  variant="body1"
                   className={classes.titleForgotAndNewPassword}
                 >
                   Please provide your email, verification code, and your new

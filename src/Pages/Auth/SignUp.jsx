@@ -126,7 +126,7 @@ class SignUpPage extends Component {
                 <Avatar className={classes.avatar}>
                   <LockIcon />
                 </Avatar>
-                <Typography variant="headline" className={classes.title}>
+                <Typography variant="h5" className={classes.title}>
                   Register
                 </Typography>
                 <form className={classes.form}>

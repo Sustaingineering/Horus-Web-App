@@ -87,7 +87,7 @@ class SignInPage extends Component {
                 <Avatar className={classes.avatar}>
                   <LockIcon />
                 </Avatar>
-                <Typography variant="headline" className={classes.title}>
+                <Typography variant="h5" className={classes.title}>
                   Sign in
                 </Typography>
                 <form className={classes.form}>
@@ -151,7 +151,7 @@ class SignInPage extends Component {
                     <Button
                       size="small"
                       className={classes.forgotPassword}
-                      disableRipple="true"
+                      disableRipple={true}
                     >
                       Forgot Password
                     </Button>

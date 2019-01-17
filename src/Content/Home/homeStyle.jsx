@@ -6,13 +6,8 @@ const styles = theme => ({
     width: 'auto',
     marginLeft: theme.spacing.unit * 3,
     marginRight: theme.spacing.unit * 3,
-    paddingTop: 90,
-    paddingBottom: 50,
-    [theme.breakpoints.up(1100 + theme.spacing.unit * 3 * 2)]: {
-      width: 1100,
-      marginLeft: 'auto',
-      marginRight: 'auto'
-    }
+    paddingTop: 50,
+    paddingBottom: 50
   },
   mainFeaturedPost: {
     backgroundImage: 'url(' + bg + ')',
@@ -21,6 +16,8 @@ const styles = theme => ({
     marginBottom: theme.spacing.unit * 4
   },
   mainFeaturedPostContent: {
+    height: '100%',
+    width: 'auto',
     padding: `${theme.spacing.unit * 6}px`,
     [theme.breakpoints.up('md')]: {
       paddingRight: 0
@@ -54,7 +51,14 @@ const styles = theme => ({
     marginTop: '2%',
     marginLeft: 'calc(50% - 350px)',
     width: 650,
-    height: 'auto'
+    height: 'auto',
+    [theme.breakpoints.down('sm')]: {
+      marginLeft: 'calc(50% - 250px)',
+      width: 450
+    },
+    [theme.breakpoints.down('xs')]: {
+      display: 'none'
+    }
   }
 })
 
