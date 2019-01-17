@@ -10,6 +10,7 @@ import Sensor from "./Dashboard/Sensor";
 import Profile from "./Profile/Profile";
 import NavBar from "../Layout/Navbar/Navbar";
 import Footer from "../Layout/Footer/Footer";
+import Home from "../Content/Home/home";
 // Electron
 const electron = window.require("electron");
 const ipcRenderer = electron.ipcRenderer;
@@ -47,8 +48,8 @@ class Content extends Component {
         <div className={classes.root}>
           <NavBar />
           <div className={classes.container}>
-            <Route path="/" exact render={() => <h1>Home</h1>} />
-            <Route path="/dashboard" exact render={() => <h1>Home</h1>} />
+            <Route path="/" exact component={Home} />
+            <Route path="/dashboard" exact component={Home} />
             {this.state.sensorsList.map(sensor => (
               <Route
                 path={"/" + sensor.name}
@@ -60,7 +61,7 @@ class Content extends Component {
             <Route path="/profile" exact component={Profile} />
           </div>
         </div>
-        <Footer />
+        {/* <Footer /> */}
       </Fragment>
     );
   }
