@@ -100,7 +100,7 @@ class App extends Component {
 
     return (
       <Fragment>
-        <TitleBar />
+        {/* <TitleBar /> */}
         <BrowserRouter>
           <MuiPickersUtilsProvider utils={DateFnsUtils}>
             {renderPlatform}

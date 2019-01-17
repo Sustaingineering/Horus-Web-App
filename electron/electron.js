@@ -1,16 +1,16 @@
-const {app, BrowserWindow, ipcMain, Menu} = require('electron');
-const isDev = require('electron-is-dev');
-const path = require('path');
-const url = require('url');
-const datastore = require('./datastore');
-const { default: installExtension, REACT_DEVELOPER_TOOLS } = require('electron-devtools-installer');
-const resetPassword = require('./modules/resetPassword.js');
-const filewatch = require('./datasource/filewatch.js');
-const log = require('./modules/loginlogout.js');
+const {app, BrowserWindow, ipcMain, Menu} = require('electron')
+const isDev = require('electron-is-dev')
+const path = require('path')
+const url = require('url')
+const datastore = require('./datastore')
+const { default: installExtension, REACT_DEVELOPER_TOOLS } = require('electron-devtools-installer')
+const resetPassword = require('./modules/resetPassword.js')
+const filewatch = require('./datasource/filewatch.js')
+const log = require('./modules/loginlogout.js')
 // Menu
 const { template } = require('./appMenu.js')
 
-let windows = {};
+let windows = {}
 
 // [ METHODS ]
 
@@ -23,18 +23,18 @@ function createWindow() {
     minWidth: 600, // set a min width!
     minHeight: 300, // and a min height!
     // Remove the window frame from windows applications
-    frame: false,
+    // frame: false,
     // Hide the titlebar from MacOS applications while keeping the stop lights
     // titleBarStyle: 'hidden',
-  });
+  })
 
   //windows.mainWindow.webContents.openDevTools()
   // Lozd the index.html of the app.
   windows.mainWindow.loadURL(isDev ?
     'http://localhost:3000' :
     `file://${path.join(__dirname, '../build/index.html')}`
-  );
-  windows.mainWindow.on('closed', () => windows.mainWindow = null);
+  )
+  windows.mainWindow.on('closed', () => windows.mainWindow = null)
   /**
    * ready-to-show: While loading the page, the ready-to-show event will be
    * emitted when the renderer process has rendered the page for the first
@@ -48,32 +48,32 @@ function createWindow() {
 
 async function checkActiveSession() {
   try {
-    await datastore.expireSessions();
-    let activeSession = await datastore.restoreSession();
+    await datastore.expireSessions()
+    let activeSession = await datastore.restoreSession()
     if(!activeSession) {
-      return false;
+      return false
     }
-    return true;
+    return true
   } catch(error) {
-    console.log(`[ ERROR ] checkActiveSessions: ${error}`);
-    return false;
+    console.log(`[ ERROR ] checkActiveSessions: ${error}`)
+    return false
   }
 }
 
 // [ IPC ]
 
 ipcMain.on('is-active-session', async (e, msg) => {
-  return e.sender.send('is-active-session', { "session": checkActiveSession()});
+  return e.sender.send('is-active-session', { 'session': checkActiveSession()})
 })
 
 ipcMain.on('log-out', async (e, msg) => {
   try {
-    user = "";
-    await log.logOut();
-    return e.sender.send('log-out', {"log-out": true});
+    user = '';
+    await log.logOut()
+    return e.sender.send('log-out', {'log-out': true})
   } catch(error) {
     console.log(`[ ERROR ] log-out: ${error}`)
-    return e.sender.send('lod-out', {"error": error});
+    return e.sender.send('lod-out', {'error': error})
   }
 })
 
@@ -93,13 +93,13 @@ ipcMain.on('sign-up', async (e, msg) => {
   try {
     let isOldUser = await datastore.findUser(msg.email)
     if (isOldUser) {
-      e.sender.send('is-new-user', {error:"User already exists"})
+      e.sender.send('is-new-user', {error:'User already exists'})
       return
     }
     else {
       await log.newUser(msg)
-      e.sender.send('is-new-user', {success: "Account successfully created."})
-      console.log("created new user")
+      e.sender.send('is-new-user', {success: 'Account successfully created.'})
+      console.log('created new user')
     }
   } catch(error) {
     e.sender.send('is-new-user', false)
@@ -108,14 +108,14 @@ ipcMain.on('sign-up', async (e, msg) => {
 
 ipcMain.on('log-in', async (e, msg) => {
   try {
-    console.log("Login IPC Bus");
+    console.log('Login IPC Bus')
     msg.user = msg.user || msg.email
-    let isLoggedIn = await log.loginUser(msg.user, msg.password, msg.isRemembered); //TODO: Ensure msg order is correct
+    let isLoggedIn = await log.loginUser(msg.user, msg.password, msg.isRemembered) //TODO: Ensure msg order is correct
     if (!isLoggedIn) {
-      e.sender.send('log-in', {error: "Incorrect username or password"});
+      e.sender.send('log-in', {error: 'Incorrect username or password'})
       return;
     }
-    e.sender.send('log-in-app', "Successfully logged in")/////////// TODO: Check this
+    e.sender.send('log-in-app', 'Successfully logged in')/////////// TODO: Check this
   } catch(error) {
     console.log('error', error)
     e.sender.send('log-in', {error: error})
@@ -125,36 +125,36 @@ ipcMain.on('log-in', async (e, msg) => {
 ipcMain.on('generate-password-token', async (e, msg) =>{
   try{
     let passwordGenerator = await resetPassword.generatePasswordToken(msg)
-    return e.sender.send('generate-password-token', passwordGenerator);
+    return e.sender.send('generate-password-token', passwordGenerator)
   }catch(error) {
-    return e.sender.send('generate-password-token', error);
+    return e.sender.send('generate-password-token', error)
   }
 })
 
 ipcMain.on('verify-and-update-password', async (e, msg) => {
   try{
-    let passwordUpdate = await resetPassword.verifyAndUpdatePassword(msg);
-    return e.sender.send('verify-and-update-password', passwordUpdate);
+    let passwordUpdate = await resetPassword.verifyAndUpdatePassword(msg)
+    return e.sender.send('verify-and-update-password', passwordUpdate)
   }catch(error) {
-    return e.sender.send('verify-and-update-password', error);
+    return e.sender.send('verify-and-update-password', error)
   }
 })
 
 //TODO: Verify it works
 ipcMain.on('update-sidebar', async (e, msg) => {
   try {
-    let username = await datastore.getUserName();
-    let organization = await datastore.getUserOrganization();
+    let username = await datastore.getUserName()
+    let organization = await datastore.getUserOrganization()
     if (!username || !organization) {
-      e.sender.send('update-sidebar', {error: "The user is not signed-in."});
+      e.sender.send('update-sidebar', {error: 'The user is not signed-in.'})
     }
 
-    e.sender.send('update-sidebar', {username: username, organization: organization});
+    e.sender.send('update-sidebar', {username: username, organization: organization})
   } catch (error) {
-    console.log(error);
-    e.sender.send('update-sidebar', {error: error});
+    console.log(error)
+    e.sender.send('update-sidebar', {error: error})
   }
-});
+})
 
 
 // [ TRIGGERS ]
@@ -167,20 +167,20 @@ ipcMain.on('update-sidebar', async (e, msg) => {
  */
 app.on('ready', async () => {
   try{
-    createWindow();
-    console.log(`[ INFO ] Initializing React Dev Tools`);
+    createWindow()
+    console.log('[ INFO ] Initializing React Dev Tools')
     let name = await  installExtension(REACT_DEVELOPER_TOOLS)
-    console.log(`[INFO] Added Extension: ${name}`);
-    console.log(`[ INFO ] Initializing datastore`)
+    console.log(`[INFO] Added Extension: ${name}`)
+    console.log('[ INFO ] Initializing datastore')
     await datastore.initializeDataStore()
-    console.log(`[ INFO ] Starting File Watch Thread`)
+    console.log('[ INFO ] Starting File Watch Thread')
     //TODO: file watch thread should be in its own function, that function should be called here
-    console.log(`[ INFO ] checking active sessions`)
+    console.log('[ INFO ] checking active sessions')
     await checkActiveSession()
   } catch(error) {
     console.log(`[ ERROR ] ready: ${error}`)
   }
-});
+})
 
 /**
  * window-all-closed: Emitted when all windows have been closed.
@@ -190,9 +190,9 @@ app.on('ready', async () => {
  * */
 app.on('window-all-closed', () => {
   // if (process.platform !== 'darwin') {
-    app.quit();
+  app.quit()
   // }
-});
+})
 
 /**
  * activate: Runs when the application is activated.
@@ -200,16 +200,16 @@ app.on('window-all-closed', () => {
  */
 app.on('activate', () => {
   if (windows.mainWindow === null) {
-    createWindow();
+    createWindow()
   }
-});
+})
 
 /**
  * Create titleBar menu
  */
-ipcMain.on('display-app-menu', (e, arg) => {
-  const appMenu = Menu.buildFromTemplate(template)
-  if(windows.mainWindow) {
-    appMenu.popup(windows.mainWindow, arg.x, arg.y)
-  }
-})
+// ipcMain.on('display-app-menu', (e, arg) => {
+//   const appMenu = Menu.buildFromTemplate(template)
+//   if(windows.mainWindow) {
+//     appMenu.popup(windows.mainWindow, arg.x, arg.y)
+//   }
+// })
