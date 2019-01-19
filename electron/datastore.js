@@ -1,6 +1,7 @@
 const Datastore = require('nedb');
 const _ = require('lodash');
 const sensors = require('./modules/sensors.js');
+const statistics = require('./modules/statistics.js')
 
 var user_id = exports.user_id = null;
 let user_sensors = {};
@@ -254,7 +255,7 @@ exports.initializeUserId = function (userID) {
     user_id = userID;
 } 
 
-exports.getSummaryData = function (pumpId) {
+exports.getNewestSensorData = function (pumpId) {
     return new Promise((resolve, reject) => {
         try {
             let userId = user_id;
@@ -265,7 +266,7 @@ exports.getSummaryData = function (pumpId) {
                 })
                 .sort({
                     createdAt: -1
-                }) // OR `.sort({ updatedAt: -1 })` to sort by last modification time
+                })
                 .limit(1)
                 .exec(function (error, data) {
                     if (error) {
@@ -273,6 +274,78 @@ exports.getSummaryData = function (pumpId) {
                     }
                     return resolve(data)
                 });
+        } catch (error) {
+            console.log(error)
+        }
+    })
+}
+
+exports.getSummaryData = function (data) {
+    return new Promise((resolve, reject) => {
+        try {
+            let userId = user_id;
+            let {
+                pumpId,
+                from,
+                to
+            } = data
+
+            udb['dataCollection'].find({
+                    userId: userId,
+                    "data.pumpId": pumpId,
+                    date: {
+                        $lte: to,
+                        $gte: from
+                    }
+                })
+                .sort({
+                    createdAt: -1
+                })
+                .exec(async (error, result) => {
+                    if (error) {
+                        return reject(error)
+                    }
+                    if (result.length <= 0) {
+                        return resolve()
+                    }
+                    let voltageList = new Array();
+                    let currentList = new Array();
+                    let powerList = new Array();
+                    let opTempList = new Array();
+                    let suTempList = new Array();
+                    //TODO: Check Labels
+                    //let labels = new Array();
+
+                    for (i = result.length - 1; i >= 0; i--) {
+                        //labels.push(i.toString())
+                        //Update Data Referencing from NEW JSON File
+                        voltageList.push(result[i].data.loadVoltage)
+                        currentList.push(result[i].data.loadCurrent)
+                        powerList.push(result[i].data.power)
+                        opTempList.push(result[i].data.atmosphericTemperature)
+                        suTempList.push(result[i].data.solarPanelTemperature)
+                    }
+
+                    let response = [
+                        voltageList,
+                        currentList,
+                        powerList,
+                        opTempList,
+                        suTempList
+                    ]
+
+                    let average = await statistics.getAvgFromData(response)
+                    let max = await statistics.getMaxFromData(response)
+                    let min = await statistics.getMinFromData(response) 
+
+                    let summary = [
+                        average,
+                        max, 
+                        min
+                    ]
+
+                    return resolve(summary)
+                })
         } catch (error) {
             console.log(error)
         }

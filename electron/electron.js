@@ -88,6 +88,15 @@ ipcMain.on('get-sensor-data', async (e, msg) => {
   }
 })
 
+ipcMain.on('get-sensor-summary', async (e, msg) => {
+  try {
+    let summary = await datastore.getSummaryData(msg.pumpId)
+    e.sender.send('get-sensor-summary', {data: summary})
+  } catch(error) {
+    e.sender.send('get-sensor-summary', false)
+  }
+})
+
 // Backend Signup
 ipcMain.on('sign-up', async (e, msg) => {
   try {

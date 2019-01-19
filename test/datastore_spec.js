@@ -50,12 +50,12 @@ describe('Datastore Wrapper Functions Testing', function () {
     }
     
     const TEST_DATA2 = {
-    user: {
+      user: {
         email: 'test3@gmail.com',
         password: 'testpass123',
         username: 'test',
         organization: 'UBC'
-    }
+      }
     }
     
     const TEST_DATA3 = {
@@ -66,6 +66,33 @@ describe('Datastore Wrapper Functions Testing', function () {
           organization: 'UBC'
       }
     }
+
+    //Test Data for Summary - START
+    const TEST_DATA4 = {
+      pumpId: 'S1',
+      from: 1547872730,
+      to: 1547872744
+    }
+
+    const TEST_DATA5 = [
+      {"number":"+16041234567","date":1547872730,
+        "data":{"loadVoltage":137,"loadCurrent":0,"power":9,"atmosphericTemperature":1,"solarPanelTemperature":8,"waterBreakerFlag":0,"pumpId":"S1"}
+      },
+      {"number":"+16041234567","date":1547872733,
+        "data":{"loadVoltage":173,"loadCurrent":1,"power":3,"atmosphericTemperature":7,"solarPanelTemperature":3,"waterBreakerFlag":3,"pumpId":"S1"}
+      },
+      {"number":"+16041234567","date":1547872737,
+        "data":{"loadVoltage":103,"loadCurrent":5,"power":7,"atmosphericTemperature":1,"solarPanelTemperature":1,"waterBreakerFlag":9,"pumpId":"S1"}
+      }, 
+      {"number":"+16041234567","date":1547872740,
+        "data":{"loadVoltage":112,"loadCurrent":1,"power":7,"atmosphericTemperature":6,"solarPanelTemperature":2,"waterBreakerFlag":0,"pumpId":"S1"}
+      },
+      {"number":"+16041234567","date":1547872744,
+        "data":{"loadVoltage":106,"loadCurrent":1,"power":1,"atmosphericTemperature":4,"solarPanelTemperature":9,"waterBreakerFlag":9,"pumpId":"S1"}
+      }
+    ]
+
+    //- END
 
     const FAKE_EMAIL = 'nomail@gmail.com';
 
@@ -329,7 +356,25 @@ describe('Datastore Wrapper Functions Testing', function () {
 
     // getUserOrganization Pass
 
+    // get Summary Data Test 
+    it('Get Summary Statistics Data Test', async function() {
+      
+      await datastore.initializeUserId("test")
+      //Insert 5 entries of sensor data (TEST_DATA5)
+      try {
+        for(i = 0; i < 5; i++) {
+          await datastore.storeSensorData(TEST_DATA5[i])
+        }
+      } catch(error) {
+        console.log(error)
+      }
     
-
-
+      let summary = await datastore.getSummaryData(TEST_DATA4)
+      //Assert List of Avgs
+      assert.deepStrictEqual(summary[0], [ 126.2, 1.6, 5.4, 3.8, 4.6 ])
+      //Assert List of Max Values
+      assert.deepStrictEqual(summary[1], [ 173, 5, 9, 7, 9 ])
+      //Assert List of Min Values
+      assert.deepStrictEqual(summary[2], [ 103, 0, 1, 1, 1 ])
+    })
   });

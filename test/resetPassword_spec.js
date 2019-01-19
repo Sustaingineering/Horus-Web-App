@@ -8,37 +8,6 @@ const datastore = require('../electron/datastore.js');
 describe('Account Functionality Testing', function () {
   this.timeout(10000)
 
-  // beforeEach(function () {
-  //   this.app = new Application({
-  //     // Your electron path can be any binary
-  //     // i.e for OSX an example path could be '/Applications/MyApp.app/Contents/MacOS/MyApp'
-  //     // But for the sake of the example we fetch it from our node_modules.
-  //     path: electronPath,
-
-  //     // Assuming you have the following directory structure
-
-  //     //  |__ my project
-  //     //     |__ ...
-  //     //     |__ main.js
-  //     //     |__ package.json
-  //     //     |__ index.html
-  //     //     |__ ...
-  //     //     |__ test
-  //     //        |__ spec.js  <- You are here! ~ Well you should be.
-
-  //     // The following line tells spectron to look and use the main.js file
-  //     // and the package.json located 1 level above.
-  //     args: [path.join(__dirname, '..')]
-  //   })
-  //   return this.app.start()
-  // })
-
-  // afterEach(function () {
-  //   if (this.app && this.app.isRunning()) {
-  //     return this.app.close()
-  //   }
-  // })
-
   it('Calls generate password token', async function() {
     let passwordReset = await resetPassword.generatePasswordToken({email: TEST_DATA.user.email})
     assert.equal(passwordReset.success, 'Verification Email sent', 'The verification email was sent')
