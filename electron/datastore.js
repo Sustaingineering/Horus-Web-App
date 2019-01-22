@@ -77,7 +77,12 @@ exports.getUserSensors = function (userId) {
             let sensors = await find({
                 userId: userId
             }, 'userSensors')
-            return resolve(sensors)
+            let sensorIds = new Array()
+            for (let s of sensors) {
+                console.log(s)
+                sensorIds.push(s.sensorId)
+            }
+            return resolve(sensorIds)
         } catch (error) {
             console.log(error);
             return reject(error);

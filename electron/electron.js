@@ -66,6 +66,10 @@ ipcMain.on('is-active-session', async (e, msg) => {
   return e.sender.send('is-active-session', { 'session': checkActiveSession()})
 })
 
+ipcMain.on('get-user-sensors', async (e,msg) => {
+  return e.sender.send('get-user-sensors',{'sensors': datastore.getUserSensors(msg.userId)})
+})
+
 ipcMain.on('log-out', async (e, msg) => {
   try {
     user = '';
