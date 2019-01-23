@@ -79,7 +79,6 @@ exports.getUserSensors = function (userId) {
             }, 'userSensors')
             let sensorIds = new Array()
             for (let s of sensors) {
-                console.log(s)
                 sensorIds.push(s.sensorId)
             }
             return resolve(sensorIds)
