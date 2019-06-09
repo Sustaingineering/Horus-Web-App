@@ -1,6 +1,5 @@
 // SignIn Styles
 import { primaryColor, backgroundColor } from "../../assets/jss/mainStyle";
-import { inherits } from "util";
 
 const signinStyle = theme => ({
   root: {
@@ -75,7 +74,7 @@ const signinStyle = theme => ({
     width: "auto"
   },
   paper: {
-    backgroundColor: backgroundColor,
+    // backgroundColor: backgroundColor,
     marginTop: theme.spacing.unit * 8,
     display: "flex",
     flexDirection: "column",

@@ -7,13 +7,13 @@ import contentStyles from "./contentStyle";
 import { withStyles } from "@material-ui/core/styles";
 // Components
 import Sensor from "./Dashboard/Sensor";
-import Profile from "./Profile/Profile";
-import NavBar from "../Layout/Navbar/Navbar";
-import Footer from "../Layout/Footer/Footer";
+import Config from "./Config/Config";
 import Home from "../Content/Home/home";
-// Electron
+// Electron 
 // const electron = window.require("electron");
 // const ipcRenderer = electron.ipcRenderer;
+// Firebase
+import { FirebaseContext } from "../Firebase/firebase.js";
 
 class Content extends Component {
   constructor(props) {
@@ -24,20 +24,14 @@ class Content extends Component {
   }
 
   componentWillMount = () => {
-    // ipcRenderer.on("get-sensor-list", (e, msg) => {
-    //   if (msg.error) {
-    //     // return alert(msg.error);
-    //   } else {
-    //     // return alert(msg);
-    //   }
-    // });
     var temp = [
       { name: "S1", type: "default" },
       { name: "S2", type: "default" },
       { name: "S3", type: "default" },
       { name: "S4", type: "default" },
       { name: "S5", type: "default" },
-      { name: "se", type: "default" }
+      { name: "se", type: "default" },
+      { name: "sdf", type: "default"}
     ];
     this.setState({ sensorsList: temp });
   };
@@ -47,7 +41,6 @@ class Content extends Component {
     return (
       <Fragment>
         <div className={classes.root}>
-          <NavBar />
           <div className={classes.container}>
             <Route path="/" exact component={Home} />
             <Route path="/dashboard" exact component={Home} />
@@ -58,11 +51,13 @@ class Content extends Component {
                 render={() => <Sensor sensorName={sensor.name} />}
               />
             ))}
-            <Route path="/config" exact render={() => <h1>config</h1>} />
-            <Route path="/profile" exact component={Profile} />
+            <Route path="/config" exact render={(props) =>
+              <FirebaseContext.Consumer>
+                {firebase => <Config {...props} firebase={firebase} />}
+              </FirebaseContext.Consumer>
+            } />
           </div>
         </div>
-        {/* <Footer /> */}
       </Fragment>
     );
   }
@@ -73,3 +68,4 @@ Content.propTypes = {
 };
 
 export default withStyles(contentStyles)(Content);
+// export default Content;

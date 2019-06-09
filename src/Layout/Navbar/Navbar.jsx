@@ -7,15 +7,12 @@ import {
   AppBar,
   Toolbar,
   Typography,
-  Menu,
-  MenuItem,
   IconButton
 } from "@material-ui/core";
 // Navbar Menu - drawer component
 import NavBarMenu from "../NavBarMenu/NavBarMenu";
 // Icons
 import MenuIcon from "@material-ui/icons/Menu";
-import AccountCircle from "@material-ui/icons/AccountCircle";
 // Style
 import navbarStyle from "./navbarStyle";
 import { withStyles } from "@material-ui/core/styles";
@@ -23,13 +20,11 @@ import classNames from "classnames";
 // Firebase
 import SignOutButton from "../../Pages/Auth/SignOut";
 
+import { FirebaseContext } from "../../Firebase/firebase.js";
+
 const nameStyle = {
   textDecoration: "none",
   color: "white"
-};
-
-const profileStyle = {
-  textDecoration: "none"
 };
 
 class Navbar extends Component {
@@ -38,28 +33,21 @@ class Navbar extends Component {
     open: false
   };
 
-  // profile icon
-  handleMenu = event => {
-    this.setState({ anchorEl: event.currentTarget });
-  };
-
-  handleClose = () => {
-    this.setState({ anchorEl: null });
-  };
-
   // drawer
   handleDrawerOpen = () => {
+    console.log("Open");
     this.setState({ open: true });
   };
 
   handleDrawerClose = drawerOpen => {
+    console.log("Close");
     this.setState({ open: drawerOpen });
   };
 
   render() {
     const { classes } = this.props;
-    const { anchorEl } = this.state;
-    const open = Boolean(anchorEl);
+    // const { anchorEl } = this.state;
+    // const open = Boolean(anchorEl);
 
     return (
       <Fragment>
@@ -88,41 +76,9 @@ class Navbar extends Component {
                   Horus
                 </Link>
               </Typography>
-              <IconButton
-                aria-owns={open ? "menu-appbar" : null}
-                aria-haspopup="true"
-                onClick={this.handleMenu}
-                color="inherit"
-              >
-                <AccountCircle />
-              </IconButton>
-              <Menu
-                id="menu-appbar"
-                anchorEl={anchorEl}
-                anchorOrigin={{
-                  vertical: "top",
-                  horizontal: "right"
-                }}
-                transformOrigin={{
-                  vertical: "top",
-                  horizontal: "right"
-                }}
-                open={open}
-                onClose={this.handleClose}
-              >
-                <Link style={profileStyle} to="/">
-                  <MenuItem
-                    className={classes.button}
-                    onClick={this.handleClose}
-                  >
-                    <AccountCircle className={classes.ltf} />
-                    Profile
-                  </MenuItem>
-                </Link>
-                <MenuItem>
-                  <SignOutButton />
-                </MenuItem>
-              </Menu>
+              <FirebaseContext.Consumer>
+                {firebase => <SignOutButton firebase={firebase} />}
+              </FirebaseContext.Consumer>
             </Toolbar>
           </AppBar>
           <NavBarMenu

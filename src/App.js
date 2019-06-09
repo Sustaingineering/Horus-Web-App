@@ -7,119 +7,62 @@ import LandingPage from "./Pages/Landing/Landing.jsx";
 import Content from "./Content/Content";
 // SignIn Component
 import SignInPage from "./Pages/Auth/SignIn";
-import SignUpPage from "./Pages/Auth/SignUp";
-import ForgotPassword from "./Pages/Auth/ForgotPassword"
-import NewPassword from "./Pages/Auth/NewPassword"
 // Date Picker
 import DateFnsUtils from "material-ui-pickers/utils/date-fns-utils";
 import MuiPickersUtilsProvider from "material-ui-pickers/MuiPickersUtilsProvider";
-import TitleBar from "./Layout/TitleBar/titlebar.jsx";
 
-// Firebase
-import * as firebase from "firebase/app";
-import firebaseConfig from "./firebase.js";
-// Electron
-// const electron = window.require("electron");
-// const ipcRenderer = electron.ipcRenderer;
-// const remote = electron.remote;
+import NavBar from "./Layout/Navbar/Navbar";
+
+
+import { FirebaseContext } from "./Firebase/firebase.js";
 
 class App extends Component {
   constructor(props) {
     super(props);
-    firebase.initializeApp(firebaseConfig);
     this.state = {
-      authUser: false,
-      loggedIn: false
+      authUser: undefined
     };
+    this.props.firebase.auth().onAuthStateChanged(authUser => {
+      console.log(authUser);
+      authUser ? this.setState({authUser : authUser}) : this.setState({authUser : undefined});
+    });
   }
 
-  // componentDidMount = async () => {
-  //   ipcRenderer.on("log-in-app", (e, msg) => {
-  //     if (msg.error) {
-  //       alert(msg.error);
-  //       return console.log(msg.error);
-  //     }
-  //     this.setState({
-  //       authUser: true
-  //     });
+  // heh = () => {
+  //   let db = this.props.firebase.firestore();
+  //   db.collection("sensors").add({
+  //     first: "test"
   //   });
-
-  //   ipcRenderer.on("sign-up", (e, msg) => {
-  //     if (msg.error) {
-  //       alert(msg.error);
-  //       return console.log(msg.error);
-  //     }
-  //     this.setState({
-  //       loggedIn: true
-  //     });
-  //   });
-  // };
-
-  // displayMenu = event => {
-  //   // ipcRenderer.send("display-app-menu", {
-  //   //   x: event.x,
-  //   //   y: event.y
-  //   // });
-  // };
-
-  // minimizeMenu = () => {
-  //   // remote.getCurrentWindow().minimize();
-  // };
-
-  // min_maxMenu = () => {
-  //   // const currentWindow = remote.getCurrentWindow();
-  //   if (currentWindow.isMaximized()) {
-  //     currentWindow.unmaximize();
-  //   } else {
-  //     currentWindow.maximize();
-  //   }
-  // };
-
-  // closeApp = () => {
-  //   remote.app.quit();
-  // };
-
-  authUpdate = (auth) => {
-    console.log(auth);
-    if (auth) {
-      this.setState({
-        authUser: true
-      })
-    }
-  }
+  // }
 
   render() {
-    // console.log(this.state.authUser);
-    // const renderPlatform = (<Fragment>
-    //   <Switch>
-    //     <Route path="/" exact component={SignInPage} />
-    //   </Switch>
-    //   {/* <Content /> */}
-    // </Fragment>);
+    // this.heh();
     const renderPlatform = this.state.authUser ? (
       <Fragment>
         <Switch>
           <Redirect from="/login" to="/dashboard" />
           <Redirect from="/signup" to="/dashboard" />
         </Switch>
-        <Content />
+        <NavBar />
+        <FirebaseContext.Consumer>
+          {firebase => <Content firebase={firebase} />}
+        </FirebaseContext.Consumer>
       </Fragment>
     ) : (
       <Fragment>
         <Switch>
           <Route path="/" exact component={LandingPage} />
-          <Route path="/login" render={(props) => <SignInPage {...props} auth={this.authUpdate} />} />
-          {/* <Route path="/signup" exact component={SignUpPage} />
-          <Route path="/forgotPassword" exact component={ForgotPassword} />
-          <Route path="/newPassword" exact component={NewPassword} /> */}
-          <Redirect from="/dashboard" to="/login" />
-          <Redirect from="/signup" to="/login" />
+          <Route path="/login" render={(props) =>
+            <FirebaseContext.Consumer>
+              {firebase => <SignInPage {...props} firebase={firebase} />}
+            </FirebaseContext.Consumer>
+          } />
+          <Redirect to="/" />
         </Switch>
       </Fragment>
     );
     return (
       <Fragment>
-        {/* <TitleBar /> */}
         <BrowserRouter>
           <MuiPickersUtilsProvider utils={DateFnsUtils}>
             {renderPlatform}

@@ -33,3 +33,29 @@ Should have the following routes:
 /upload <- upload sensor data here
 /config <- configure sensors here
 /profile <- update firebase profiles?
+
+
+// Profile settings
+  // Profile Photo URL
+  // Name
+  // Phone
+  // Submit Changes
+
+// Email functions
+  // Email
+  // Change Email
+  // Verify email (if not verified button)
+
+// Admin functions
+  // Current password
+  // Password field
+  // Update password
+  // Send password reset
+  // Delete account
+
+// TODO
+Split out buttons so they're their own props that take a color and function
+Split out inputs so it's the same
+Set up the auth handlers for Google and Facebook
+Set up the reauthorization after 5 minutes to access admin functions
+Set up the handlers to change user profile settings

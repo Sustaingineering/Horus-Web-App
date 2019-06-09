@@ -17,11 +17,17 @@ const featuredPosts = [
     title: 'Contact',
     link: 'sustaingineering@gmail.com',
     description: 'For general inquiries, please reach out by email.'
+  },
+  {
+    title: 'test',
+    link: 'google.com',
+    description: "fweagfweg"
   }
 ]
+// This is sick
 
 function Home(props) {
-  const { classes } = props
+  const { classes } = props;
 
   return (
     <Fragment>

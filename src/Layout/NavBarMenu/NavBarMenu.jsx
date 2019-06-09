@@ -60,7 +60,7 @@ class NavBarMenu extends Component {
       { name: "S2", type: "default" },
       { name: "S3", type: "default" },
       { name: "S4", type: "default" },
-      { name: "S5", type: "default" }
+      { name: "S5", type: "default" },
     ];
     this.setState({ sensorsList: temp });
   };
