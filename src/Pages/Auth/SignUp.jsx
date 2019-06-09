@@ -21,8 +21,8 @@ import signinStyle from "./signinStyle";
 import { withStyles, MuiThemeProvider } from "@material-ui/core/styles";
 import { mainTheme } from "../../assets/jss/mainStyle";
 // Electron
-const electron = window.require("electron");
-const ipcRenderer = electron.ipcRenderer;
+// const electron = window.require("electron");
+// const ipcRenderer = electron.ipcRenderer;
 
 const byPropKey = (propertyName, value) => () => ({
   [propertyName]: value
@@ -45,18 +45,18 @@ class SignUpPage extends Component {
   }
 
   componentDidMount = () => {
-    ipcRenderer.on("is-new-user", (e, msg) => {
-      if (msg.error) {
-        return alert(msg.error);
-      } else if (msg.success) {
-        alert(msg.success);
-        const { history } = this.props;
-        history.push("/login");
-      }
-      this.setState({
-        isValidUser: true
-      });
-    });
+    // ipcRenderer.on("is-new-user", (e, msg) => {
+    //   if (msg.error) {
+    //     return alert(msg.error);
+    //   } else if (msg.success) {
+    //     alert(msg.success);
+    //     const { history } = this.props;
+    //     history.push("/login");
+    //   }
+    //   this.setState({
+    //     isValidUser: true
+    //   });
+    // });
   };
   // push
   signUp = e => {
@@ -64,12 +64,12 @@ class SignUpPage extends Component {
     const email = this.state.email;
     const organization = this.state.organization;
     const username = this.state.username;
-    ipcRenderer.send("sign-up", {
-      password,
-      email,
-      organization,
-      username
-    });
+    // ipcRenderer.send("sign-up", {
+    //   password,
+    //   email,
+    //   organization,
+    //   username
+    // });
   };
 
   dialogPromptOpen = message => {

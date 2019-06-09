@@ -29,8 +29,8 @@ import navbarmenuStyle from "./navbarmenuStyle";
 import classNames from "classnames";
 import { mainTheme } from "../../assets/jss/mainStyle";
 // Electron
-const electron = window.require("electron");
-const ipcRenderer = electron.ipcRenderer;
+// const electron = window.require("electron");
+// const ipcRenderer = electron.ipcRenderer;
 
 const style = {
   textDecoration: "none",
@@ -48,13 +48,13 @@ class NavBarMenu extends Component {
   }
 
   componentWillMount = () => {
-    ipcRenderer.on("get-sensors", (e, msg) => {
-      if (msg.error) {
-        // return alert(msg.error);
-      } else {
-        // return alert(msg);
-      }
-    });
+    // ipcRenderer.on("get-sensors", (e, msg) => {
+    //   if (msg.error) {
+    //     // return alert(msg.error);
+    //   } else {
+    //     // return alert(msg);
+    //   }
+    // });
     var temp = [
       { name: "S1", type: "default" },
       { name: "S2", type: "default" },

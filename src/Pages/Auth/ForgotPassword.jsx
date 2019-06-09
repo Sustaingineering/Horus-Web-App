@@ -22,8 +22,8 @@ import signinStyle from "./signinStyle";
 import { withStyles, MuiThemeProvider } from "@material-ui/core/styles";
 import { mainTheme } from "../../assets/jss/mainStyle";
 // Electron
-const electron = window.require("electron");
-const ipcRenderer = electron.ipcRenderer;
+// const electron = window.require("electron");
+// const ipcRenderer = electron.ipcRenderer;
 // const fs = electron.remote.require("fs");
 
 class ForgotPassword extends Component {
@@ -64,23 +64,23 @@ class ForgotPassword extends Component {
     if (email === "") {
       return alert("Blank email. Please write your email");
     }
-    ipcRenderer.send("generate-password-token", {
-      email: email
-    });
+    // ipcRenderer.send("generate-password-token", {
+    //   email: email
+    // });
   };
 
   componentDidMount = async () => {
-    ipcRenderer.on("generate-password-token", (e, msg) => {
-      if (msg.error) {
-        alert(msg.error);
-      } else {
-        alert(
-          msg.success + ". Please check your email for the verification code."
-        );
-        const { history } = this.props;
-        history.push("/newPassword");
-      }
-    });
+    // ipcRenderer.on("generate-password-token", (e, msg) => {
+    //   if (msg.error) {
+    //     alert(msg.error);
+    //   } else {
+    //     alert(
+    //       msg.success + ". Please check your email for the verification code."
+    //     );
+    //     const { history } = this.props;
+    //     history.push("/newPassword");
+    //   }
+    // });
   };
 
   render() {

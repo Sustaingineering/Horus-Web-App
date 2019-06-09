@@ -15,67 +15,87 @@ import DateFnsUtils from "material-ui-pickers/utils/date-fns-utils";
 import MuiPickersUtilsProvider from "material-ui-pickers/MuiPickersUtilsProvider";
 import TitleBar from "./Layout/TitleBar/titlebar.jsx";
 
+// Firebase
+import * as firebase from "firebase/app";
+import firebaseConfig from "./firebase.js";
 // Electron
-const electron = window.require("electron");
-const ipcRenderer = electron.ipcRenderer;
-const remote = electron.remote;
+// const electron = window.require("electron");
+// const ipcRenderer = electron.ipcRenderer;
+// const remote = electron.remote;
 
 class App extends Component {
   constructor(props) {
     super(props);
+    firebase.initializeApp(firebaseConfig);
     this.state = {
       authUser: false,
       loggedIn: false
     };
   }
 
-  componentDidMount = async () => {
-    ipcRenderer.on("log-in-app", (e, msg) => {
-      if (msg.error) {
-        alert(msg.error);
-        return console.log(msg.error);
-      }
+  // componentDidMount = async () => {
+  //   ipcRenderer.on("log-in-app", (e, msg) => {
+  //     if (msg.error) {
+  //       alert(msg.error);
+  //       return console.log(msg.error);
+  //     }
+  //     this.setState({
+  //       authUser: true
+  //     });
+  //   });
+
+  //   ipcRenderer.on("sign-up", (e, msg) => {
+  //     if (msg.error) {
+  //       alert(msg.error);
+  //       return console.log(msg.error);
+  //     }
+  //     this.setState({
+  //       loggedIn: true
+  //     });
+  //   });
+  // };
+
+  // displayMenu = event => {
+  //   // ipcRenderer.send("display-app-menu", {
+  //   //   x: event.x,
+  //   //   y: event.y
+  //   // });
+  // };
+
+  // minimizeMenu = () => {
+  //   // remote.getCurrentWindow().minimize();
+  // };
+
+  // min_maxMenu = () => {
+  //   // const currentWindow = remote.getCurrentWindow();
+  //   if (currentWindow.isMaximized()) {
+  //     currentWindow.unmaximize();
+  //   } else {
+  //     currentWindow.maximize();
+  //   }
+  // };
+
+  // closeApp = () => {
+  //   remote.app.quit();
+  // };
+
+  authUpdate = (auth) => {
+    console.log(auth);
+    if (auth) {
       this.setState({
         authUser: true
-      });
-    });
-
-    ipcRenderer.on("sign-up", (e, msg) => {
-      if (msg.error) {
-        alert(msg.error);
-        return console.log(msg.error);
-      }
-      this.setState({
-        loggedIn: true
-      });
-    });
-  };
-
-  displayMenu = event => {
-    ipcRenderer.send("display-app-menu", {
-      x: event.x,
-      y: event.y
-    });
-  };
-
-  minimizeMenu = () => {
-    remote.getCurrentWindow().minimize();
-  };
-
-  min_maxMenu = () => {
-    const currentWindow = remote.getCurrentWindow();
-    if (currentWindow.isMaximized()) {
-      currentWindow.unmaximize();
-    } else {
-      currentWindow.maximize();
+      })
     }
-  };
-
-  closeApp = () => {
-    remote.app.quit();
-  };
+  }
 
   render() {
+    // console.log(this.state.authUser);
+    // const renderPlatform = (<Fragment>
+    //   <Switch>
+    //     <Route path="/" exact component={SignInPage} />
+    //   </Switch>
+    //   {/* <Content /> */}
+    // </Fragment>);
     const renderPlatform = this.state.authUser ? (
       <Fragment>
         <Switch>
@@ -88,16 +108,15 @@ class App extends Component {
       <Fragment>
         <Switch>
           <Route path="/" exact component={LandingPage} />
-          <Route path="/login" exact component={SignInPage} />
-          <Route path="/signup" exact component={SignUpPage} />
+          <Route path="/login" render={(props) => <SignInPage {...props} auth={this.authUpdate} />} />
+          {/* <Route path="/signup" exact component={SignUpPage} />
           <Route path="/forgotPassword" exact component={ForgotPassword} />
-          <Route path="/newPassword" exact component={NewPassword} />
+          <Route path="/newPassword" exact component={NewPassword} /> */}
           <Redirect from="/dashboard" to="/login" />
           <Redirect from="/signup" to="/login" />
         </Switch>
       </Fragment>
     );
-
     return (
       <Fragment>
         {/* <TitleBar /> */}

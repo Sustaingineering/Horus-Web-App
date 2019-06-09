@@ -20,63 +20,92 @@ import LockIcon from "@material-ui/icons/LockOutlined";
 import signinStyle from "./signinStyle";
 import { withStyles, MuiThemeProvider } from "@material-ui/core/styles";
 import { mainTheme } from "../../assets/jss/mainStyle";
+
+// Firebase 
+import * as firebaseui from "firebaseui";
+import * as firebase from "firebase";
+
+// var uiConfig = 
 // Electron
-const electron = window.require("electron");
-const ipcRenderer = electron.ipcRenderer;
+// const electron = window.require("electron");
+// const ipcRenderer = electron.ipcRenderer;
 // const fs = electron.remote.require("fs");
 
 class SignInPage extends Component {
   constructor(props) {
     super(props);
+    console.log("SigninPage");
     this.state = {
-      username: "admin@gmail.com",
-      password: "root",
-      error: null,
-      openDialog: false,
-      isRemembered: false
+      ui: undefined,
+      // username: "admin@gmail.com",
+      // password: "root",
+      // error: null,
+      // openDialog: false,
+      // isRemembered: false
     };
   }
 
   componentDidMount = () => {
-    ipcRenderer.on("log-in", (e, msg) => {
-      if (msg.error) {
-        return alert(msg.error);
+    console.log("Starting component");
+    console.log(firebaseui.auth.AuthResult);
+    if (this.state.ui === undefined) {
+      this.setState({
+        ui: new firebaseui.auth.AuthUI(firebase.auth())
+      },
+        this.authFlow
+      );
+    }
+  }
+
+  authFlow = () => {
+    this.state.ui.start("#firebaseui-auth-container", {
+      // signInSuccessUrl: "/",
+      signInOptions: [
+        {
+          provider: firebase.auth.EmailAuthProvider.PROVIDER_ID,
+          requireDisplayName: false
+        },
+        firebase.auth.GoogleAuthProvider.PROVIDER_ID
+      ],
+      callbacks: {
+        signInSuccessWithAuthResult: (authResult, redirectUrl) => {
+          this.props.auth(authResult);
+          return true;
+        }
       }
-      return alert(msg);
     });
-  };
+  }
 
-  login = () => {
-    const tpas = this.state.password;
-    const username = this.state.username;
-    const tisRemembered = this.state.isRemembered;
-    console.log("sending");
-    ipcRenderer.send("log-in", {
-      password: tpas,
-      username: username,
-      email: username,
-      isRemembered: tisRemembered
-    });
-  };
+  // login = () => {
+  //   const tpas = this.state.password;
+  //   const username = this.state.username;
+  //   const tisRemembered = this.state.isRemembered;
+  //   console.log("sending");
+  //   // ipcRenderer.send("log-in", {
+  //   //   password: tpas,
+  //   //   username: username,
+  //   //   email: username,
+  //   //   isRemembered: tisRemembered
+  //   // });
+  // };
 
-  dialogPromptOpen = message => {
-    this.setState({
-      openDialog: true,
-      error: message
-    });
-  };
+  // dialogPromptOpen = message => {
+  //   this.setState({
+  //     openDialog: true,
+  //     error: message
+  //   });
+  // };
 
-  dialogClose = () => {
-    this.setState({ openDialog: false });
-  };
+  // dialogClose = () => {
+  //   this.setState({ openDialog: false });
+  // };
 
-  handleChange = event => {
-    this.setState({ [event.target.name]: event.target.value });
-  };
+  // handleChange = event => {
+  //   this.setState({ [event.target.name]: event.target.value });
+  // };
 
   render() {
     const { classes } = this.props;
-
     return (
       <Fragment>
         <CssBaseline />
@@ -90,79 +119,8 @@ class SignInPage extends Component {
                 <Typography variant="h5" className={classes.title}>
                   Sign in
                 </Typography>
-                <form className={classes.form}>
-                  <FormControl margin="normal" required fullWidth>
-                    <TextField
-                      className={classes.field}
-                      autoFocus
-                      autoComplete="username"
-                      type="username"
-                      name="username"
-                      id="username"
-                      label="Username"
-                      onChange={this.handleChange}
-                      value={this.state.username}
-                      InputProps={{
-                        className: classes.input
-                      }}
-                      InputLabelProps={{
-                        className: classes.input
-                      }}
-                    />
-                  </FormControl>
-                  <FormControl margin="normal" required fullWidth>
-                    <TextField
-                      className={classes.field}
-                      autoComplete="current-password"
-                      id="password"
-                      label="Password"
-                      name="password"
-                      type="password"
-                      onChange={this.handleChange}
-                      value={this.state.password}
-                      InputProps={{
-                        className: classes.input
-                      }}
-                      InputLabelProps={{
-                        className: classes.input
-                      }}
-                    />
-                  </FormControl>
-                  <Button
-                    fullWidth
-                    className={classes.submit}
-                    variant="contained"
-                    onClick={this.login}
-                    color="primary"
-                  >
-                    Sign in
-                  </Button>
-                  <Link className={classes.noDeco} to="/signup">
-                    <Button
-                      fullWidth
-                      className={classes.submit}
-                      variant="contained"
-                      color="secondary"
-                    >
-                      Register
-                    </Button>
-                  </Link>
-                  <Link className={classes.noDeco} to="/forgotPassword">
-                    <Button
-                      size="small"
-                      className={classes.forgotPassword}
-                      disableRipple={true}
-                    >
-                      Forgot Password
-                    </Button>
-                  </Link>
-                </form>
+                <div id="firebaseui-auth-container"></div>
               </Paper>
-              <ErrorDialog
-                error={this.state.error}
-                openDialog={this.state.openDialog}
-                dialogClose={this.dialogClose}
-              />
             </div>
           </div>
         </MuiThemeProvider>

@@ -17,8 +17,8 @@ import HistoryChart from "./historyChart";
 import dashboardStyle from "./dashboardStyle";
 import { mainTheme } from "../../assets/jss/mainStyle";
 // Electron
-const electron = window.require("electron");
-const ipcRenderer = electron.ipcRenderer;
+// const electron = window.require("electron");
+// const ipcRenderer = electron.ipcRenderer;
 
 class Dashboard extends Component {
   state = {
@@ -30,28 +30,28 @@ class Dashboard extends Component {
   };
 
   tick = () => {
-    ipcRenderer.send("get-sensor-data", { sensorId: this.props.sensorName });
+    // ipcRenderer.send("get-sensor-data", { sensorId: this.props.sensorName });
   };
 
   componentWillMount = () => {
-    this.interval = setInterval(this.tick.bind(this), 1000);
-    ipcRenderer.on("get-sensor-data", (e, msg) => {
-      console.log("renderer", msg.data[0], msg.data);
-      if (msg.error) {
-        // return alert(msg.error);
-      } else {
-        const voltageDummyData = msg.data[0];
-        const currentDummyData = msg.data[1];
-        const powerDummyData = msg.data[2];
-        const tempDummyData = msg.data[3];
-        this.setState({
-          voltageData: voltageDummyData,
-          currentData: currentDummyData,
-          powerData: powerDummyData,
-          tempData: tempDummyData
-        });
-      }
-    });
+    this.interval = setInterval(this.tick.bind(this), 500);
+    // ipcRenderer.on("get-sensor-data", (e, msg) => {
+    //   console.log("renderer", msg.data[0], msg.data);
+    //   if (msg.error) {
+    //     // return alert(msg.error);
+    //   } else {
+    //     const voltageDummyData = msg.data[0];
+    //     const currentDummyData = msg.data[1];
+    //     const powerDummyData = msg.data[2];
+    //     const tempDummyData = msg.data[3];
+    //     this.setState({
+    //       voltageData: voltageDummyData,
+    //       currentData: currentDummyData,
+    //       powerData: powerDummyData,
+    //       tempData: tempDummyData
+    //     });
+    //   }
+    // });
   };
 
   componentWillUnmount = () => {

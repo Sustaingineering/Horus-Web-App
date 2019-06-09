@@ -12,8 +12,8 @@ import NavBar from "../Layout/Navbar/Navbar";
 import Footer from "../Layout/Footer/Footer";
 import Home from "../Content/Home/home";
 // Electron
-const electron = window.require("electron");
-const ipcRenderer = electron.ipcRenderer;
+// const electron = window.require("electron");
+// const ipcRenderer = electron.ipcRenderer;
 
 class Content extends Component {
   constructor(props) {
@@ -24,19 +24,20 @@ class Content extends Component {
   }
 
   componentWillMount = () => {
-    ipcRenderer.on("get-sensor-list", (e, msg) => {
-      if (msg.error) {
-        // return alert(msg.error);
-      } else {
-        // return alert(msg);
-      }
-    });
+    // ipcRenderer.on("get-sensor-list", (e, msg) => {
+    //   if (msg.error) {
+    //     // return alert(msg.error);
+    //   } else {
+    //     // return alert(msg);
+    //   }
+    // });
     var temp = [
       { name: "S1", type: "default" },
       { name: "S2", type: "default" },
       { name: "S3", type: "default" },
       { name: "S4", type: "default" },
-      { name: "S5", type: "default" }
+      { name: "S5", type: "default" },
+      { name: "se", type: "default" }
     ];
     this.setState({ sensorsList: temp });
   };

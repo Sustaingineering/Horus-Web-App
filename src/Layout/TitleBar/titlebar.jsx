@@ -4,56 +4,56 @@ import titlebarStyle from "./titlebarStyle.jsx";
 // Icons
 import MenuIcon from "@material-ui/icons/Menu";
 // Electron
-const electron = window.require("electron");
-const ipcRenderer = electron.ipcRenderer;
-const remote = electron.remote;
+// const electron = window.require("electron");
+// const ipcRenderer = electron.ipcRenderer;
+// const remote = electron.remote;
 
 class TitleBar extends Component {
   componentDidMount = async () => {
-    ipcRenderer.on("log-in-app", (e, msg) => {
-      if (msg.error) {
-        alert(msg.error);
-        return console.log(msg.error);
-      }
-      this.setState({
-        authUser: true
-      });
-    });
+    // ipcRenderer.on("log-in-app", (e, msg) => {
+    //   if (msg.error) {
+    //     alert(msg.error);
+    //     return console.log(msg.error);
+    //   }
+    //   this.setState({
+    //     authUser: true
+    //   });
+    // });
 
-    ipcRenderer.on("sign-up", (e, msg) => {
-      if (msg.error) {
-        alert(msg.error);
-        return console.log(msg.error);
-      }
-      this.setState({
-        loggedIn: true
-      });
-    });
+    // ipcRenderer.on("sign-up", (e, msg) => {
+    //   if (msg.error) {
+    //     alert(msg.error);
+    //     return console.log(msg.error);
+    //   }
+    //   this.setState({
+    //     loggedIn: true
+    //   });
+    // });
   };
 
   displayMenu = event => {
-    ipcRenderer.send("display-app-menu", {
-      x: event.x,
-      y: event.y
-    });
+    // ipcRenderer.send("display-app-menu", {
+    //   x: event.x,
+    //   y: event.y
+    // });
   };
 
-  minimizeMenu = () => {
-    remote.getCurrentWindow().minimize();
-  };
+  // minimizeMenu = () => {
+  //   remote.getCurrentWindow().minimize();
+  // };
 
-  min_maxMenu = () => {
-    const currentWindow = remote.getCurrentWindow();
-    if (currentWindow.isMaximized()) {
-      currentWindow.unmaximize();
-    } else {
-      currentWindow.maximize();
-    }
-  };
+  // min_maxMenu = () => {
+  //   const currentWindow = remote.getCurrentWindow();
+  //   if (currentWindow.isMaximized()) {
+  //     currentWindow.unmaximize();
+  //   } else {
+  //     currentWindow.maximize();
+  //   }
+  // };
 
-  closeApp = () => {
-    remote.app.quit();
-  };
+  // closeApp = () => {
+  //   remote.app.quit();
+  // };
 
   render() {
     const { classes } = this.props;

@@ -31,4 +31,4 @@ const dashboardStyle = theme => ({
   }
 })
 
-export default dashboardStyle
+export default dashboardStyle;

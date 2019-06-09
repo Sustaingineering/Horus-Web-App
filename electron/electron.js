@@ -83,6 +83,7 @@ ipcMain.on('log-out', async (e, msg) => {
 
 
 ipcMain.on('get-sensor-data', async (e, msg) => {
+  console.log("[ INFO ] get-sensor-data");
   try { 
     let data = await datastore.getRealTime({pumpId: msg.sensorId})
     e.sender.send('get-sensor-data', {data: data})
@@ -93,6 +94,7 @@ ipcMain.on('get-sensor-data', async (e, msg) => {
 })
 
 ipcMain.on('get-sensor-summary', async (e, msg) => {
+  console.log("[ INFO ] get-sensor-summary");
   try {
     let summary = await datastore.getSummaryData(msg.pumpId)
     e.sender.send('get-sensor-summary', {data: summary})
@@ -103,6 +105,7 @@ ipcMain.on('get-sensor-summary', async (e, msg) => {
 
 // Backend Signup
 ipcMain.on('sign-up', async (e, msg) => {
+  console.log("[ INFO ] sign-up");
   try {
     let isOldUser = await datastore.findUser(msg.email)
     if (isOldUser) {
@@ -120,6 +123,7 @@ ipcMain.on('sign-up', async (e, msg) => {
 })
 
 ipcMain.on('log-in', async (e, msg) => {
+  console.log("[ INFO ] log-in");
   try {
     console.log('Login IPC Bus')
     msg.user = msg.user || msg.email

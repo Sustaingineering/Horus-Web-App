@@ -22,9 +22,9 @@ import signinStyle from "./signinStyle";
 import { withStyles, MuiThemeProvider } from "@material-ui/core/styles";
 import { mainTheme } from "../../assets/jss/mainStyle";
 // Electron
-const electron = window.require("electron");
-const ipcRenderer = electron.ipcRenderer;
-const { getCurrentWindow } = electron.remote;
+// const electron = window.require("electron");
+// const ipcRenderer = electron.ipcRenderer;
+// const { getCurrentWindow } = electron.remote;
 
 class NewPassword extends Component {
   constructor(props) {
@@ -73,24 +73,24 @@ class NewPassword extends Component {
     if (email === "" || verificationCode === "" || newPassword === "") {
       return alert("Please fill all blank fields");
     }
-    ipcRenderer.send("verify-and-update-password", {
-      email: msg.email,
-      token: msg.verificationCode,
-      password: msg.newPassword
-    });
+    // ipcRenderer.send("verify-and-update-password", {
+    //   email: msg.email,
+    //   token: msg.verificationCode,
+    //   password: msg.newPassword
+    // });
   };
 
   componentDidMount = async () => {
-    ipcRenderer.on("verify-and-update-password", (e, msg) => {
-      if (msg.error) {
-        alert(msg.error);
-      } else {
-        alert(msg.success);
-        const { history } = this.props;
-        history.push("/login");
-        getCurrentWindow().reload();
-      }
-    });
+    // ipcRenderer.on("verify-and-update-password", (e, msg) => {
+    //   if (msg.error) {
+    //     alert(msg.error);
+    //   } else {
+    //     alert(msg.success);
+    //     const { history } = this.props;
+    //     history.push("/login");
+    //     getCurrentWindow().reload();
+    //   }
+    // });
   };
 
   render() {
