@@ -27,7 +27,6 @@ const featuredPosts = [
 
 function Home(props) {
   const { classes } = props;
-
   return (
     <Fragment>
       <div className={classes.layout}>

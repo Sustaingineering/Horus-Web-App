@@ -16,7 +16,6 @@ import { mainTheme } from "../../assets/jss/mainStyle";
 class Profile extends Component {
   constructor(props) {
     super(props);
-    console.log("Constructor");
     // Grab the initial cached state
     let user = this.props.firebase.auth().currentUser;
     this.state = {
@@ -31,16 +30,13 @@ class Profile extends Component {
   }
 
   updateName = () => {
-    console.log("Updating name");
     this.state.userAuth.updateProfile({
       displayName: this.state.name,
     }).then((e) => {
       this.generateSnack("Updated name.");
-      console.log("Updated");
       console.log(e);
     }).catch((e) => {
       this.generateSnack("Error in name update.");
-      console.log("Error");
       console.log(e);
     });
   }
@@ -49,11 +45,9 @@ class Profile extends Component {
     console.log("Updating email");
     this.state.userAuth.updateEmail(this.state.email).then((e) => {
       this.generateSnack("Updated email.");
-      console.log("Updated");
       console.log(e);
     }).catch((e) => {
       this.generateSnack("Error in email update.");
-      console.log("Not updated");
       console.log(e);
     });
     this.refresh();
@@ -74,7 +68,6 @@ class Profile extends Component {
     let emailAddress = this.state.userAuth.email;
     this.props.firebase.auth().sendPasswordResetEmail(emailAddress).then((e) => {
       this.generateSnack("Password reset email sent.");
-      console.log("Email sent");
     }).catch((e) => {
       this.generateSnack("Error in reset email. Try logging out.");
       console.log(e);
@@ -128,7 +121,6 @@ class Profile extends Component {
 
   reauthFlow = () => {
     let { classes } = this.props;
-    console.log("reauthflow");
     if (this.isAuthOld()) {
       if (this.state.isEmail) {
         // Reauthenticate with password here, given in TextField
@@ -176,7 +168,6 @@ class Profile extends Component {
       this.props.firebase.auth().currentUser.reauthenticateWithCredential(credential).then((result) => {
         this.generateSnack("Reauthorized.");
         this.refresh();
-        console.log(result);
       }).catch((e) => {
         console.log(e);
       });
@@ -185,7 +176,6 @@ class Profile extends Component {
       this.props.firebase.auth().currentUser.reauthenticateWithPopup(provider).then((result) => {
         this.generateSnack("Reauthorized.");
         this.refresh();
-        console.log(result);
       }).catch((e) => {
         console.log(e);
       });
@@ -213,7 +203,6 @@ class Profile extends Component {
 
   render() {
     const { classes } = this.props;
-    console.log("Rerender");
     return (
       <Fragment>
         <MuiThemeProvider theme={mainTheme}>

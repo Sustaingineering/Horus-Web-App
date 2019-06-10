@@ -48,6 +48,9 @@ class Navbar extends Component {
   render() {
     const { classes } = this.props;
 
+    // Refresh to check if token is still valid on every nav
+    this.props.firebase.auth().currentUser.reload();
+
     return (
       <Fragment>
         <div className={classes.root}>
