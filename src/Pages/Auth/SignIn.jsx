@@ -1,5 +1,4 @@
 import React, { Component, Fragment } from "react";
-
 // Router
 import { withRouter } from "react-router-dom";
 // Material UI Components
@@ -13,14 +12,8 @@ import LockIcon from "@material-ui/icons/LockOutlined";
 import signinStyle from "./signinStyle";
 import { withStyles, MuiThemeProvider } from "@material-ui/core/styles";
 import { mainTheme } from "../../assets/jss/mainStyle";
-
 // Firebase 
 import * as firebaseui from "firebaseui";
-
-// Electron
-// const electron = window.require("electron");
-// const ipcRenderer = electron.ipcRenderer;
-// const fs = electron.remote.require("fs");
 
 class SignInPage extends Component {
   constructor(props) {
@@ -39,7 +32,6 @@ class SignInPage extends Component {
           requireDisplayName: false
         },
         this.props.firebase.auth.GoogleAuthProvider.PROVIDER_ID,
-        firebaseui.auth.AnonymousAuthProvider.PROVIDER_ID
       ],
       callbacks: {
         signInSuccessWithAuthResult: (authResult, redirectUrl) => {
@@ -72,9 +64,5 @@ class SignInPage extends Component {
     );
   }
 }
-
-// SignInPage.propTypes = {
-//   classes: PropTypes.object.isRequired
-// };
 
 export default withRouter(withStyles(signinStyle)(SignInPage));

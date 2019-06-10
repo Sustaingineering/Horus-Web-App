@@ -8,7 +8,7 @@ const landingStyle = theme => ({
     overflow: "hidden",
     height: "100%",
     minHeight: "100vh",
-    backgroundColor: primaryColor,
+    backgroundColor: backgroundColor,
     backgroundRepeat: "no-repeat",
     backgroundSize: "cover",
     backgroundPosition: "center",
@@ -16,10 +16,8 @@ const landingStyle = theme => ({
     color: "white"
   },
   logos: {
-    marginTop: "15%",
-    marginLeft: "calc(50% - 400px)",
-    width: 750,
-    height: "auto"
+    width: "100%",
+    maxWidth: 600
   },
   container: {
     marginTop: "5%",
@@ -28,7 +26,7 @@ const landingStyle = theme => ({
     marginRight: theme.spacing.unit * 3,
     marginLeft: theme.spacing.unit * 3,
     [theme.breakpoints.up(400 + theme.spacing.unit * 3 * 2)]: {
-      width: 400,
+      width: 500,
       marginLeft: "auto",
       marginRight: "auto"
     }
@@ -45,7 +43,7 @@ const landingStyle = theme => ({
   },
   submit: {
     marginTop: theme.spacing.unit * 3,
-    backgroundColor: primaryColor,
+    backgroundColor: backgroundColor,
     color: "white",
     "&:hover": {
       backgroundColor: "white",
@@ -53,7 +51,7 @@ const landingStyle = theme => ({
     }
   },
   paper: {
-    backgroundColor: backgroundColor,
+    backgroundColor: primaryColor,
     marginTop: theme.spacing.unit * 8,
     display: "flex",
     flexDirection: "column",

@@ -7,7 +7,8 @@ import {
   AppBar,
   Toolbar,
   Typography,
-  IconButton
+  IconButton,
+  Button
 } from "@material-ui/core";
 // Navbar Menu - drawer component
 import NavBarMenu from "../NavBarMenu/NavBarMenu";
@@ -17,8 +18,6 @@ import MenuIcon from "@material-ui/icons/Menu";
 import navbarStyle from "./navbarStyle";
 import { withStyles } from "@material-ui/core/styles";
 import classNames from "classnames";
-// Firebase
-import SignOutButton from "../../Pages/Auth/SignOut";
 
 import { FirebaseContext } from "../../Firebase/firebase.js";
 
@@ -44,10 +43,12 @@ class Navbar extends Component {
     this.setState({ open: drawerOpen });
   };
 
+  signOut = () => {
+    this.props.firebase.auth().signOut();
+  }
+
   render() {
     const { classes } = this.props;
-    // const { anchorEl } = this.state;
-    // const open = Boolean(anchorEl);
 
     return (
       <Fragment>
@@ -76,15 +77,13 @@ class Navbar extends Component {
                   Horus
                 </Link>
               </Typography>
-              <FirebaseContext.Consumer>
-                {firebase => <SignOutButton firebase={firebase} />}
-              </FirebaseContext.Consumer>
+              <Button className={classes.button} color="primary" onClick={this.signOut}>
+                Sign Out
+              </Button>
             </Toolbar>
           </AppBar>
-          <NavBarMenu
-            open={this.state.open}
-            changeOpen={this.handleDrawerClose.bind(this)}
-          />
+          <NavBarMenu sensors={this.props.sensors} open={this.state.open} changeOpen={this.handleDrawerClose.bind(this)} />
+
         </div>
       </Fragment>
     );

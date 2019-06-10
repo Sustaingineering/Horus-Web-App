@@ -1,12 +1,12 @@
 // Profile Styles
 // SignIn Styles
-import { warningColor, primaryColor, backgroundColor, dangerColor } from "../../assets/jss/mainStyle";
+import { infoColor, warningColor, primaryColor, backgroundColor, dangerColor } from "../../assets/jss/mainStyle";
 
 
 const profileStyle = theme => ({
   root: {
     // TODO CHANGE
-    flexGrow: 1,
+    // flexGrow: 1,
     // marginLeft: '100px',
     // marginRight: '30px',
     // paddingTop: 15,
@@ -79,7 +79,11 @@ const profileStyle = theme => ({
   // },
   textField: {
     width: "100%",
-    color: "white"
+    color: "white",
+  },
+  textFieldDisabled: {
+    width: "100%",
+    color: "#9e9e9e"
   },
   submit: {
     marginTop: theme.spacing.unit * 3,
@@ -108,6 +112,15 @@ const profileStyle = theme => ({
       color: "black"
     }
   },
+  submitInfo: {
+    marginTop: theme.spacing.unit * 3,
+    backgroundColor: infoColor,
+    color: "white",
+    "&:hover": {
+      backgroundColor: "white",
+      color: "black"
+    }
+  }
   // avatar: {
   //   margin: 'auto',
   //   height: '100%',

@@ -58,8 +58,7 @@
     "mac": {},
     "linux": {}
   },
-  "main": "electron/electron.js",
-  "homepage": "./",
+  "homepage": ".",
   "scripts": {
     "react-start": "react-scripts start",
     "react-build": "react-scripts build",

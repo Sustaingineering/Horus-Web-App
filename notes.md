@@ -59,3 +59,9 @@ Split out inputs so it's the same
 Set up the auth handlers for Google and Facebook
 Set up the reauthorization after 5 minutes to access admin functions
 Set up the handlers to change user profile settings
+
+## Build
+
+`npm run react-build`
+`firebase init hosting`
+`firebase deploy`
