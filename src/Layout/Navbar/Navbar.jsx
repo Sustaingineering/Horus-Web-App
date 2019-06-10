@@ -19,8 +19,6 @@ import navbarStyle from "./navbarStyle";
 import { withStyles } from "@material-ui/core/styles";
 import classNames from "classnames";
 
-import { FirebaseContext } from "../../Firebase/firebase.js";
-
 const nameStyle = {
   textDecoration: "none",
   color: "white"

@@ -11,10 +11,6 @@ import landingStyle from "./landingStyle";
 import { mainTheme } from "../../assets/jss/mainStyle";
 
 class LandingPage extends Component {
-  constructor(props) {
-    super(props);
-  }
-
   render() {
     const { classes } = this.props;
 
