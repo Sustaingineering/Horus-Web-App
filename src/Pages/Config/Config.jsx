@@ -85,13 +85,17 @@ class Profile extends Component {
   deleteAccount = () => {
     console.log("Delete account");
     if (window.confirm("Are you sure? You CANNOT undo this.")) {
+      // Cache the UID
+      let uid = this.props.firebase.auth().currentUser.uid;
       this.state.userAuth.delete().then(() => {
-        console.log("Success");
+        let db = this.props.firebase.firestore();
+        db.collection("users").doc(uid).delete().then(() => {
+        }).catch((e) => {
+          console.log(e);
+        });
       }).catch((e) => {
-        console.log("Failed");
+        console.log(e);
       });
-    } else {
-      console.log("Rejected");
     }
   }
 
