@@ -1,19 +1,25 @@
 import React, { Component, Fragment } from "react";
 // Router
-import { withRouter } from "react-router-dom";
+import { withRouter, Link } from "react-router-dom";
 // Material UI Components
 import {
   Avatar,
-  CssBaseline
+  CssBaseline,
 } from "@material-ui/core";
 // Icons
 import LockIcon from "@material-ui/icons/LockOutlined";
+import BackIcon from "@material-ui/icons/ArrowBack";
 //Style
 import signinStyle from "./signinStyle";
 import { withStyles, MuiThemeProvider } from "@material-ui/core/styles";
 import { mainTheme } from "../../assets/jss/mainStyle";
 // Firebase 
 import * as firebaseui from "firebaseui";
+
+const style = {
+  textDecoration: "none",
+  color: "white"
+};
 
 class SignInPage extends Component {
   constructor(props) {
@@ -56,6 +62,10 @@ class SignInPage extends Component {
                   <LockIcon />
                 </Avatar>
                 <div id="firebaseui-auth-container"></div>
+                <br/><br/>
+                <Link style={style} to="/">
+                  <BackIcon />
+                </Link>
               </div>
             </div>
           </div>

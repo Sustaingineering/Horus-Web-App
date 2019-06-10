@@ -70,11 +70,8 @@ class Navbar extends Component {
               >
                 <MenuIcon />
               </IconButton>
-              <Typography variant="h6" color="inherit" className={classes.flex}>
-                <Link style={nameStyle} to="/">
-                  Horus
-                </Link>
-              </Typography>
+              {/* This is a hacky way of moving the signout button over. Fix later? */}
+              <div className={classes.flex}></div>
               <Button className={classes.button} color="primary" onClick={this.signOut}>
                 Sign Out
               </Button>

@@ -24,7 +24,6 @@ const featuredPosts = [
     description: "fweagfweg"
   }
 ]
-// This is sick
 
 function Home(props) {
   const { classes } = props;

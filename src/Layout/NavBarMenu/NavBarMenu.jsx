@@ -87,30 +87,6 @@ class NavBarMenu extends Component {
       </Link>);
     }
     return sensorPages;
-    // this.props.sensors.map(sensor => (
-    //   <Link key={sensor.name} style={style} to={sensor.name}>
-    //     <ListItem
-    //       key={sensor.name}
-    //       button
-    //       onClick={this.handleDrawerClose}
-    //     >
-    //       <ListItemIcon>
-    //         <Dashboard style={style} />
-    //       </ListItemIcon>
-    //       <ListItemText
-    //         className={classes.listItems}
-    //         primary={
-    //           <Typography
-    //             type="body2"
-    //             style={{ color: "#FFFFFF" }}
-    //           >
-    //             {sensor.name}
-    //           </Typography>
-    //         }
-    //       />
-    //     </ListItem>
-    //   </Link>
-    // ))
   }
 
   render() {
