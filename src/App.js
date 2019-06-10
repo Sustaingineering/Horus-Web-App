@@ -46,7 +46,7 @@ class App extends Component {
         this.setState({authUser : authUser});
         this.updateSensors();
       } else {
-        this.setState({authUser : undefined});
+        this.setState({authUser : undefined, sensors: {}});
       }
     });
   }
@@ -65,6 +65,9 @@ class App extends Component {
       } else {
         console.log("Doesn't exist, no state update");
         db.collection("users").doc(uid).set({sensors: {}});
+        this.setState({
+          sensors: {}
+        });
       }
     });
   }
