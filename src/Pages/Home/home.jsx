@@ -10,7 +10,6 @@ import classNames from "classnames";
 
 class Home extends Component {
   render() {
-    console.log("Home rendering");
     const { classes } = this.props;
     const user = this.props.firebase.auth().currentUser.displayName;
     return (

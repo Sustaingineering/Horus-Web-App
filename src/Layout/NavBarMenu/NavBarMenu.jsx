@@ -36,7 +36,7 @@ const style = {
 
 class NavBarMenu extends Component {
   constructor(props) {
-    super();
+    super(props);
     this.state = {
       openDrawer: false,
       open: false,

@@ -42,7 +42,6 @@ class App extends Component {
       posts: []
     };
     this.props.firebase.auth().onAuthStateChanged(authUser => {
-      console.log("Auth update");
       if (authUser) {
         this.setState({authUser : authUser});
         this.updateSensors();
@@ -59,12 +58,10 @@ class App extends Component {
     let uid = this.props.firebase.auth().currentUser.uid;
     db.collection("users").doc(uid).get().then((doc) => {
       if (doc.exists) {
-        console.log("Exists, updating state");
         this.setState({
           sensors: doc.data().sensors
         });
       } else {
-        console.log("Doesn't exist, no state update");
         db.collection("users").doc(uid).set({sensors: {}});
         this.setState({
           sensors: {}
@@ -77,9 +74,7 @@ class App extends Component {
     let db = this.props.firebase.firestore();
     db.collection("posts").get().then((c) => {
       let posts = [];
-      console.log(c);
       c.forEach((doc) => {
-        console.log(doc.data());
         posts.push(doc.data());
       });
       this.setState({
