@@ -1,12 +1,9 @@
 import React, { Component, Fragment } from "react";
 import PropTypes from "prop-types";
-// Router
-import { Link } from "react-router-dom";
 // Material UI Components
 import {
   AppBar,
   Toolbar,
-  Typography,
   IconButton,
   Button
 } from "@material-ui/core";
@@ -18,11 +15,6 @@ import MenuIcon from "@material-ui/icons/Menu";
 import navbarStyle from "./navbarStyle";
 import { withStyles } from "@material-ui/core/styles";
 import classNames from "classnames";
-
-const nameStyle = {
-  textDecoration: "none",
-  color: "white"
-};
 
 class Navbar extends Component {
   state = {

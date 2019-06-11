@@ -31,13 +31,13 @@ const styles = theme => ({
   cardDetails: {
     flex: 1
   },
-  postLink: {
+  postTitle: {
     margin: 15,
     fontWeight: 700
   },
   postText: {
     margin: 15,
-    fontWeight: 500
+    lineHeight: 1.5,
   },
   cardMedia: {
     width: 160
@@ -59,6 +59,12 @@ const styles = theme => ({
     [theme.breakpoints.down('xs')]: {
       display: 'none'
     }
+  },
+  menuButton: {
+    position: 'relative',
+    marginLeft: 0,
+    marginRight: 20,
+    marginBottom: 20
   }
 })
 

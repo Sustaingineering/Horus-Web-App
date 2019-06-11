@@ -26,7 +26,7 @@ const landingStyle = theme => ({
     marginRight: theme.spacing.unit * 3,
     marginLeft: theme.spacing.unit * 3,
     [theme.breakpoints.up(400 + theme.spacing.unit * 3 * 2)]: {
-      width: 500,
+      width: 350,
       marginLeft: "auto",
       marginRight: "auto"
     }

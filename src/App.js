@@ -38,13 +38,15 @@ class App extends Component {
     super(props);
     this.state = {
       authUser: undefined,
-      sensors: {}
+      sensors: {},
+      posts: []
     };
     this.props.firebase.auth().onAuthStateChanged(authUser => {
       console.log("Auth update");
       if (authUser) {
         this.setState({authUser : authUser});
         this.updateSensors();
+        this.getPosts();
       } else {
         this.setState({authUser : undefined, sensors: {}});
       }
@@ -55,7 +57,6 @@ class App extends Component {
     let db = this.props.firebase.firestore();
     // Grab the UID from the auth().currentUser object in case state isn't updated yet
     let uid = this.props.firebase.auth().currentUser.uid;
-    console.log(uid);
     db.collection("users").doc(uid).get().then((doc) => {
       if (doc.exists) {
         console.log("Exists, updating state");
@@ -69,6 +70,21 @@ class App extends Component {
           sensors: {}
         });
       }
+    });
+  }
+
+  getPosts = () => {
+    let db = this.props.firebase.firestore();
+    db.collection("posts").get().then((c) => {
+      let posts = [];
+      console.log(c);
+      c.forEach((doc) => {
+        console.log(doc.data());
+        posts.push(doc.data());
+      });
+      this.setState({
+        posts: posts
+      })
     });
   }
 
@@ -104,7 +120,11 @@ class App extends Component {
           <div className={classes.root}>
             <div className={classes.container}>
               <Switch>
-                <Route path="/" exact component={Home} />
+                <Route path="/" exact render={(props) => 
+                  <FirebaseContext.Consumer>
+                    {firebase => <Home {...props} refreshPosts={this.getPosts} posts={this.state.posts} firebase={firebase} />}
+                  </FirebaseContext.Consumer>
+                } />
                 {this.processSensors().map((e) => e)}
                 <Route path="/config" exact render={(props) => 
                   <FirebaseContext.Consumer>
