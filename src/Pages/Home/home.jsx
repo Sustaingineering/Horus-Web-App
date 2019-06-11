@@ -1,13 +1,10 @@
 import React, { Fragment, Component } from 'react';
 import { Link } from "react-router-dom";
 import { withStyles } from '@material-ui/core/styles';
-import { Paper, Typography, Grid, Card, CardContent, IconButton } from '@material-ui/core';
+import { Paper, Typography, Grid, Card, CardContent } from '@material-ui/core';
 import styles from './homeStyle';
 // Logos
 import logos from '../../assets/images/logos.png';
-import RefreshIcon from "@material-ui/icons/Refresh";
-import classNames from "classnames";
-
 class Home extends Component {
   render() {
     const { classes } = this.props;
@@ -39,14 +36,6 @@ class Home extends Component {
               </Grid>
             </Grid>
           </Paper>
-          <IconButton
-            color="inherit"
-            aria-label="refresh"
-            onClick={this.props.refreshPosts}
-            className={classNames(classes.card, classes.menuButton)}
-          >
-            <RefreshIcon />
-          </IconButton>
           <Grid container spacing={40} className={classes.cardGrid}>
             {user === null ?
               <Grid item key={"no-user-auth"} xs={12} md={6}>

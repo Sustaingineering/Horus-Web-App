@@ -36,23 +36,31 @@ const customStyle = (theme) => ({
 class App extends Component {
   constructor(props) {
     super(props);
+    this.subscriber = undefined;
     this.state = {
       authUser: undefined,
       sensors: {},
       posts: []
     };
+    console.log("App constructor");
     this.props.firebase.auth().onAuthStateChanged(authUser => {
       if (authUser) {
         this.setState({authUser : authUser});
         this.updateSensors();
         this.getPosts();
       } else {
+        if (this.subscriber) {
+          console.log("Unsubscribe");
+          this.subscriber();
+          this.subscriber = undefined;
+        }
         this.setState({authUser : undefined, sensors: {}});
       }
     });
   }
 
   updateSensors = () => {
+    console.log("Update sensors");
     let db = this.props.firebase.firestore();
     // Grab the UID from the auth().currentUser object in case state isn't updated yet
     let uid = this.props.firebase.auth().currentUser.uid;
@@ -71,8 +79,10 @@ class App extends Component {
   }
 
   getPosts = () => {
+    console.log("Get posts");
     let db = this.props.firebase.firestore();
-    db.collection("posts").get().then((c) => {
+    this.subscriber = db.collection("posts").onSnapshot((c) => {
+      console.log("Subscriber heard");
       let posts = [];
       c.forEach((doc) => {
         posts.push(doc.data());
@@ -117,7 +127,7 @@ class App extends Component {
               <Switch>
                 <Route path="/" exact render={(props) => 
                   <FirebaseContext.Consumer>
-                    {firebase => <Home {...props} refreshPosts={this.getPosts} posts={this.state.posts} firebase={firebase} />}
+                    {firebase => <Home {...props} posts={this.state.posts} firebase={firebase} />}
                   </FirebaseContext.Consumer>
                 } />
                 {this.processSensors().map((e) => e)}

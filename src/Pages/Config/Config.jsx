@@ -17,7 +17,6 @@ class Profile extends Component {
   constructor(props) {
     super(props);
     // Grab the initial cached state
-    console.log("Constructor");
     let user = this.props.firebase.auth().currentUser;
     this.state = {
       userAuth: user,
