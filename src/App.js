@@ -36,7 +36,7 @@ const customStyle = (theme) => ({
 class App extends Component {
   constructor(props) {
     super(props);
-    this.subscriber = undefined;
+    this.subscribers = [];
     this.state = {
       authUser: undefined,
       sensors: {},
@@ -47,13 +47,11 @@ class App extends Component {
       if (authUser) {
         this.setState({authUser : authUser});
         this.updateSensors();
-        this.getPosts();
+        this.postSubscriber();
       } else {
-        if (this.subscriber) {
-          console.log("Unsubscribe");
-          this.subscriber();
-          this.subscriber = undefined;
-        }
+        console.log("unsubscribe");
+        this.subscribers.map((s) => s());
+        this.subscribers = [];
         this.setState({authUser : undefined, sensors: {}});
       }
     });
@@ -78,10 +76,10 @@ class App extends Component {
     });
   }
 
-  getPosts = () => {
+  postSubscriber = () => {
     console.log("Get posts");
     let db = this.props.firebase.firestore();
-    this.subscriber = db.collection("posts").onSnapshot((c) => {
+    this.subscribers.push(db.collection("posts").onSnapshot((c) => {
       console.log("Subscriber heard");
       let posts = [];
       c.forEach((doc) => {
@@ -90,7 +88,7 @@ class App extends Component {
       this.setState({
         posts: posts
       })
-    });
+    }, (e) => console.log(e)));
   }
 
   processSensors = () => {

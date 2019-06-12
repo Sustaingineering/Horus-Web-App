@@ -101,7 +101,6 @@ class Profile extends Component {
     // Check if it's an email auth
     let isEmail = (this.state.userAuth.providerData.length === 0) ?
       false : (this.state.userAuth.providerData[0].providerId === "password");
-    console.log(user);
     this.setState({
       userAuth: user,
       name: user.displayName,
