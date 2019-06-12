@@ -1,6 +1,7 @@
 import firebase from "firebase/app";
 import "firebase/auth";
 import "firebase/firestore";
+import "firebase/database";
 import React from 'react';
 
 // Unique, but non-secret firebase context details
@@ -20,6 +21,7 @@ export default class Firebase {
     firebase.initializeApp(firebaseConfig);
     this.auth = firebase.auth;
     this.firestore = firebase.firestore;
+    this.database = firebase.database;
   }
 }
 

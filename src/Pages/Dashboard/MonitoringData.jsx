@@ -49,7 +49,7 @@ function MonitoringData(props) {
                   Load Voltage
                 </Typography>
                 <Typography color='primary' variant='headline'>
-                  {/* {voltajeInt} */}140V
+                  {/* {voltajeInt} */}null
                 </Typography>
               </Grid>
             </Grid>
@@ -71,7 +71,7 @@ function MonitoringData(props) {
                   Load Current
                 </Typography>
                 <Typography color='primary' variant='headline'>
-                  {/* {voltajeInt} */}8A
+                  {/* {voltajeInt} */}null
                 </Typography>
               </Grid>
             </Grid>
@@ -93,7 +93,7 @@ function MonitoringData(props) {
                   Power Absorbed
                 </Typography>
                 <Typography color='primary' variant='headline'>
-                  {/* {voltajeInt} */}1120W
+                  {/* {voltajeInt} */}null
                 </Typography>
               </Grid>
             </Grid>
@@ -115,7 +115,7 @@ function MonitoringData(props) {
                   Operating Temperature
                 </Typography>
                 <Typography color='primary' variant='headline'>
-                  {/* {voltajeInt} */}28C
+                  {/* {voltajeInt} */}null
                 </Typography>
               </Grid>
             </Grid>
@@ -137,7 +137,7 @@ function MonitoringData(props) {
                   Surface Temperature
                 </Typography>
                 <Typography color='primary' variant='headline'>
-                  {/* {voltajeInt} */}35C
+                  {/* {voltajeInt} */}null
                 </Typography>
               </Grid>
             </Grid>
@@ -159,7 +159,7 @@ function MonitoringData(props) {
                   Water Breaker
                 </Typography>
                 <Typography color='primary' variant='headline'>
-                  {/* {voltajeInt} */}0
+                  {/* {voltajeInt} */}null
                 </Typography>
               </Grid>
             </Grid>

@@ -1,5 +1,4 @@
 import React, { Component, Fragment } from "react";
-import PropTypes from "prop-types";
 // Material UI Components
 import {
   Grid,
@@ -16,47 +15,42 @@ import HistoryChart from "./historyChart";
 //Style
 import dashboardStyle from "./dashboardStyle";
 import { mainTheme } from "../../assets/jss/mainStyle";
-// Electron
-// const electron = window.require("electron");
-// const ipcRenderer = electron.ipcRenderer;
+// Probably won't need to use moment, just multiply time by 1000
+import moment from "moment";
 
 class Dashboard extends Component {
-  state = {
-    value: 0,
-    voltageData: [],
-    currentData: [],
-    powerData: [],
-    tempData: []
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      value: 0,
+      voltageData: [],
+      currentData: [],
+      powerData: [],
+      tempData: []
+    }
+  }
 
-  tick = () => {
-    // ipcRenderer.send("get-sensor-data", { sensorId: this.props.sensorName });
-  };
-
-  componentWillMount = () => {
-    this.interval = setInterval(this.tick.bind(this), 500);
-    // ipcRenderer.on("get-sensor-data", (e, msg) => {
-    //   console.log("renderer", msg.data[0], msg.data);
-    //   if (msg.error) {
-    //     // return alert(msg.error);
-    //   } else {
-    //     const voltageDummyData = msg.data[0];
-    //     const currentDummyData = msg.data[1];
-    //     const powerDummyData = msg.data[2];
-    //     const tempDummyData = msg.data[3];
-    //     this.setState({
-    //       voltageData: voltageDummyData,
-    //       currentData: currentDummyData,
-    //       powerData: powerDummyData,
-    //       tempData: tempDummyData
-    //     });
-    //   }
-    // });
-  };
-
-  componentWillUnmount = () => {
-    clearInterval(this.interval);
-  };
+  componentDidMount = () => {
+    console.log("recalc");
+    let voltageData = [];
+    let currentData = [];
+    let powerData = [];
+    let tempData = [];
+    (this.props.data || []).map((e) => {
+      let timeString = moment.unix(e["time-stamp"]).toISOString();
+      voltageData.push({"time": timeString, "voltage": e.voltage});
+      currentData.push({"time": timeString, "current": e.current});
+      powerData.push({"time": timeString, "power": e.power});
+      tempData.push({"time": timeString, "opTemp": e["op-temp"], "suTemp": e["surface-temperature"]});
+    });
+    this.setState({
+      value: 0,
+      voltageData: voltageData,
+      currentData: currentData,
+      powerData: powerData,
+      tempData: tempData
+    });
+  }
 
   handleChange = (event, value) => {
     this.setState({ value });
@@ -96,7 +90,7 @@ class Dashboard extends Component {
                     <Chart
                       data={this.state.voltageData}
                       type="Voltage"
-                      title={"Voltage"}
+                      title="Voltage"
                       dataKey1="voltage"
                       dataKey2=""
                     />
@@ -180,9 +174,5 @@ class Dashboard extends Component {
     );
   }
 }
-
-Dashboard.propTypes = {
-  classes: PropTypes.object.isRequired
-};
 
 export default withStyles(dashboardStyle)(Dashboard);

@@ -69,9 +69,10 @@ class Chart extends React.Component {
                         </linearGradient>
                       </defs>
                       <XAxis
-                        dataKey="name"
+                        dataKey="time"
                         tick={{ fill: "white" }}
                         stroke="#efefef"
+                        hide
                       >
                         <Label value="Time" offset={0} fill= 'white' position="insideBottom" dy={10}/>
                         <Label value={Voltage} offset={0} fontSize={20} fill= 'white' position="top" dy={-245} />      
@@ -126,9 +127,10 @@ class Chart extends React.Component {
                         </linearGradient>
                       </defs>
                       <XAxis
-                        dataKey="name"
+                        dataKey="time"
                         tick={{ fill: "white" }}
                         stroke="#efefef"
+                        hide
                       >
                         <Label value="Time" offset={0} fill= 'white' position="insideBottom" dy={10}/>
                         <Label value={Current} offset={0} fontSize={20} fill= 'white' position="top" dy={-245} />  
@@ -184,9 +186,10 @@ class Chart extends React.Component {
                         </linearGradient>
                       </defs>
                       <XAxis
-                        dataKey="name"
+                        dataKey="time"
                         tick={{ fill: "white" }}
                         stroke="#efefef"
+                        hide
                       >
                         <Label value="Time" offset={0} fill= 'white' position="insideBottom" dy={10}/>
                         <Label value={Power} offset={0} fontSize={20} fill= 'white' position="top" dy={-245} /> 
@@ -258,9 +261,10 @@ class Chart extends React.Component {
                         </linearGradient>
                       </defs>
                       <XAxis
-                        dataKey="name"
+                        dataKey="time"
                         tick={{ fill: "white" }}
                         stroke="#efefef"
+                        hide
                       >
                         <Label value="Time" offset={0} fill= 'white' position="insideBottom" dy={10}/>
                         <Label value={Temperature} offset={0} fontSize={20} fill= 'white' position="top" dy={-245} /> 
@@ -279,8 +283,8 @@ class Chart extends React.Component {
                       />
                       <Area
                         type="monotone"
-                        dataKey={this.props.dataKey1}
-                        stackId="1"
+                        dataKey={this.props.dataKey2}
+                        stackId="2"
                         stroke="#FD5F00"
                         strokeWidth="3"
                         fillOpacity={1}

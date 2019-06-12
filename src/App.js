@@ -37,28 +37,43 @@ class App extends Component {
   constructor(props) {
     super(props);
     this.subscribers = [];
+    this.dbrefs = [];
     this.state = {
       authUser: undefined,
       sensors: {},
+      data: {},
       posts: []
     };
-    console.log("App constructor");
     this.props.firebase.auth().onAuthStateChanged(authUser => {
       if (authUser) {
         this.setState({authUser : authUser});
         this.updateSensors();
         this.postSubscriber();
       } else {
-        console.log("unsubscribe");
+        this.props.firebase.database().ref('69420').off();
         this.subscribers.map((s) => s());
+        this.dbrefs.map((e) => e.off());
         this.subscribers = [];
+        this.dbrefs = [];
         this.setState({authUser : undefined, sensors: {}});
       }
     });
   }
 
+  getDatabase = (sensorId) => {
+    let db = this.props.firebase.database().ref(sensorId);
+    this.dbrefs.push(db);
+    // Use .once() to make it call less data
+    db.limitToFirst(100).on('value', (e) => {
+      let temp = this.state.data;
+      temp[sensorId] = e.val();
+      this.setState({
+        data: temp
+      });
+    });
+  }
+
   updateSensors = () => {
-    console.log("Update sensors");
     let db = this.props.firebase.firestore();
     // Grab the UID from the auth().currentUser object in case state isn't updated yet
     let uid = this.props.firebase.auth().currentUser.uid;
@@ -66,6 +81,14 @@ class App extends Component {
       if (doc.exists) {
         this.setState({
           sensors: doc.data().sensors
+        }, () => {
+          // This can be improved by not dropping the database entries that we don't need
+          // Keep as is for proof of concept.
+          this.dbrefs.map((e) => e.off());
+          this.dbrefs = [];
+          for (let name in this.state.sensors) {
+            this.getDatabase(this.state.sensors[name]);
+          }
         });
       } else {
         db.collection("users").doc(uid).set({sensors: {}});
@@ -77,10 +100,8 @@ class App extends Component {
   }
 
   postSubscriber = () => {
-    console.log("Get posts");
     let db = this.props.firebase.firestore();
     this.subscribers.push(db.collection("posts").onSnapshot((c) => {
-      console.log("Subscriber heard");
       let posts = [];
       c.forEach((doc) => {
         posts.push(doc.data());
@@ -88,7 +109,7 @@ class App extends Component {
       this.setState({
         posts: posts
       })
-    }, (e) => console.log(e)));
+    }));
   }
 
   processSensors = () => {
@@ -101,7 +122,12 @@ class App extends Component {
           key={x}
           render={(props) => (
             <FirebaseContext.Consumer>
-              {firebase => <Sensor {...props} sensorName={x} firebase={firebase} sensorId={this.state.sensors[x]} />}
+              {firebase => <Sensor {...props} 
+                                  sensorName={x} 
+                                  firebase={firebase} 
+                                  data={this.state.data[this.state.sensors[x]]}
+                                  sensorId={this.state.sensors[x]} 
+                                  />}
             </FirebaseContext.Consumer>
           )}
         />
