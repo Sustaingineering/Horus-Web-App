@@ -65,3 +65,28 @@ Set up the handlers to change user profile settings
 `npm run react-build`
 `firebase init hosting`
 `firebase deploy`
+
+
+# Firebase Config
+
+## Firestore
+
+```
+{
+  posts: {
+    <unique document name>: {
+      text: <html aware text>,
+      title: <some title>
+    }
+  },
+  users: {
+    <uid> : {
+      sensors: {
+        <human readable name>: <sensor-id>,
+        <human readable name>: <sensor-id>,
+        etc
+      }
+    }
+  }
+}
+```

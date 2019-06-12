@@ -114,12 +114,11 @@ class App extends Component {
 
   render() {
     const { classes } = this.props;
-    this.processSensors();
     const renderPlatform = this.state.authUser ? (
       <Fragment>
           <FirebaseContext.Consumer>
             {firebase => {
-              return (<NavBar sensors={this.state.sensors} firebase={firebase} />);
+              return (<NavBar updateSensors={this.updateSensors} sensors={this.state.sensors} firebase={firebase} />);
             }}
           </FirebaseContext.Consumer>
           <div className={classes.root}>

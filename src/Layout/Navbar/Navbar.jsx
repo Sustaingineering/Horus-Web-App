@@ -16,6 +16,8 @@ import navbarStyle from "./navbarStyle";
 import { withStyles } from "@material-ui/core/styles";
 import classNames from "classnames";
 
+import { FirebaseContext } from "../../Firebase/firebase";
+
 class Navbar extends Component {
   state = {
     anchorEl: null,
@@ -72,7 +74,17 @@ class Navbar extends Component {
               </Button>
             </Toolbar>
           </AppBar>
-          <NavBarMenu sensors={this.props.sensors} open={this.state.open} changeOpen={this.handleDrawerClose.bind(this)} />
+          <FirebaseContext.Consumer>
+            {firebase => 
+              <NavBarMenu 
+                firebase={firebase} 
+                updateSensors={this.props.updateSensors} 
+                sensors={this.props.sensors} 
+                open={this.state.open} 
+                changeOpen={this.handleDrawerClose.bind(this)} />
+            }
+          </FirebaseContext.Consumer>
+          
 
         </div>
       </Fragment>

@@ -36,13 +36,10 @@ const navbarmenuStyle = theme => ({
   },
   listItems: {
     backgroundColor: primaryColor,
-    color: 'white'
-  },
-  settings: {
-    backgroundColor: primaryColor,
     color: 'white',
-    position: 'absolute',
-    bottom: 30
+    "&::hover" : {
+      backgroundColor: "rgba(0, 0, 0, 0.08)"
+    }
   },
   sidebarDivider: {
     // position: "absolute",
