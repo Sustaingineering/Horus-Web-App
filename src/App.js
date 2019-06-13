@@ -70,9 +70,7 @@ class App extends Component {
     // Use .once() to make it call less data
     db.limitToLast(5).on('child_added', (e) => {
       let temp = this.state.data;
-      if (!temp[sensorId] || temp[sensorId].length === 0) {
-        temp[sensorId] = [];
-      }
+      temp[sensorId] = [];
       temp[sensorId].push(e.val());
       this.setState({
         data: temp
