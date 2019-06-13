@@ -84,6 +84,7 @@ class Chart extends React.Component {
                       label={{value: "Volts", fill: 'white', angle: -90, position: 'insideLeft' }} />
                       <Tooltip />
                       <Area
+                        isAnimationActive={false}
                         type="monotone"
                         dataKey={this.props.dataKey1}
                         stackId="1"
@@ -103,7 +104,7 @@ class Chart extends React.Component {
                   <ResponsiveContainer width="100%" height={300}>
                     <AreaChart
                       data={this.props.data}
-                      margin={{ top: 30, right: 30, left: 0, bottom: 10 }}                    >
+                      margin={{ top: 30, right: 30, left: 0, bottom: 10 }}>
                       <CartesianGrid
                         strokeDasharray="5 5"
                         verticalFill={["263148", "#444444"]}
@@ -144,6 +145,7 @@ class Chart extends React.Component {
                              label={{value: "Amps", fill: 'white', angle: -90, position: 'insideLeft' }} />/>
                       <Tooltip />
                       <Area
+                        isAnimationActive={false}
                         type="monotone"
                         dataKey={this.props.dataKey1}
                         stackId="1"
@@ -201,6 +203,7 @@ class Chart extends React.Component {
                               label={{value: "Watts", fill: 'white', angle: -90, position: 'insideLeft' }} />
                       <Tooltip />
                       <Area
+                        isAnimationActive={false}
                         type="monotone"
                         dataKey={this.props.dataKey1}
                         stackId="1"
@@ -219,7 +222,7 @@ class Chart extends React.Component {
                   <ResponsiveContainer width="100%" height={300}>
                     <AreaChart
                       data={this.props.data}
-                      margin={{ top: 30, right: 30, left: 0, bottom: 10 }}                    >
+                      margin={{ top: 30, right: 30, left: 0, bottom: 10 }}>
                       <CartesianGrid
                         strokeDasharray="5 5"
                         verticalFill={["263148", "#444444"]}
@@ -276,6 +279,7 @@ class Chart extends React.Component {
                              label={{value: "Celsius", fill: 'white', angle: -90, position: 'insideLeft' }} />
                       <Tooltip />
                       <Area
+                        isAnimationActive={false}
                         type="monotone"
                         dataKey={this.props.dataKey1}
                         stackId="1"
@@ -285,6 +289,7 @@ class Chart extends React.Component {
                         fill="url(#colortemp1)"
                       />
                       <Area
+                        isAnimationActive={false}
                         type="monotone"
                         dataKey={this.props.dataKey2}
                         stackId="2"
