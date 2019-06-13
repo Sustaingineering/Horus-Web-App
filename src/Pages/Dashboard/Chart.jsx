@@ -17,13 +17,16 @@ import {
 } from "recharts";
 
 class Chart extends React.Component {
+  shouldComponentUpdate = (nextProps) => {
+    return this.props.data !== nextProps.data;
+  }
+
   render() {
     const { classes } = this.props;
     let Voltage = "Voltage";
     let Current = "Current";
     let Power = "Power";
     let Temperature = "Temperature";
-
     return (
       <Fragment>
         {(() => {
@@ -159,7 +162,7 @@ class Chart extends React.Component {
                   <ResponsiveContainer width="100%" height={300}>
                     <AreaChart
                       data={this.props.data}
-                      margin={{ top: 30, right: 30, left: 0, bottom: 10 }}                    >
+                      margin={{ top: 30, right: 30, left: 0, bottom: 10 }}>
                       <CartesianGrid
                         strokeDasharray="5 5"
                         verticalFill={["263148", "#444444"]}

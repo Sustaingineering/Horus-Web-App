@@ -50,12 +50,16 @@ class App extends Component {
         this.updateSensors();
         this.postSubscriber();
       } else {
-        this.props.firebase.database().ref('69420').off();
-        this.subscribers.map((s) => s());
-        this.dbrefs.map((e) => e.off());
-        this.subscribers = [];
-        this.dbrefs = [];
-        this.setState({authUser : undefined, sensors: {}});
+        try {
+          this.subscribers.map((s) => s());
+          this.dbrefs.map((e) => e.off());
+        } catch (e) {
+          console.log(e);
+        } finally {
+          this.subscribers = [];
+          this.dbrefs = [];
+          this.setState({authUser : undefined, sensors: {}, data: {}, posts: []});
+        }
       }
     });
   }
@@ -64,9 +68,12 @@ class App extends Component {
     let db = this.props.firebase.database().ref(sensorId);
     this.dbrefs.push(db);
     // Use .once() to make it call less data
-    db.limitToFirst(100).on('value', (e) => {
+    db.limitToLast(5).on('child_added', (e) => {
       let temp = this.state.data;
-      temp[sensorId] = e.val();
+      if (!temp[sensorId] || temp[sensorId].length === 0) {
+        temp[sensorId] = [];
+      }
+      temp[sensorId].push(e.val());
       this.setState({
         data: temp
       });
