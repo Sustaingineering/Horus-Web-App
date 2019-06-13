@@ -33,8 +33,9 @@ class MonitoringData extends React.Component {
 
   render() {
     const { classes } = this.props;
+    let data = undefined;
     if (this.props.data.length === 0) {
-      var data = {
+      data = {
         voltage: undefined,
         current: undefined,
         power: undefined,
@@ -43,7 +44,7 @@ class MonitoringData extends React.Component {
         "water-breaker": undefined
       }
     } else {
-      var data = this.props.data[this.props.data.length - 1];
+      data = this.props.data[this.props.data.length - 1];
     }
     return (
       <div className={classes.root}>

@@ -70,7 +70,8 @@ class App extends Component {
     let temp = this.state.data;
     temp[sensorId] = [];
     // Use .once() to make it call less data
-    db.limitToLast(5).on('child_added', (e) => {
+    db.limitToLast(15).on('child_added', (e) => {
+      if (temp[sensorId].length >= 15) temp[sensorId].shift();
       temp[sensorId].push(e.val());
       this.setState({
         data: temp
@@ -91,8 +92,8 @@ class App extends Component {
           // Keep as is for proof of concept.
           this.dbrefs.map((e) => e.off());
           this.dbrefs = [];
-          for (let name in this.state.sensors) {
-            this.getDatabase(this.state.sensors[name]);
+          for (let newSensors in this.state.sensors) {
+            this.getDatabase(this.state.sensors[newSensors]);
           }
         });
       } else {

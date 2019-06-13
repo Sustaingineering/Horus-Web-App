@@ -11,12 +11,10 @@ import {
 // Components
 import MonitoringData from "./MonitoringData";
 import Chart from "./Chart";
-import HistoryChart from "./historyChart";
+// import HistoryChart from "./historyChart";
 //Style
 import dashboardStyle from "./dashboardStyle";
 import { mainTheme } from "../../assets/jss/mainStyle";
-// Probably won't need to use moment, just multiply time by 1000
-import moment from "moment";
 
 class Dashboard extends Component {
   constructor(props) {
