@@ -67,12 +67,10 @@ class App extends Component {
   getDatabase = (sensorId) => {
     let db = this.props.firebase.database().ref(sensorId);
     this.dbrefs.push(db);
+    let temp = this.state.data;
+    temp[sensorId] = [];
     // Use .once() to make it call less data
     db.limitToLast(5).on('child_added', (e) => {
-      let temp = this.state.data;
-      if (!temp[sensorId] || temp[sensorId].length === 0) {
-        temp[sensorId] = [];
-      }
       temp[sensorId].push(e.val());
       this.setState({
         data: temp
