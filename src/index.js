@@ -2,7 +2,6 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
-import registerServiceWorker from './registerServiceWorker';
 import Firebase, { FirebaseContext } from "./Firebase/firebase.js";
 
 ReactDOM.render(
@@ -13,4 +12,3 @@ ReactDOM.render(
   </FirebaseContext.Provider>,
   document.getElementById('root')
 );
-registerServiceWorker();
