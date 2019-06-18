@@ -1,4 +1,4 @@
-# Horus Monitoring build with React + Electron
+# Horus Monitoring
 
 [Sustaingineering at UBC](https://www.sustaingineering.com)
 
@@ -7,31 +7,56 @@ UBC Sustaingineering is working in partnership with ENICALSA (Renewable solution
 
 The team is developing a remote monitoring platform that senses various operating parameters of the solar panels and water pumps such as the temperature, voltage/current, water pressure, and transmits this data through GSM/3G to a central base for its monitoring.
 
-## Developer
+# Developer
 
-### Usage
+The front-end is handled by React, which is backed by Firebase. As our backend, firebase handles the auth, hosting, and storage. 
+
+Check out `scripts/` to preview how to add sensor data to the RDB.
+
+## Usage
 
 Run `npm install` after cloning the repo.
 
-### Testing and building projects
+## Testing and building projects
 
-npm scirpts
+`npm run start` - start a local development server.
 
-```JSON
-"scripts": {
-  "react-start": "react-scripts start",
-  "react-build": "react-scripts build",
-  "react-test": "react-scripts test --env=jsdom",
-  "react-eject": "react-scripts eject",
-  "electron-build": "electron-builder",
-  "release": "npm run react-build && electron-builder --publish=always",
-  "build": "npm run react-build && npm run electron-build",
-  "start": "concurrently \"cross-env BROWSER=none npm run react-start\" \"wait-on http://localhost:3000 && electron .\""
+`npm run build` - build an optimized output to `build/`.
+
+`npm run deploy` - deploy to firebase. Make sure you have auth permissions. 
+
+Firebase credentials are unique but non-secret, thus are committed. 
+
+## Firestore Format
+
+```
+{
+  posts: {
+    <unique document name>: {
+      text: <html aware text>,
+      title: <some title>
+    }
+  },
+  users: {
+    <uid> : {
+      sensors: {
+        <human readable name>: <sensor-id>,
+        <human readable name>: <sensor-id>,
+        etc
+      }
+    }
+  }
 }
 ```
 
-> `npm start` Starts react dev server and electron.
+## Firebase RDB Format 
 
-> `npm run build` Builds react project on 'build' directory and builds electron packages on 'dist' directory. (Building the react project first is necessary to build the electron packages)
-
----
+```
+{
+  <random-monotonically-increasing-UID> : {
+    timestamp: <data>,
+    voltage: <data>,
+    ...
+  },
+}
+```
