@@ -1,5 +1,4 @@
 import React, { Component, Fragment } from "react";
-import PropTypes from "prop-types";
 // Material UI Components
 import {
   Drawer,
@@ -314,10 +313,5 @@ class NavBarMenu extends Component {
     );
   }
 }
-
-NavBarMenu.propTypes = {
-  classes: PropTypes.object.isRequired,
-  theme: PropTypes.object.isRequired
-};
 
 export default withStyles(navbarmenuStyle, { withTheme: true })(NavBarMenu);

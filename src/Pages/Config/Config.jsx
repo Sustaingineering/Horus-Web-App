@@ -29,6 +29,10 @@ class Profile extends Component {
     };
   }
 
+  shouldComponentUpdate = (nextProps, nextState) => {
+    return nextState !== this.state;
+  }
+
   updateName = () => {
     this.state.userAuth.updateProfile({
       displayName: this.state.name,

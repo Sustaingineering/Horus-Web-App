@@ -5,7 +5,12 @@ import { Paper, Typography, Grid, Card, CardContent } from '@material-ui/core';
 import styles from './homeStyle';
 // Logos
 import logos from '../../assets/images/logos.png';
+
 class Home extends Component {
+  shouldComponentUpdate = (nextProps, nextState) => {
+    return nextProps.posts !== this.props.posts;
+  }
+
   render() {
     const { classes } = this.props;
     const user = this.props.firebase.auth().currentUser.displayName;

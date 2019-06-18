@@ -1,5 +1,4 @@
 import React, { Component, Fragment } from "react";
-import PropTypes from "prop-types";
 // Material UI Components
 import {
   AppBar,
@@ -19,10 +18,16 @@ import classNames from "classnames";
 import { FirebaseContext } from "../../Firebase/firebase";
 
 class Navbar extends Component {
-  state = {
-    anchorEl: null,
-    open: false
-  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      open: false
+    };
+  }
+
+  shouldComponentUpdate = (nextProps, nextState) => {
+    return this.state !== nextState;
+  }
 
   // drawer
   handleDrawerOpen = () => {
@@ -91,10 +96,5 @@ class Navbar extends Component {
     );
   }
 }
-
-Navbar.propTypes = {
-  classes: PropTypes.object.isRequired,
-  theme: PropTypes.object.isRequired
-};
 
 export default withStyles(navbarStyle, { withTheme: true })(Navbar);
