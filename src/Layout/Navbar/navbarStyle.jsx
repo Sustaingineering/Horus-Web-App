@@ -5,7 +5,6 @@ import { drawerWidth, primaryColor } from '../../assets/jss/mainStyle';
 const navbarStyle = theme => ({
   root: {
     position: 'fixed',
-    // top: 30,  // with titlebar
     top: 0,
     flexGrow: 1,
     [theme.breakpoints.down('sm')]: {
@@ -15,7 +14,6 @@ const navbarStyle = theme => ({
       height: '64px'
     },
     zIndex: 1,
-    overflow: 'hidden',
     display: 'flex',
     color: 'white'
   },
