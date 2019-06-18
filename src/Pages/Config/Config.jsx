@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from "react";
+import React, { PureComponent, Fragment } from "react";
 // Material UI Components
 import {
   Grid,
@@ -13,7 +13,7 @@ import profileStyle from "./configStyle";
 import { withStyles } from "@material-ui/core/styles";
 import { mainTheme } from "../../assets/jss/mainStyle";
 
-class Profile extends Component {
+class Profile extends PureComponent {
   constructor(props) {
     super(props);
     // Grab the initial cached state
@@ -27,10 +27,6 @@ class Profile extends Component {
       isEmail: undefined,
       snack: undefined
     };
-  }
-
-  shouldComponentUpdate = (nextProps, nextState) => {
-    return nextState !== this.state;
   }
 
   updateName = () => {

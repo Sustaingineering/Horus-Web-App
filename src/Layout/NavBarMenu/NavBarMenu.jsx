@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from "react";
+import React, { PureComponent, Fragment } from "react";
 // Material UI Components
 import {
   Drawer,
@@ -44,7 +44,7 @@ const style = {
   color: "white"
 };
 
-class NavBarMenu extends Component {
+class NavBarMenu extends PureComponent {
   constructor(props) {
     super(props);
     this.toggle = false;

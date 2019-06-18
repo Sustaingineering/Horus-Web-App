@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from "react";
+import React, { PureComponent, Fragment } from "react";
 // Material UI Components
 import {
   AppBar,
@@ -17,16 +17,12 @@ import classNames from "classnames";
 
 import { FirebaseContext } from "../../Firebase/firebase";
 
-class Navbar extends Component {
+class Navbar extends PureComponent {
   constructor(props) {
     super(props);
     this.state = {
       open: false
     };
-  }
-
-  shouldComponentUpdate = (nextProps, nextState) => {
-    return this.state !== nextState;
   }
 
   // drawer

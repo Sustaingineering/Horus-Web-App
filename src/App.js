@@ -76,6 +76,7 @@ class App extends Component {
       }
     });
     db.limitToLast(1).on('child_added', (e) => {
+      temp[sensorId] = temp[sensorId].slice();
       if (temp[sensorId].length >= 30) temp[sensorId].shift();
       temp[sensorId].push(e.val());
       this.setState({
@@ -131,9 +132,9 @@ class App extends Component {
           path={"/" + x}
           exact
           key={x}
-          render={(props) => (
+          render={() => (
             <FirebaseContext.Consumer>
-              {firebase => <Sensor {...props} 
+              {firebase => <Sensor
                                   sensorName={x} 
                                   firebase={firebase} 
                                   data={this.state.data[this.state.sensors[x]]}
@@ -159,15 +160,15 @@ class App extends Component {
           <div className={classes.root}>
             <div className={classes.container}>
               <Switch>
-                <Route path="/" exact render={(props) => 
+                <Route path="/" exact render={() => 
                   <FirebaseContext.Consumer>
-                    {firebase => <Home {...props} posts={this.state.posts} firebase={firebase} />}
+                    {firebase => <Home posts={this.state.posts} firebase={firebase} />}
                   </FirebaseContext.Consumer>
                 } />
                 {this.processSensors().map((e) => e)}
-                <Route path="/config" exact render={(props) => 
+                <Route path="/config" exact render={() => 
                   <FirebaseContext.Consumer>
-                    {firebase => <Config {...props} firebase={firebase} />}
+                    {firebase => <Config firebase={firebase} />}
                   </FirebaseContext.Consumer>
                 } />
                 <Redirect to="/" />
@@ -179,9 +180,9 @@ class App extends Component {
       <Fragment>
         <Switch>
           <Route path="/" exact component={LandingPage} />
-          <Route path="/login" exact render={(props) =>
+          <Route path="/login" exact render={() =>
             <FirebaseContext.Consumer>
-              {firebase => <SignInPage {...props} firebase={firebase} />}
+              {firebase => <SignInPage firebase={firebase} />}
             </FirebaseContext.Consumer>
           } />
           <Redirect to="/" />

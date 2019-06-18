@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { PureComponent } from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import Paper from '@material-ui/core/Paper';
 import { Grid, Typography } from '@material-ui/core';
@@ -26,11 +26,7 @@ const styles = theme => ({
   }
 })
 
-class MonitoringData extends React.Component {
-  shouldComponentUpdate = (nextProps) => {
-    return this.props.data !== nextProps.data;
-  }
-
+class MonitoringData extends PureComponent {
   render() {
     const { classes } = this.props;
     let data = undefined;

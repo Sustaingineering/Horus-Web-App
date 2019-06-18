@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from "react";
+import React, { PureComponent, Fragment } from "react";
 // Material UI Components
 import { withStyles, MuiThemeProvider } from "@material-ui/core";
 //Style
@@ -6,7 +6,7 @@ import dashboardStyle from "./dashboardStyle";
 import { mainTheme } from "../../assets/jss/mainStyle";
 import Dashboard from "./Dashboard";
 
-class Sensor extends Component {
+class Sensor extends PureComponent {
   render() {
     const { classes } = this.props;
     return (

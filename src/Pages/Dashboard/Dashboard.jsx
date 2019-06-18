@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from "react";
+import React, { PureComponent, Fragment } from "react";
 // Material UI Components
 import {
   Grid,
@@ -16,7 +16,7 @@ import Chart from "./Chart";
 import dashboardStyle from "./dashboardStyle";
 import { mainTheme } from "../../assets/jss/mainStyle";
 
-class Dashboard extends Component {
+class Dashboard extends PureComponent {
   constructor(props) {
     super(props);
     this.state = {

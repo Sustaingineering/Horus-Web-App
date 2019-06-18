@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import React, { PureComponent, Fragment } from "react";
 // Material UI Components
 import { Paper, withStyles } from "@material-ui/core";
 //Style
@@ -16,11 +16,7 @@ import {
   Label
 } from "recharts";
 
-class Chart extends React.Component {
-  shouldComponentUpdate = (nextProps) => {
-    return this.props.data !== nextProps.data;
-  }
-
+class Chart extends PureComponent {
   render() {
     const { classes } = this.props;
     let Voltage = "Voltage";
