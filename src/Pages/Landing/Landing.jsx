@@ -20,7 +20,9 @@ class LandingPage extends Component {
         <MuiThemeProvider theme={mainTheme}>
           <div className={classes.root}>
             <Paper className={classes.paper}>
-              <img className={classes.logos} src={logos} alt="logos" />
+              <div>
+                <img className={classes.logos} src={logos} alt="logos" />
+              </div>
             </Paper>
             <div className={classes.container}>
               <Paper className={classes.paper}>

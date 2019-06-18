@@ -17,6 +17,7 @@ const landingStyle = theme => ({
   },
   logos: {
     width: "100%",
+    height: "auto",
     maxWidth: 600
   },
   container: {
