@@ -56,37 +56,38 @@ class Dashboard extends PureComponent {
                   <Grid item xs={12} sm={12} md={6}>
                     <Chart
                       data={data}
-                      type="Voltage"
+                      color="#fd5d93"
                       title="Voltage"
+                      unit="Volts"
                       dataKey1="voltage"
-                      dataKey2=""
                     />
                   </Grid>
                   <Grid item xs={12} sm={12} md={6}>
                     <Chart
                       data={data}
-                      type="Current"
-                      title={"Current"}
+                      color="#efefef"
+                      title="Current"
+                      unit="Amps"
                       dataKey1="current"
-                      dataKey2=""
                     />
                   </Grid>
                   <Grid item xs={12} sm={12} md={6}>
                     <Chart
                       data={data}
-                      type="Power"
-                      title={"Power"}
+                      color="#1d8cf8"
+                      title="Power"
+                      unit="Watts"
                       dataKey1="power"
-                      dataKey2=""
                     />
                   </Grid>
                   <Grid item xs={12} sm={12} md={6}>
                     <Chart
                       data={data}
-                      type="Temperature"
-                      title={"Temperature"}
+                      color="#00f2c3"
+                      title="Temperature"
+                      unit="Celcius"
                       dataKey1="op-temp"
-                      dataKey2="suTemp"
+                      dataKey2="surface-temperature"
                     />
                   </Grid>
                 </Grid>
