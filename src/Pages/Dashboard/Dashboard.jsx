@@ -32,17 +32,15 @@ class Dashboard extends PureComponent {
     this.setState({value: value})
   };
 
-  handleChangeRange = (event, value) => {
+  handleChangeRange = (value) => {
       this.setState({selected: value})
   };
-
-  //I NEED HELP!!!!
 
   render() {
     const { classes } = this.props;
     const { value } = this.state;
     const data = (this.props.data || []).slice();
-    const selected = this.state;
+    const selected = this.state.selected;
     return (
       <Fragment>
         <MuiThemeProvider theme={mainTheme}>
@@ -126,7 +124,6 @@ class Dashboard extends PureComponent {
                             <Select
                                 name="range-select"
                                 value={selected}
-                                fullWidth
                                 onChange={event => this.handleChangeRange(event.target.value)}
                             >
                                 <MenuItem value={1}>1 hour</MenuItem>
