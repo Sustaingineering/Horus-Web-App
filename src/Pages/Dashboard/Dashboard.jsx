@@ -6,7 +6,7 @@ import {
   Tabs,
   Tab,
   Typography,
-  MuiThemeProvider
+  MuiThemeProvider, Paper
 } from "@material-ui/core";
 // Components
 import MonitoringData from "./MonitoringData";
@@ -15,6 +15,10 @@ import Chart from "./Chart";
 //Style
 import dashboardStyle from "./dashboardStyle";
 import { mainTheme } from "../../assets/jss/mainStyle";
+import MenuItem from "@material-ui/core/MenuItem";
+import FormControl from "@material-ui/core/FormControl";
+import InputLabel from "@material-ui/core/InputLabel";
+import Select from "@material-ui/core/Select";
 
 class Dashboard extends PureComponent {
   constructor(props) {
@@ -24,10 +28,21 @@ class Dashboard extends PureComponent {
     }
   }
 
+  handleChange = (event, value) => {
+    this.setState({value: value})
+  };
+
+  handleChangeRange = (event, value) => {
+      this.setState({selected: value})
+  };
+
+  //I NEED HELP!!!!
+
   render() {
     const { classes } = this.props;
     const { value } = this.state;
     const data = (this.props.data || []).slice();
+    const selected = this.state;
     return (
       <Fragment>
         <MuiThemeProvider theme={mainTheme}>
@@ -40,7 +55,7 @@ class Dashboard extends PureComponent {
             <Tabs
               value={value}
               className={classes.tabs}
-              // onChange={this.handleChange}
+              onChange={this.handleChange}
               indicatorColor="primary"
               textColor="primary"
               centered
@@ -48,18 +63,22 @@ class Dashboard extends PureComponent {
               // scrollButtons="auto"
             >
               <Tab className={classes.tab} label="Data" />
-              {/* <Tab className={classes.tab} label="History" />
-              <Tab className={classes.tab} label="Summary" /> */}
+              <Tab className={classes.tab} label="History" />
+              <Tab className={classes.tab} label="Summary" />
             </Tabs>
+
+            {
+              value === 0 &&
               <Fragment>
                 <Grid container spacing={24}>
                   <Grid item xs={12} sm={12} md={6}>
                     <Chart
-                      data={data}
-                      color="#fd5d93"
-                      title="Voltage"
-                      unit="Volts"
-                      dataKey1="voltage"
+                        data={data}
+                        color="#fd5d93"
+                        title="Voltage"
+                        unit="Volts"
+                        dataKey1="voltage"
+                        domain={['dataMin','dataMax']}
                     />
                   </Grid>
                   <Grid item xs={12} sm={12} md={6}>
@@ -92,6 +111,69 @@ class Dashboard extends PureComponent {
                   </Grid>
                 </Grid>
               </Fragment>
+            }
+            {
+              value === 1 &&
+              <Fragment>
+                <Grid container spacing={24}>
+                  <Grid item xs={12} sm={12} md={6}>
+                    <Paper className={classes.paper}>
+                      <Typography variant="h6" color="primary" gutterBottom>
+                        Data Range
+                      </Typography>
+                        <FormControl className={classes.formControl}>
+                            <InputLabel htmlFor="range">Range</InputLabel>
+                            <Select
+                                name="range-select"
+                                value={selected}
+                                fullWidth
+                                onChange={event => this.handleChangeRange(event.target.value)}
+                            >
+                                <MenuItem value={1}>1 hour</MenuItem>
+                                <MenuItem value={2}>2 hours</MenuItem>
+                                <MenuItem value={3}>6 hours</MenuItem>
+                                <MenuItem value={4}>24 hours</MenuItem>
+                                <MenuItem value={5}>1 week</MenuItem>
+                                <MenuItem value={6}>1 month</MenuItem>
+                                <MenuItem value={7}>6 months</MenuItem>
+                                <MenuItem value={8}>1 year</MenuItem>
+                            </Select>
+                        </FormControl>
+                    </Paper>
+                  </Grid>
+                  <Grid item xs={12} sm={12} md={6}>
+
+                  </Grid>
+                </Grid>
+              </Fragment>
+            }
+            {
+              value === 2 &&
+              <Fragment>
+                <Grid container spacing={24}>
+                  <Grid item xs={12} sm={12} md={6}>
+                    <Typography variant='subtitle1' color='primary' paragraph>
+                      Sustaingineering is a student engineering design team that
+                      designs, develops and deploys sustainable technology solutions
+                      for renewable energy applications in remote and developing
+                      communities. Our goal is to create power solutions to address
+                      the global challenge of climate change and to improve the
+                      quality of life of the people living in these communities.
+                    </Typography>
+                  </Grid>
+                  <Grid item xs={12} sm={12} md={6}>
+                    <Typography variant='subtitle1' color='primary' paragraph>
+                      Sustaingineering is a student engineering design team that
+                      designs, develops and deploys sustainable technology solutions
+                      for renewable energy applications in remote and developing
+                      communities. Our goal is to create power solutions to address
+                      the global challenge of climate change and to improve the
+                      quality of life of the people living in these communities.
+                    </Typography>
+                  </Grid>
+                </Grid>
+              </Fragment>
+            }
           </div>
         </MuiThemeProvider>
       </Fragment>
