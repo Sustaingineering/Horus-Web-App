@@ -33,14 +33,50 @@ class Dashboard extends PureComponent {
   };
 
   handleChangeRange = (value) => {
-      this.setState({selected: value})
+      this.setState({selected: value});
+      switch (value) {
+          case 1:
+              let d = Date.getTime();
+              let timestamp = Math.floor((Date.getTime())/1000);
+              this.setState({range: timestamp});
+              break;
+          case 2:
+              //soemthing
+              break;
+          case 3:
+              //something
+              break;
+          case 4:
+              //soemthing
+              break;
+          case 5:
+              //something
+              break;
+          case 6:
+              //soemthing
+              break;
+          case 7:
+              //something
+              break;
+          case 8:
+              //soemthing
+              break;
+          default:
+
+      }
+      this.setState({timestamp: ()})
   };
+
+    getTime() {
+        return undefined;
+    }
 
   render() {
     const { classes } = this.props;
     const { value } = this.state;
     const data = (this.props.data || []).slice();
     const selected = this.state.selected;
+
     return (
       <Fragment>
         <MuiThemeProvider theme={mainTheme}>
@@ -57,8 +93,6 @@ class Dashboard extends PureComponent {
               indicatorColor="primary"
               textColor="primary"
               centered
-              // scrollable
-              // scrollButtons="auto"
             >
               <Tab className={classes.tab} label="Data" />
               <Tab className={classes.tab} label="History" />
@@ -119,12 +153,18 @@ class Dashboard extends PureComponent {
                       <Typography variant="h6" color="primary" gutterBottom>
                         Data Range
                       </Typography>
-                        <FormControl className={classes.formControl}>
-                            <InputLabel htmlFor="range">Range</InputLabel>
+                        <FormControl style={{minWidth: 120}} className={classes.formControl}>
+                            <InputLabel shrink htmlFor="range">Range</InputLabel>
                             <Select
                                 name="range-select"
+                                autoWidth={[true]}
                                 value={selected}
                                 onChange={event => this.handleChangeRange(event.target.value)}
+                                SelectDisplayProps={{
+                                    label: "Range",
+                                    InputLabelProps: this.state.shrink?{shrink:true}:{},
+                                    style: {color: 'white'}
+                                }}
                             >
                                 <MenuItem value={1}>1 hour</MenuItem>
                                 <MenuItem value={2}>2 hours</MenuItem>
