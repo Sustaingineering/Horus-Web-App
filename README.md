@@ -13,7 +13,7 @@ The front-end is handled by React, which is backed by Firebase. As our backend, 
 
 Check out `scripts/` to preview how to add sensor data to the RDB.
 
-## Usage
+## Usagel
 
 Run `npm install` after cloning the repo.
 

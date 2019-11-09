@@ -34,42 +34,36 @@ class Dashboard extends PureComponent {
 
   handleChangeRange = (value) => {
       this.setState({selected: value});
-      switch (value) {
-          case 1:
-              let d = Date.getTime();
-              let timestamp = Math.floor((Date.getTime())/1000);
-              this.setState({range: timestamp});
-              break;
-          case 2:
-              //soemthing
-              break;
-          case 3:
-              //something
-              break;
-          case 4:
-              //soemthing
-              break;
-          case 5:
-              //something
-              break;
-          case 6:
-              //soemthing
-              break;
-          case 7:
-              //something
-              break;
-          case 8:
-              //soemthing
-              break;
-          default:
-
+      console.log(value);
+      let offset;
+      if (value === 1){
+          offset = 60 * 60 * 1000;
+      } else if (value === 2) {
+          offset = 2 * 60 * 60 * 1000;
+      } else if (value === 3) {
+          offset = 6 * 60 * 60 * 1000;
+      } else if (value === 4) {
+          offset = 24 * 60 * 60 * 1000;
+      } else if (value === 5) {
+          offset = 7 * 24 * 60 * 60 * 1000;
+      } else if (value === 6) {
+          offset = 30 * 24 * 60 * 60 * 1000;
+      } else if (value === 7) {
+          offset = 183 * 24 * 60 * 60 * 1000;
+      } else if (value === 8) {
+          offset = 365 * 24 * 60 * 60 * 1000;
+      } else {
+          offset = 6 * 60 * 60 * 1000;
       }
-      this.setState({timestamp: ()})
+      let date = new Date();
+      let now = date.getTime();
+      console.log(now);
+      let d = now - offset;
+      console.log(d);
+      let timestamp = Math.floor(d/1000);
+      console.log(timestamp);
+      this.setState({range: timestamp});
   };
-
-    getTime() {
-        return undefined;
-    }
 
   render() {
     const { classes } = this.props;
