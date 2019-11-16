@@ -1,11 +1,6 @@
 import React, { PureComponent, Fragment } from "react";
 // Material UI Components
-import {
-  AppBar,
-  Toolbar,
-  IconButton,
-  Button
-} from "@material-ui/core";
+import { AppBar, Toolbar, IconButton, Button } from "@material-ui/core";
 // Navbar Menu - drawer component
 import NavBarMenu from "../NavBarMenu/NavBarMenu";
 // Icons
@@ -14,8 +9,6 @@ import MenuIcon from "@material-ui/icons/Menu";
 import navbarStyle from "./navbarStyle";
 import { withStyles } from "@material-ui/core/styles";
 import classNames from "classnames";
-
-import { FirebaseContext } from "../../Firebase/firebase";
 
 class Navbar extends PureComponent {
   constructor(props) {
@@ -27,18 +20,16 @@ class Navbar extends PureComponent {
 
   // drawer
   handleDrawerOpen = () => {
-    console.log("Open");
     this.setState({ open: true });
   };
 
   handleDrawerClose = drawerOpen => {
-    console.log("Close");
     this.setState({ open: drawerOpen });
   };
 
   signOut = () => {
     this.props.firebase.auth().signOut();
-  }
+  };
 
   render() {
     const { classes } = this.props;
@@ -70,23 +61,22 @@ class Navbar extends PureComponent {
               </IconButton>
               {/* This is a hacky way of moving the signout button over. Fix later? */}
               <div className={classes.flex}></div>
-              <Button className={classes.button} color="primary" onClick={this.signOut}>
+              <Button
+                className={classes.button}
+                color="primary"
+                onClick={this.signOut}
+              >
                 Sign Out
               </Button>
             </Toolbar>
           </AppBar>
-          <FirebaseContext.Consumer>
-            {firebase => 
-              <NavBarMenu 
-                firebase={firebase} 
-                updateSensors={this.props.updateSensors} 
-                sensors={this.props.sensors} 
-                open={this.state.open} 
-                changeOpen={this.handleDrawerClose.bind(this)} />
-            }
-          </FirebaseContext.Consumer>
-          
-
+          <NavBarMenu
+            firebase={this.props.firebase}
+            updateSensors={this.props.updateSensors}
+            sensors={this.props.sensors}
+            open={this.state.open}
+            changeOpen={this.handleDrawerClose.bind(this)}
+          />
         </div>
       </Fragment>
     );

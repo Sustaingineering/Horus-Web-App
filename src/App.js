@@ -11,189 +11,168 @@ import Home from "./Pages/Home/home.jsx";
 import Config from "./Pages/Config/Config.jsx";
 import NavBar from "./Layout/Navbar/Navbar";
 import { withStyles } from "@material-ui/core/styles";
-import { backgroundColor } from './assets/jss/mainStyle';
-
-import { FirebaseContext } from "./Firebase/firebase.js";
+import { backgroundColor } from "./assets/jss/mainStyle";
 
 // Sensor
 import Sensor from "./Pages/Dashboard/Sensor";
 
-const customStyle = (theme) => ({
+const customStyle = theme => ({
   root: {
-    position: 'relative',
-    minHeight: 'calc(100vh - 160px)',
+    position: "relative",
+    minHeight: "calc(100vh - 160px)",
     paddingTop: 60, // with titlebar
-    paddingBottom: '20px',
+    paddingBottom: "20px",
     backgroundColor: backgroundColor
   },
   container: {
     flexGrow: 1,
-    marginRight: '2%',
-    marginLeft: 'calc(57px + 2%)'
+    marginRight: "2%",
+    marginLeft: "calc(57px + 2%)"
   }
 });
 
 class App extends Component {
   constructor(props) {
     super(props);
-    this.subscribers = [];
-    this.dbrefs = [];
+    this.firestoreSubscribers = [];
     this.state = {
       authUser: undefined,
       sensors: {},
-      data: {},
       posts: []
     };
+  }
+
+  componentWillMount = () => {
     this.props.firebase.auth().onAuthStateChanged(authUser => {
       if (authUser) {
-        this.setState({authUser : authUser});
+        this.setState({ authUser: authUser });
         this.updateSensors();
         this.postSubscriber();
       } else {
         try {
-          this.subscribers.map((s) => s());
-          this.dbrefs.map((e) => e.off());
+          this.firestoreSubscribers.map(unsubscribe => unsubscribe());
         } catch (e) {
           console.log(e);
         } finally {
-          this.subscribers = [];
-          this.dbrefs = [];
-          this.setState({authUser : undefined, sensors: {}, data: {}, posts: []});
+          this.firestoreSubscribers = [];
+          this.setState({
+            authUser: undefined,
+            sensors: {},
+            posts: []
+          });
         }
       }
     });
-  }
-
-  getDatabase = (sensorId) => {
-    let db = this.props.firebase.database().ref(sensorId);
-    this.dbrefs.push(db);
-    let temp = this.state.data;
-    temp[sensorId] = [];
-    // Use .once() to make it call less data
-    db.limitToLast(30).once('value', (e) => {
-      for (let i in e.val()) {
-        temp[sensorId].push(e.val()[i]);
-      }
-    });
-    db.limitToLast(1).on('child_added', (e) => {
-      temp[sensorId] = temp[sensorId].slice();
-      if (temp[sensorId].length >= 30) temp[sensorId].shift();
-      temp[sensorId].push(e.val());
-      this.setState({
-        data: temp
-      });
-    });
-  }
+  };
 
   updateSensors = () => {
     let db = this.props.firebase.firestore();
     // Grab the UID from the auth().currentUser object in case state isn't updated yet
     let uid = this.props.firebase.auth().currentUser.uid;
-    db.collection("users").doc(uid).get().then((doc) => {
-      if (doc.exists) {
-        this.setState({
-          sensors: doc.data().sensors
-        }, () => {
-          // This can be improved by not dropping the database entries that we don't need
-          // Keep as is for proof of concept.
-          this.dbrefs.map((e) => e.off());
-          this.dbrefs = [];
-          for (let newSensors in this.state.sensors) {
-            this.getDatabase(this.state.sensors[newSensors]);
-          }
-        });
-      } else {
-        db.collection("users").doc(uid).set({sensors: {}});
-        this.setState({
-          sensors: {}
-        });
-      }
-    });
-  }
+    db.collection("users")
+      .doc(uid)
+      .get()
+      .then(doc => {
+        if (doc.exists) {
+          this.setState({
+            sensors: doc.data().sensors
+          });
+        } else {
+          db.collection("users")
+            .doc(uid)
+            .set({ sensors: {} });
+          this.setState({
+            sensors: {}
+          });
+        }
+      });
+  };
 
   postSubscriber = () => {
     let db = this.props.firebase.firestore();
-    this.subscribers.push(db.collection("posts").onSnapshot((c) => {
-      let posts = [];
-      c.forEach((doc) => {
-        posts.push(doc.data());
-      });
-      this.setState({
-        posts: posts
+    this.firestoreSubscribers.push(
+      db.collection("posts").onSnapshot(c => {
+        let posts = [];
+        c.forEach(doc => {
+          posts.push(doc.data());
+        });
+        this.setState({
+          posts: posts
+        });
       })
-    }));
-  }
+    );
+  };
 
   processSensors = () => {
     let sensorsRedirects = [];
-    for (let x in this.state.sensors) {
+    for (let sensor in this.state.sensors) {
       sensorsRedirects.push(
-        <Route 
-          path={"/" + x}
+        <Route
+          path={"/" + sensor}
           exact
-          key={x}
+          key={sensor}
           render={() => (
-            <FirebaseContext.Consumer>
-              {firebase => <Sensor
-                                  sensorName={x} 
-                                  firebase={firebase} 
-                                  data={this.state.data[this.state.sensors[x]]}
-                                  sensorId={this.state.sensors[x]} 
-                                  />}
-            </FirebaseContext.Consumer>
+            <Sensor
+              sensorName={sensor}
+              firebase={this.props.firebase}
+              sensorId={this.state.sensors[sensor]}
+            />
           )}
         />
       );
     }
     return sensorsRedirects;
-  }
+  };
 
   render() {
     const { classes } = this.props;
     const renderPlatform = this.state.authUser ? (
       <Fragment>
-          <FirebaseContext.Consumer>
-            {firebase => {
-              return (<NavBar updateSensors={this.updateSensors} sensors={this.state.sensors} firebase={firebase} />);
-            }}
-          </FirebaseContext.Consumer>
-          <div className={classes.root}>
-            <div className={classes.container}>
-              <Switch>
-                <Route path="/" exact render={() => 
-                  <FirebaseContext.Consumer>
-                    {firebase => <Home posts={this.state.posts} firebase={firebase} />}
-                  </FirebaseContext.Consumer>
-                } />
-                {this.processSensors().map((e) => e)}
-                <Route path="/config" exact render={() => 
-                  <FirebaseContext.Consumer>
-                    {firebase => <Config firebase={firebase} />}
-                  </FirebaseContext.Consumer>
-                } />
-                <Redirect to="/" />
-              </Switch>
-            </div>
+        <NavBar
+          updateSensors={this.updateSensors}
+          sensors={this.state.sensors}
+          firebase={this.props.firebase}
+        />
+        <div className={classes.root}>
+          <div className={classes.container}>
+            <Switch>
+              <Route
+                path="/"
+                exact
+                render={() => (
+                  <Home
+                    posts={this.state.posts}
+                    firebase={this.props.firebase}
+                  />
+                )}
+              />
+              {this.processSensors()}
+              <Route
+                path="/config"
+                exact
+                render={() => <Config firebase={this.props.firebase} />}
+              />
+              <Redirect to="/" />
+            </Switch>
           </div>
+        </div>
       </Fragment>
     ) : (
       <Fragment>
         <Switch>
           <Route path="/" exact component={LandingPage} />
-          <Route path="/login" exact render={() =>
-            <FirebaseContext.Consumer>
-              {firebase => <SignInPage firebase={firebase} />}
-            </FirebaseContext.Consumer>
-          } />
+          <Route
+            path="/login"
+            exact
+            render={() => <SignInPage firebase={this.props.firebase} />}
+          />
           <Redirect to="/" />
         </Switch>
       </Fragment>
     );
     return (
       <Fragment>
-        <BrowserRouter>
-          {renderPlatform}
-        </BrowserRouter>
+        <BrowserRouter>{renderPlatform}</BrowserRouter>
       </Fragment>
     );
   }
