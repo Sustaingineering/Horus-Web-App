@@ -55,7 +55,7 @@ class Sensor extends PureComponent {
               data={this.state.data}
               sensorName={this.props.sensorName}
               sensorId={this.props.sensorId}
-			  firebase={this.props.firebase}
+              firebase={this.props.firebase}
             />
           </div>
         </MuiThemeProvider>
