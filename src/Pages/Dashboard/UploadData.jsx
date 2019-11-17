@@ -10,7 +10,7 @@ class UploadData extends React.Component {
   sendData = data => {
     this.props.firebase
       .database()
-      .ref("testBranch" + "/" + timestamp)
+      .ref(this.props.sensorId + "/" + timestamp)
       .set(data);
   };
 
