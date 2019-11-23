@@ -15,6 +15,11 @@ import Chart from "./Chart";
 //Style
 import dashboardStyle from "./dashboardStyle";
 import { mainTheme } from "../../assets/jss/mainStyle";
+import MenuItem from "@material-ui/core/MenuItem";
+import Paper from "@material-ui/core/Paper";
+import FormControl from "@material-ui/core/FormControl";
+import Select from "@material-ui/core/Select";
+import InputLabel from "@material-ui/core/InputLabel";
 
 class Dashboard extends PureComponent {
   constructor(props) {
@@ -28,44 +33,11 @@ class Dashboard extends PureComponent {
     this.setState({value: value})
   };
 
-  handleChangeRange = (value) => {
-      this.setState({selected: value});
-      console.log(value);
-      let offset;
-      if (value === 1){
-          offset = 60 * 60 * 1000;
-      } else if (value === 2) {
-          offset = 2 * 60 * 60 * 1000;
-      } else if (value === 3) {
-          offset = 6 * 60 * 60 * 1000;
-      } else if (value === 4) {
-          offset = 24 * 60 * 60 * 1000;
-      } else if (value === 5) {
-          offset = 7 * 24 * 60 * 60 * 1000;
-      } else if (value === 6) {
-          offset = 30 * 24 * 60 * 60 * 1000;
-      } else if (value === 7) {
-          offset = 183 * 24 * 60 * 60 * 1000;
-      } else if (value === 8) {
-          offset = 365 * 24 * 60 * 60 * 1000;
-      } else {
-          offset = 6 * 60 * 60 * 1000;
-      }
-      let date = new Date();
-      let now = date.getTime();
-      console.log(now);
-      let d = now - offset;
-      console.log(d);
-      let timestamp = Math.floor(d/1000);
-      console.log(timestamp);
-      this.setState({range: timestamp});
-  };
-
   render() {
     const { classes } = this.props;
     const { value } = this.state;
     const data = (this.props.data || []).slice();
-    const selected = this.state.selected;
+    // const selected = this.state.selected;
 
     return (
       <Fragment>
@@ -143,13 +115,16 @@ class Dashboard extends PureComponent {
                       <Typography variant="h6" color="primary" gutterBottom>
                         Data Range
                       </Typography>
-                        <FormControl style={{minWidth: 120}} className={classes.formControl}>
-                            <InputLabel shrink htmlFor="range">Range</InputLabel>
+                        <FormControl style={{color: 'white', minWidth: 120}} className={classes.formControl}>
+                            <InputLabel shrink htmlFor="range" style={{color: 'white'}}>Range</InputLabel>
                             <Select
                                 name="range-select"
+                                className={classes.select}
                                 autoWidth={[true]}
-                                value={selected}
-                                onChange={event => this.handleChangeRange(event.target.value)}
+                                value={this.props.selected}
+                                onChange={event => this.props.changeRange(event.target.value)}
+                                style={{color: 'white'}}
+                                // classes={{root: rootclasses.root}}
                                 SelectDisplayProps={{
                                     label: "Range",
                                     InputLabelProps: this.state.shrink?{shrink:true}:{},

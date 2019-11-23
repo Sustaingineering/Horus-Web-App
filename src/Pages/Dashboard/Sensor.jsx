@@ -1,66 +1,125 @@
-import React, { PureComponent, Fragment } from "react";
+import React, {PureComponent, Fragment, useCallback} from "react";
 // Material UI Components
-import { withStyles, MuiThemeProvider } from "@material-ui/core";
+import {withStyles, MuiThemeProvider} from "@material-ui/core";
 //Style
 import dashboardStyle from "./dashboardStyle";
-import { mainTheme } from "../../assets/jss/mainStyle";
+import {mainTheme} from "../../assets/jss/mainStyle";
 import Dashboard from "./Dashboard";
 
 class Sensor extends PureComponent {
-  constructor(props) {
-    super(props);
-    this.db = null;
-    this.state = {
-      data: []
+    constructor(props) {
+        super(props);
+        this.db = null;
+        this.state = {
+            data: []
+        };
+        let date = new Date();
+        let now = date.getTime();
+        let d = now - (365 * 24 * 60 * 60 * 1000);
+        this.timestamp = Math.floor(d / 1000);
+        this.nowstamp = Math.floor(now / 1000);
+        this.setState({range: this.timestamp});
+        this.setState({selected: 3});
+        this.getDatabase();
+    }
+
+    // We wait until the component has been mounted (which means
+    // other components are unmounted) before polling, so we don't
+    // have multiple registers to a particular database
+    componentDidMount = () => {
+        this.getDatabase(this.props.sensorId);
     };
-  }
 
-  // We wait until the component has been mounted (which means
-  // other components are unmounted) before polling, so we don't
-  // have multiple registers to a particular database
-  componentDidMount = () => {
-    this.getDatabase(this.props.sensorId);
-  };
+    changeRange = (value) => {
+        this.setState({selected: value});
+        console.log(value);
+        let offset;
+        if (value === 1) {
+            offset = 60 * 60 * 1000;
+        } else if (value === 2) {
+            offset = 2 * 60 * 60 * 1000;
+        } else if (value === 3) {
+            offset = 6 * 60 * 60 * 1000;
+        } else if (value === 4) {
+            offset = 24 * 60 * 60 * 1000;
+        } else if (value === 5) {
+            offset = 7 * 24 * 60 * 60 * 1000;
+        } else if (value === 6) {
+            offset = 30 * 24 * 60 * 60 * 1000;
+        } else if (value === 7) {
+            offset = 183 * 24 * 60 * 60 * 1000;
+        } else if (value === 8) {
+            offset = 365 * 24 * 60 * 60 * 1000;
+        } else {
+            offset = 6 * 60 * 60 * 1000;
+        }
+        let date = new Date();
+        let now = date.getTime();
+        let d = now - offset;
+        this.timestamp = Math.floor(d / 1000);
+        console.log(this.timestamp);
+        this.nowstamp = Math.floor(now / 1000);
+        console.log(this.nowstamp);
+        this.setState({range: this.timestamp});
+        this.getDatabase();
+    }
 
-  getDatabase = sensorId => {
-    this.db = this.props.firebase.database().ref(sensorId);
-    let temp = [];
-    // Use .once() to make it call less data
-    this.db.limitToLast(30).once("value", e => {
-      for (let i in e.val()) {
-        temp.push(e.val()[i]);
-      }
-    });
-    this.db.limitToLast(1).on("child_added", e => {
-      temp = temp.slice();
-      if (temp.length >= 30) temp.shift();
-      temp.push(e.val());
-      this.setState({
-        data: temp
-      });
-    });
-  };
+    getDatabase = sensorId => {
 
-  componentWillUnmount = () => {
-    this.db.off();
-  };
+        console.log(this.timestamp);
+        console.log(this.nowstamp);
 
-  render() {
-    const { classes } = this.props;
-    return (
-      <Fragment>
-        <MuiThemeProvider theme={mainTheme}>
-          <div className={classes.root}>
-            <Dashboard
-              data={this.state.data}
-              sensorName={this.props.sensorName}
-              sensorId={this.props.sensorId}
-            />
-          </div>
-        </MuiThemeProvider>
-      </Fragment>
-    );
-  }
+        this.db = this.props.firebase.database().ref(sensorId);
+        let temp = [];
+        // Use .once() to make it call less data
+        // this.db.limitToLast(30).once("value", e => {
+        //   for (let i in e.val()) {
+        //     temp.push(e.val()[i]);
+        //   }
+        // })
+
+        this.db.orderByKey()
+            .startAt(this.timestamp.toString())
+            .endAt(this.nowstamp.toString())
+            .once("value", e => {
+                for (let i in e.val()) {
+                    temp.push(e.val()[i]);
+                }
+            });
+
+        this.db.limitToLast(1).on("child_added", e => {
+            temp = temp.slice();
+            if (temp.length >= 30) temp.shift();
+            temp.push(e.val());
+            this.setState({
+                data: temp
+            });
+        });
+
+    };
+
+    componentWillUnmount = () => {
+        this.db.off();
+    };
+
+    render() {
+        const {classes} = this.props;
+        return (
+            <Fragment>
+                <MuiThemeProvider theme={mainTheme}>
+                    <div className={classes.root}>
+                        <Dashboard
+                            data={this.state.data}
+                            sensorName={this.props.sensorName}
+                            sensorId={this.props.sensorId}
+                            changeRange={this.changeRange}
+                            selected={this.state.selected}
+                        />
+                    </div>
+                </MuiThemeProvider>
+            </Fragment>
+        );
+    }
 }
 
 export default withStyles(dashboardStyle)(Sensor);

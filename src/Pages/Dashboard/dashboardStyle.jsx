@@ -6,8 +6,14 @@ const dashboardStyle = theme => ({
     flexGrow: 1,
     // marginLeft: '100px',
     // marginRight: '30px',
-    paddingTop: 15,
-    height: '100%'
+    paddingTop: 15
+  },
+  select: {
+    color: "white",
+    border: '1px solid bottom white !important',
+    borderBottomColor: "white",
+    borderColor: "white",
+    fill: "white"
   },
   title: {
     color: 'white',
@@ -28,7 +34,11 @@ const dashboardStyle = theme => ({
       color: 'white',
       opacity: 1
     }
-  }
+  },
+  '.MuiSelect-root': {
+    fontSize: 100,
+    border: '1px solid white',
+  },
 })
 
 export default dashboardStyle;
