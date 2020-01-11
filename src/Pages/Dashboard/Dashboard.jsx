@@ -55,15 +55,6 @@ class Dashboard extends PureComponent {
     const { value } = this.state;
     const data = (this.props.data || []).slice();
     const selected = this.state;
-    const keys = [
-      "power",
-      "surface-temperature",
-      "op-temp",
-      "current",
-      "water-breaker",
-      "time-stamp",
-      "voltage"
-    ];
     return (
       <Fragment>
         <MuiThemeProvider theme={mainTheme}>
@@ -208,7 +199,6 @@ class Dashboard extends PureComponent {
                       <h1>Upload your csv file</h1>
 
                       <UploadData
-                        keys={keys}
                         onDataUploaded={this.handleData}
                         onError={this.handleError}
                         render={onChange => (
