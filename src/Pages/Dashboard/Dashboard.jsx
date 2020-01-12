@@ -48,8 +48,6 @@ class Dashboard extends PureComponent {
     this.setState({ error });
   };
 
-  //I NEED HELP!!!!
-
   render() {
     const { classes } = this.props;
     const { value } = this.state;
@@ -195,9 +193,10 @@ class Dashboard extends PureComponent {
                   alignItems="center"
                 >
                   <Grid item>
-                    <div>
-                      <h1>Upload your csv file</h1>
-
+                    <Paper className={classes.paper}>
+                    <Typography variant="h6" color="primary" gutterBottom>
+                        Upload your csv file
+                      </Typography>
                       <UploadData
                         onDataUploaded={this.handleData}
                         onError={this.handleError}
@@ -215,7 +214,7 @@ class Dashboard extends PureComponent {
                       {this.state.error && (
                         <pre>{JSON.stringify(this.state.error, null, 2)}</pre>
                       )}
-                    </div>
+                    </Paper>
                   </Grid>
                 </Grid>
               </Fragment>

@@ -2,14 +2,12 @@ import React from "react";
 import PropTypes from "prop-types";
 
 import Papa from "papaparse";
-import { apply, compose, lift, splitAt, zipObj } from "ramda";
 
 class UploadData extends React.Component {
   sendData = data => {
-    const timestamp = Date.now();
     this.props.firebase
       .database()
-      .ref(this.props.sensorId + "/" + timestamp)
+      .ref(this.props.sensorId + "/" + data["time-stamp"].toString())
       .set(data);
   };
 
@@ -22,6 +20,7 @@ class UploadData extends React.Component {
     Papa.parse(file, {
       header: true,
       skipEmptyLines: true,
+      dynamicTyping: true,
       error: function(err, file, inputElem, reason) {
         onError({ err, file, inputElem, reason });
       },
