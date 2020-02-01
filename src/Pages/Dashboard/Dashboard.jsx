@@ -66,7 +66,6 @@ class Dashboard extends PureComponent {
             >
               <Tab className={classes.tab} label="Data" />
               <Tab className={classes.tab} label="History" />
-              <Tab className={classes.tab} label="Summary" />
               <Tab className={classes.tab} label="Upload CSV" />
             </Tabs>
 
@@ -149,34 +148,6 @@ class Dashboard extends PureComponent {
               </Fragment>
             )}
             {value === 2 && (
-              <Fragment>
-                <Grid container spacing={24}>
-                  <Grid item xs={12} sm={12} md={6}>
-                    <Typography variant="subtitle1" color="primary" paragraph>
-                      Sustaingineering is a student engineering design team that
-                      designs, develops and deploys sustainable technology
-                      solutions for renewable energy applications in remote and
-                      developing communities. Our goal is to create power
-                      solutions to address the global challenge of climate
-                      change and to improve the quality of life of the people
-                      living in these communities.
-                    </Typography>
-                  </Grid>
-                  <Grid item xs={12} sm={12} md={6}>
-                    <Typography variant="subtitle1" color="primary" paragraph>
-                      Sustaingineering is a student engineering design team that
-                      designs, develops and deploys sustainable technology
-                      solutions for renewable energy applications in remote and
-                      developing communities. Our goal is to create power
-                      solutions to address the global challenge of climate
-                      change and to improve the quality of life of the people
-                      living in these communities.
-                    </Typography>
-                  </Grid>
-                </Grid>
-              </Fragment>
-            )}
-            {value === 3 && (
               <Fragment>
                 <Grid
                   container
