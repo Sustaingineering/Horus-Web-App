@@ -76,7 +76,7 @@ class Chart extends PureComponent {
                 tick={{ fill: "white" }}
                 stroke="#efefef"
                 type="number"
-                domain={['dataMin', 'dataMax']}
+                domain={['dataMin', 'dataMax']} //pass data from Dashboard?
                 minTickGap={200}
                 tickFormatter={unixTime => moment(unixTime * 1000).format("hh:mm:ss")}
                 scale="time"
