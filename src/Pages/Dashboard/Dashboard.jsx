@@ -40,14 +40,6 @@ class Dashboard extends PureComponent {
     this.setState({ selected: value });
   };
 
-  handleData = data => {
-    this.setState({ data });
-  };
-
-  handleError = error => {
-    this.setState({ error });
-  };
-
   render() {
     const { classes } = this.props;
     const { value } = this.state;
@@ -198,22 +190,9 @@ class Dashboard extends PureComponent {
                         Upload your csv file
                       </Typography>
                       <UploadData
-                        onDataUploaded={this.handleData}
-                        onError={this.handleError}
-                        render={onChange => (
-                          <input type="file" onChange={onChange} />
-                        )}
                         firebase={this.props.firebase}
                         sensorId={this.props.sensorId}
                       />
-
-                      {this.state.data && (
-                        <pre>{JSON.stringify(this.state.data, null, 2)}</pre>
-                      )}
-
-                      {this.state.error && (
-                        <pre>{JSON.stringify(this.state.error, null, 2)}</pre>
-                      )}
                     </Paper>
                   </Grid>
                 </Grid>

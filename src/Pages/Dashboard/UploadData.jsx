@@ -1,7 +1,13 @@
 import React from "react";
-import PropTypes from "prop-types";
-
+import { Typography, Input, Button } from "@material-ui/core";
 import Papa from "papaparse";
+import { withStyles } from "@material-ui/core/styles";
+
+const style = {
+  input: {
+    color: "white"
+  }
+};
 
 class UploadData extends React.Component {
   sendData = data => {
@@ -11,39 +17,62 @@ class UploadData extends React.Component {
       .set(data);
   };
 
-  handleFile = event => {
-    const file = event.target.files[0];
-    const onDataUploaded = this.props.onDataUploaded;
-    const onError = this.props.onError;
-    const sendData = this.sendData;
+  handleResult = result => {
+    const msg = document.getElementById("message-box");
+    msg.innerHTML = result;
+    setTimeout(() => {
+      msg.innerHTML = "";
+    }, 5000);
+  };
 
-    Papa.parse(file, {
-      header: true,
-      skipEmptyLines: true,
-      dynamicTyping: true,
-      error: function(err, file, inputElem, reason) {
-        onError({ err, file, inputElem, reason });
-      },
-      step: row => {
-        if (row.errors.length === 0) {
-          console.log(row);
-          sendData(row.data);
+  handleFile = event => {
+    const elem = document.getElementById("upload-file");
+    const file = elem.files[0];
+    if (file) {
+      Papa.parse(file, {
+        header: true,
+        skipEmptyLines: true,
+        dynamicTyping: true,
+        error: (err, file, inputElem, reason) => {
+          this.handleResult("Parsing error!");
+        },
+        step: (row, parser) => {
+          if (row.errors.length === 0 && row.data["time-stamp"]) {
+            this.sendData(row.data);
+          } else {
+            parser.abort();
+          }
+        },
+        complete: results => {
+          elem.value = "";
+          if (results.meta.aborted) {
+            this.handleResult("File or data was malformed!");
+          } else {
+            this.handleResult("Data has been uploaded to Firebase!");
+          }
         }
-      },
-      complete: function(results) {
-        onDataUploaded("Data has been uploaded to Firebase!");
-      }
-    });
+      });
+    } else {
+      this.handleResult("Select a file!");
+    }
   };
 
   render() {
-    return this.props.render(this.handleFile);
+    const { classes } = this.props;
+    return (
+      <div>
+        <Input className={classes.input} id="upload-file" type="file" />
+        <Button color="primary" onClick={this.handleFile}>
+          Upload
+        </Button>
+        <Typography
+          id="message-box"
+          color="primary"
+          variant="subtitle2"
+        ></Typography>
+      </div>
+    );
   }
 }
 
-UploadData.propTypes = {
-  onDataUploaded: PropTypes.func.isRequired,
-  onError: PropTypes.func
-};
-
-export default UploadData;
+export default withStyles(style)(UploadData);
