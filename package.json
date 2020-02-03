@@ -31,6 +31,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject",
+    "push": "npm run build && npm run deploy",
     "deploy": "firebase login && firebase deploy"
   },
   "browserslist": [
