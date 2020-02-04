@@ -27,17 +27,20 @@
   },
   "homepage": ".",
   "scripts": {
-    "start": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test --env=jsdom",
+    "start": "react-app-rewired start",
+    "build": "react-app-rewired build",
+    "test": "react-app-rewired test --env=jsdom",
     "eject": "react-scripts eject",
-    "push": "npm run build && npm run deploy",
-    "deploy": "firebase login && firebase deploy"
+    "push": "firebase login && firebase deploy",
+    "deploy": "npm run build && npm run push"
   },
   "browserslist": [
     ">0.2%",
     "not dead",
     "not ie <= 11",
     "not op_mini all"
-  ]
+  ],
+  "devDependencies": {
+    "react-app-rewired": "^2.1.5"
+  }
 }
