@@ -42,7 +42,7 @@ class App extends PureComponent {
     };
   }
 
-  componentWillMount = () => {
+  componentDidMount = () => {
     this.props.firebase.auth().onAuthStateChanged(authUser => {
       if (authUser) {
         this.setState({ authUser: authUser });
