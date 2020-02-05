@@ -160,23 +160,18 @@ class App extends PureComponent {
         </MuiThemeProvider>
       </Fragment>
     ) : (
-      <MuiThemeProvider theme={mainTheme}>
-        {" "}
-        <Switch>
-          <Route path="/" exact component={LandingPage} />
-          <Route
-            path="/login"
-            exact
-            render={() => <SignInPage firebase={this.props.firebase} />}
-          />
-          <Redirect to="/" />
-        </Switch>
-      </MuiThemeProvider>
+      <Switch>
+        <Route path="/" exact component={LandingPage} />
+        <Route
+          path="/login"
+          exact
+          render={() => <SignInPage firebase={this.props.firebase} />}
+        />
+        <Redirect to="/" />
+      </Switch>
     );
     return (
-      <Fragment>
-        <BrowserRouter>{renderPlatform}</BrowserRouter>
-      </Fragment>
+      <BrowserRouter>{renderPlatform}</BrowserRouter>
     );
   }
 }
