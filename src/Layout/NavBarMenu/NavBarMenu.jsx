@@ -86,7 +86,6 @@ class NavBarMenu extends PureComponent {
         .doc(uid)
         .set(add, { merge: true })
         .then(() => {
-          this.props.updateSensors();
           this.setDialogOpenState(false);
         });
     } else {
@@ -107,8 +106,7 @@ class NavBarMenu extends PureComponent {
     ] = this.props.firebase.firestore.FieldValue.delete();
     db.collection("users")
       .doc(uid)
-      .update(remove)
-      .then(() => this.props.updateSensors());
+      .update(remove);
   };
 
   processSensors = () => {

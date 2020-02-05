@@ -67,7 +67,6 @@ class Navbar extends PureComponent {
         </AppBar>
         <NavBarMenu
           firebase={this.props.firebase}
-          updateSensors={this.props.updateSensors}
           sensors={this.props.sensors}
           isOpen={this.state.open}
           changeDrawerOpen={this.setDrawerOpenState}

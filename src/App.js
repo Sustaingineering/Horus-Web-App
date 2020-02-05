@@ -46,7 +46,7 @@ class App extends PureComponent {
     this.props.firebase.auth().onAuthStateChanged(authUser => {
       if (authUser) {
         this.setState({ authUser: authUser });
-        this.updateSensors();
+        this.sensorSubscriber();
         this.postSubscriber();
       } else {
         try {
@@ -65,14 +65,13 @@ class App extends PureComponent {
     });
   };
 
-  updateSensors = () => {
+  sensorSubscriber = () => {
     let db = this.props.firebase.firestore();
     // Grab the UID from the auth().currentUser object in case state isn't updated yet
     let uid = this.props.firebase.auth().currentUser.uid;
-    db.collection("users")
+    this.firestoreSubscribers.push(db.collection("users")
       .doc(uid)
-      .get()
-      .then(doc => {
+      .onSnapshot(doc => {
         if (doc.exists) {
           this.setState({
             sensors: doc.data().sensors
@@ -85,7 +84,7 @@ class App extends PureComponent {
             sensors: {}
           });
         }
-      });
+      }));
   };
 
   postSubscriber = () => {
@@ -129,7 +128,6 @@ class App extends PureComponent {
     const renderPlatform = this.state.authUser ? (
       <Fragment>
         <NavBar
-          updateSensors={this.updateSensors}
           sensors={this.state.sensors}
           firebase={this.props.firebase}
         />
