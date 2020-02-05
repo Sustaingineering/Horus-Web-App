@@ -71,7 +71,7 @@ Firebase credentials are unique but non-secret, thus are committed.
 
 ```
 {
-  <random-monotonically-increasing-UID> : {
+  <time-stamp> : {
     time-stamp: <data>,
     voltage: <data>,
     ...
