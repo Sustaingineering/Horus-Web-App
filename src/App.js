@@ -10,8 +10,8 @@ import Home from "./Pages/Home/home.jsx";
 // Config
 import Config from "./Pages/Config/Config.jsx";
 import NavBar from "./Layout/Navbar/Navbar";
-import { withStyles } from "@material-ui/core/styles";
-import { backgroundColor } from "./assets/jss/mainStyle";
+import { withStyles, MuiThemeProvider } from "@material-ui/core";
+import { mainTheme, backgroundColor } from "./assets/jss/mainStyle";
 
 // Sensor
 import Sensor from "./Pages/Dashboard/Sensor";
@@ -133,32 +133,35 @@ class App extends PureComponent {
           sensors={this.state.sensors}
           firebase={this.props.firebase}
         />
-        <div className={classes.root}>
-          <div className={classes.container}>
-            <Switch>
-              <Route
-                path="/"
-                exact
-                render={() => (
-                  <Home
-                    posts={this.state.posts}
-                    firebase={this.props.firebase}
-                  />
-                )}
-              />
-              {this.processSensors()}
-              <Route
-                path="/config"
-                exact
-                render={() => <Config firebase={this.props.firebase} />}
-              />
-              <Redirect to="/" />
-            </Switch>
+        <MuiThemeProvider theme={mainTheme}>
+          <div className={classes.root}>
+            <div className={classes.container}>
+              <Switch>
+                <Route
+                  path="/"
+                  exact
+                  render={() => (
+                    <Home
+                      posts={this.state.posts}
+                      firebase={this.props.firebase}
+                    />
+                  )}
+                />
+                {this.processSensors()}
+                <Route
+                  path="/config"
+                  exact
+                  render={() => <Config firebase={this.props.firebase} />}
+                />
+                <Redirect to="/" />
+              </Switch>
+            </div>
           </div>
-        </div>
+        </MuiThemeProvider>
       </Fragment>
     ) : (
-      <Fragment>
+      <MuiThemeProvider theme={mainTheme}>
+        {" "}
         <Switch>
           <Route path="/" exact component={LandingPage} />
           <Route
@@ -168,7 +171,7 @@ class App extends PureComponent {
           />
           <Redirect to="/" />
         </Switch>
-      </Fragment>
+      </MuiThemeProvider>
     );
     return (
       <Fragment>
