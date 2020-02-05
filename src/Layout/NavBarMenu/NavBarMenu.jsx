@@ -41,29 +41,9 @@ class NavBarMenu extends PureComponent {
     this.toggle = false;
     this.state = {
       dialogOpen: false,
-      dialogInfoText: undefined,
-      sensorDetailsOpen: false,
-      sensorsList: [{}]
+      dialogInfoText: undefined
     };
   }
-
-  toggleSensorList = () => {
-    this.setState(
-      {
-        sensorDetailsOpen: !this.state.sensorDetailsOpen
-      },
-      () => {
-        this.props.changeDrawerOpen(true);
-      }
-    );
-  };
-
-  setDrawerClose = () => {
-    this.setState({
-      sensorDetailsOpen: false
-    });
-    this.props.changeDrawerOpen(false);
-  };
 
   setDialogOpenState = state => {
     this.setState({
@@ -114,7 +94,14 @@ class NavBarMenu extends PureComponent {
     for (let sensor in this.props.sensors) {
       sensorPages.push(
         <Link key={sensor + "-key"} className={classes.white} to={"/" + sensor}>
-          <ListItem key={sensor} button onClick={this.setDrawerClose}>
+          <ListItem
+            key={sensor}
+            button
+            onClick={() => {
+              this.props.setDrawerOpenState(false);
+              this.props.setSensorOpenState(false);
+            }}
+          >
             <ListItemIcon>
               <SensorIcon className={classes.white} />
             </ListItemIcon>
@@ -189,16 +176,21 @@ class NavBarMenu extends PureComponent {
           classes={{
             paper: classNames(
               classes.drawerPaper,
-              !this.props.isOpen && classes.drawerPaperClose
+              !this.props.isDrawerOpen && classes.drawerPaperClose
             )
           }}
-          open={this.props.isOpen}
+          open={this.props.isDrawerOpen}
         >
-          <div className={classes.toolbar}>
-          </div>
+          <div className={classes.toolbar}></div>
           <List>
             <Link className={classes.white} to="/">
-              <ListItem button onClick={this.setDrawerClose}>
+              <ListItem
+                button
+                onClick={() => {
+                  this.props.setDrawerOpenState(false);
+                  this.props.setSensorOpenState(false);
+                }}
+              >
                 <ListItemIcon>
                   <Dashboard className={classes.white} />
                 </ListItemIcon>
@@ -215,7 +207,10 @@ class NavBarMenu extends PureComponent {
             <ListItem
               className={classes.white}
               button
-              onClick={this.toggleSensorList}
+              onClick={() => {
+                this.props.setDrawerOpenState(true);
+                this.props.setSensorOpenState(!this.props.isSensorsOpen);
+              }}
             >
               <ListItemIcon>
                 <GraphicEQ className={classes.white} />
@@ -228,10 +223,10 @@ class NavBarMenu extends PureComponent {
                   </Typography>
                 }
               />
-              {this.state.sensorDetailsOpen ? <ExpandLess /> : <ExpandMore />}
+              {this.props.isSensorsOpen ? <ExpandLess /> : <ExpandMore />}
             </ListItem>
             <Collapse
-              in={this.state.sensorDetailsOpen}
+              in={this.props.isSensorsOpen}
               timeout="auto"
               unmountOnExit
             >
@@ -259,7 +254,10 @@ class NavBarMenu extends PureComponent {
           <Divider className={classes.sidebarDivider} />
           <List>
             <Link className={classes.white} to="/config">
-              <ListItem button onClick={this.setDrawerClose}>
+              <ListItem
+                button
+                onClick={() => this.props.setDrawerOpenState(false)}
+              >
                 <ListItemIcon>
                   <Settings className={classes.white} />
                 </ListItemIcon>

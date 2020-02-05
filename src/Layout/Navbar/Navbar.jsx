@@ -13,12 +13,21 @@ class Navbar extends PureComponent {
   constructor(props) {
     super(props);
     this.state = {
-      open: false
+      drawerOpen: false,
+      sensorsOpen: false
     };
   }
 
-  setDrawerOpenState = open => {
-    this.setState({ open });
+  setSensorOpenState = state => {
+    this.setState({
+      sensorsOpen: state
+    });
+  };
+
+  setDrawerOpenState = state => {
+    this.setState({
+      drawerOpen: state
+    });
   };
 
   signOut = () => {
@@ -41,7 +50,7 @@ class Navbar extends PureComponent {
                   color="inherit"
                   aria-label="open drawer"
                   onClick={() => {
-                    this.setDrawerOpenState(!this.state.open);
+                    this.setDrawerOpenState(!this.state.drawerOpen);
                   }}
                   className={classes.menuButton}
                 >
@@ -63,8 +72,10 @@ class Navbar extends PureComponent {
         <NavBarMenu
           firebase={this.props.firebase}
           sensors={this.props.sensors}
-          isOpen={this.state.open}
-          changeDrawerOpen={this.setDrawerOpenState}
+          isDrawerOpen={this.state.drawerOpen}
+          isSensorsOpen={this.state.sensorsOpen}
+          setDrawerOpenState={this.setDrawerOpenState}
+          setSensorOpenState={this.setSensorOpenState}
         />
       </div>
     );
