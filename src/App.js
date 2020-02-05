@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from "react";
+import React, { PureComponent, Fragment } from "react";
 // Router
 import { Switch, BrowserRouter, Route, Redirect } from "react-router-dom";
 // Components
@@ -31,7 +31,7 @@ const customStyle = theme => ({
   }
 });
 
-class App extends Component {
+class App extends PureComponent {
   constructor(props) {
     super(props);
     this.firestoreSubscribers = [];
