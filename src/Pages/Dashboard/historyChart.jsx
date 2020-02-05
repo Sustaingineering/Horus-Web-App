@@ -1,8 +1,8 @@
-import React, { Fragment } from "react";
+import React, { PureComponent, Fragment } from "react";
 // Material UI Components
 import { Paper, withStyles } from "@material-ui/core";
 //Style
-import dashboardStyle from "./dashboardStyle";
+import { dashboardStyle } from "./dashboardStyle";
 
 // Recharts
 import {
@@ -17,7 +17,7 @@ import {
   Label
 } from "recharts";
 
-class Chart extends React.Component {
+class Chart extends PureComponent {
   render() {
     const { classes } = this.props;
     let Voltage = "Voltage";
