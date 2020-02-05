@@ -55,7 +55,7 @@ class MonitoringData extends PureComponent {
                   {data[type] !== undefined
                     ? data[type] % 1 === 0
                       ? data[type]
-                      : data[type].toFixed(2)
+                      : Number(data[type]).toFixed(2)
                     : undefined}
                 </Typography>
               </Grid>
