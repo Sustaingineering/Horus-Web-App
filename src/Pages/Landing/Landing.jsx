@@ -1,22 +1,17 @@
-import React, { Component, Fragment } from "react";
-// Material Ui
-import { Paper, Button, Typography, CssBaseline } from "@material-ui/core";
-// Logos
+import React, { PureComponent, Fragment } from "react";
+import { Paper, Button, Typography } from "@material-ui/core";
 import logos from "../../assets/images/logos.png";
-// Routing
 import { Link } from "react-router-dom";
-// Style
 import { withStyles, MuiThemeProvider } from "@material-ui/core/styles";
-import landingStyle from "./landingStyle";
 import { mainTheme } from "../../assets/jss/mainStyle";
+import landingStyle from "./landingStyle";
 
-class LandingPage extends Component {
+class LandingPage extends PureComponent {
   render() {
     const { classes } = this.props;
 
     return (
       <Fragment>
-        <CssBaseline />
         <MuiThemeProvider theme={mainTheme}>
           <div className={classes.root}>
             <Paper className={classes.paper}>
@@ -30,14 +25,14 @@ class LandingPage extends Component {
                   Horus Monitoring
                 </Typography>
                 <form className={classes.form}>
-                  <Link className={classes.noDeco} to="/login">
+                  <Link to="/login">
                     <Button
                       fullWidth
                       className={classes.submit}
                       variant="contained"
                       color="primary"
                     >
-                      START
+                      SIGN IN
                     </Button>
                   </Link>
                 </form>
