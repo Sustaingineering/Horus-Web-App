@@ -230,8 +230,8 @@ class Profile extends PureComponent {
           onClose={() => this.generateSnack(undefined)}
           message={<span>{this.state.snack}</span>}
         ></Snackbar>
-        <Grid container spacing={40}>
-          <Grid item sm xs={12}>
+        <Grid container spacing={4}>
+          <Grid item md sm={6} xs={12}>
             <Paper className={classes.paper}>
               <h2 className={classes.postText}>Profile</h2>
               <TextField
@@ -261,7 +261,7 @@ class Profile extends PureComponent {
               </Button>
             </Paper>
           </Grid>
-          <Grid item sm xs={12}>
+          <Grid item md sm={6} xs={12}>
             <Paper className={classes.paper}>
               <h2 className={classes.postText}>Email Settings</h2>
               <TextField
@@ -313,7 +313,7 @@ class Profile extends PureComponent {
               )}
             </Paper>
           </Grid>
-          <Grid item sm xs={12}>
+          <Grid item md sm={12} xs={12}>
             <Paper className={classes.paper}>
               <h2 className={classes.postText}>Administration</h2>
               {this.reauthFlow()}
