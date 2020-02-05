@@ -2,8 +2,7 @@ import React, { PureComponent, Fragment } from "react";
 import { Paper, Button, Typography } from "@material-ui/core";
 import logos from "../../assets/images/logos.png";
 import { Link } from "react-router-dom";
-import { withStyles, MuiThemeProvider } from "@material-ui/core/styles";
-import { mainTheme } from "../../assets/jss/mainStyle";
+import { withStyles } from "@material-ui/core/styles";
 import landingStyle from "./landingStyle";
 
 class LandingPage extends PureComponent {
@@ -12,7 +11,6 @@ class LandingPage extends PureComponent {
 
     return (
       <Fragment>
-        <MuiThemeProvider theme={mainTheme}>
           <div className={classes.root}>
             <Paper className={classes.paper}>
               <div>
@@ -39,7 +37,6 @@ class LandingPage extends PureComponent {
               </Paper>
             </div>
           </div>
-        </MuiThemeProvider>
       </Fragment>
     );
   }
