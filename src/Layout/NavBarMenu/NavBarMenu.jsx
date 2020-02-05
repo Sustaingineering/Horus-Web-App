@@ -107,7 +107,7 @@ class NavBarMenu extends PureComponent {
             </ListItemIcon>
             <ListItemText
               primary={
-                <Typography className={classes.white} type="body1">
+                <Typography noWrap className={classes.white} type="body1">
                   {sensor}
                 </Typography>
               }
