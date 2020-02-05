@@ -1,4 +1,4 @@
-import React, { PureComponent, Fragment } from "react";
+import React, { PureComponent } from "react";
 import { Paper, Button, Typography } from "@material-ui/core";
 import logos from "../../assets/images/logos.png";
 import { Link } from "react-router-dom";
@@ -10,34 +10,32 @@ class LandingPage extends PureComponent {
     const { classes } = this.props;
 
     return (
-      <Fragment>
-          <div className={classes.root}>
-            <Paper className={classes.paper}>
-              <div>
-                <img className={classes.logos} src={logos} alt="logos" />
-              </div>
-            </Paper>
-            <div className={classes.container}>
-              <Paper className={classes.paper}>
-                <Typography variant="h5" className={classes.title}>
-                  Horus Monitoring
-                </Typography>
-                <form className={classes.form}>
-                  <Link to="/login">
-                    <Button
-                      fullWidth
-                      className={classes.submit}
-                      variant="contained"
-                      color="primary"
-                    >
-                      SIGN IN
-                    </Button>
-                  </Link>
-                </form>
-              </Paper>
-            </div>
+      <div className={classes.root}>
+        <Paper className={classes.paper}>
+          <div>
+            <img className={classes.logos} src={logos} alt="logos" />
           </div>
-      </Fragment>
+        </Paper>
+        <div className={classes.container}>
+          <Paper className={classes.paper}>
+            <Typography variant="h5" className={classes.title}>
+              Horus Monitoring
+            </Typography>
+            <form className={classes.form}>
+              <Link to="/login">
+                <Button
+                  fullWidth
+                  className={classes.submit}
+                  variant="contained"
+                  color="primary"
+                >
+                  SIGN IN
+                </Button>
+              </Link>
+            </form>
+          </Paper>
+        </div>
+      </div>
     );
   }
 }

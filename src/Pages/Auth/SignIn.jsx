@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from "react";
+import React, { PureComponent } from "react";
 // Router
 import { withRouter, Link } from "react-router-dom";
 // Material UI Components
@@ -17,15 +17,12 @@ const style = {
   color: "white"
 };
 
-class SignInPage extends Component {
+class SignInPage extends PureComponent {
   constructor(props) {
     super(props);
-    console.log("SigninPage");
   }
 
   componentDidMount = () => {
-    console.log("Starting component");
-    console.log(firebaseui.auth.AuthResult);
     let ui =
       firebaseui.auth.AuthUI.getInstance() ||
       new firebaseui.auth.AuthUI(this.props.firebase.auth());
@@ -50,23 +47,21 @@ class SignInPage extends Component {
   render() {
     const { classes } = this.props;
     return (
-      <Fragment>
-        <div className={classes.root}>
-          <div className={classes.container}>
-            <div className={classes.paper}>
-              <Avatar className={classes.avatar}>
-                <LockIcon />
-              </Avatar>
-              <div id="firebaseui-auth-container"></div>
-              <br />
-              <br />
-              <Link style={style} to="/">
-                <BackIcon />
-              </Link>
-            </div>
+      <div className={classes.root}>
+        <div className={classes.container}>
+          <div className={classes.paper}>
+            <Avatar className={classes.avatar}>
+              <LockIcon />
+            </Avatar>
+            <div id="firebaseui-auth-container"></div>
+            <br />
+            <br />
+            <Link style={style} to="/">
+              <BackIcon />
+            </Link>
           </div>
         </div>
-      </Fragment>
+      </div>
     );
   }
 }

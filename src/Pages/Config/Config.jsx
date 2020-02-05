@@ -1,16 +1,9 @@
 import React, { PureComponent, Fragment } from "react";
 // Material UI Components
-import {
-  Grid,
-  Paper,
-  TextField,
-  Button,
-  Snackbar
-} from "@material-ui/core";
+import { Grid, Paper, TextField, Button, Snackbar } from "@material-ui/core";
 //Style
 import profileStyle from "./configStyle";
 import { withStyles } from "@material-ui/core/styles";
-import { mainTheme } from "../../assets/jss/mainStyle";
 
 class Profile extends PureComponent {
   constructor(props) {
@@ -124,7 +117,7 @@ class Profile extends PureComponent {
     let lastAuth = Date.parse(this.state.userAuth.metadata.lastSignInTime);
     let currentTime = Date.now();
     return currentTime - lastAuth >= 300000;
-  }
+  };
 
   reauthFlow = () => {
     let { classes } = this.props;
@@ -163,7 +156,6 @@ class Profile extends PureComponent {
       } else {
         // Reauthenticate with popup here
         return (
-          <Fragment>
             <Button
               fullWidth
               variant="contained"
@@ -172,7 +164,6 @@ class Profile extends PureComponent {
             >
               REAUTHENTICATE
             </Button>
-          </Fragment>
         );
       }
     } else {
@@ -190,9 +181,12 @@ class Profile extends PureComponent {
         .auth()
         .currentUser.reauthenticateWithCredential(credential)
         .then(result => {
-          this.props.firebase.auth().currentUser.reload().then(() => {
-            this.generateSnack("Reauthorized.");
-          })
+          this.props.firebase
+            .auth()
+            .currentUser.reload()
+            .then(() => {
+              this.generateSnack("Reauthorized.");
+            });
         })
         .catch(e => {
           this.generateSnack(e.message);
@@ -203,9 +197,12 @@ class Profile extends PureComponent {
         .auth()
         .currentUser.reauthenticateWithPopup(provider)
         .then(result => {
-          this.props.firebase.auth().currentUser.reload().then(() => {
-            this.generateSnack("Reauthorized.");
-          })
+          this.props.firebase
+            .auth()
+            .currentUser.reload()
+            .then(() => {
+              this.generateSnack("Reauthorized.");
+            });
         })
         .catch(e => {
           this.generateSnack(e.message);
@@ -222,131 +219,129 @@ class Profile extends PureComponent {
   render() {
     const { classes } = this.props;
     return (
-      <Fragment>
-          <div className={classes.root}>
-            <Snackbar
-              anchorOrigin={{
-                vertical: "bottom",
-                horizontal: "right"
-              }}
-              open={this.state.snack !== undefined}
-              autoHideDuration={4000}
-              onClose={() => this.generateSnack(undefined)}
-              message={<span>{this.state.snack}</span>}
-            ></Snackbar>
-            <Grid container spacing={40}>
-              <Grid item sm xs={12}>
-                <Paper className={classes.paper}>
-                  <h2 className={classes.postText}>Profile</h2>
-                  <TextField
-                    id="name"
-                    label="Name"
-                    className={classes.textField}
-                    value={this.state.name || ""}
-                    InputProps={{
-                      className: classes.textField
-                    }}
-                    InputLabelProps={{
-                      style: {
-                        color: "white"
-                      }
-                    }}
-                    onChange={val => this.setState({ name: val.target.value })}
-                    margin="normal"
-                  />
-                  <Button
-                    fullWidth
-                    variant="contained"
-                    color="primary"
-                    className={classes.submit}
-                    onClick={this.updateName}
-                  >
-                    SUBMIT
-                  </Button>
-                </Paper>
-              </Grid>
-              <Grid item sm xs={12}>
-                <Paper className={classes.paper}>
-                  <h2 className={classes.postText}>Email Settings</h2>
-                  <TextField
-                    id="email"
-                    label="Email"
-                    className={classes.textField}
-                    value={this.state.email || ""}
-                    InputProps={{
-                      classes: {
-                        disabled: classes.textFieldDisabled,
-                        root: classes.textField
-                      },
-                      disabled: !this.state.isEmail
-                    }}
-                    InputLabelProps={{
-                      style: {
-                        color: "white"
-                      }
-                    }}
-                    onChange={val => this.setState({ email: val.target.value })}
-                    margin="normal"
-                  />
-                  {this.state.isEmail ? (
-                    <Button
-                      fullWidth
-                      variant="contained"
-                      color="primary"
-                      className={classes.submit}
-                      disabled={this.isAuthOld()}
-                      onClick={this.updateEmail}
-                    >
-                      CHANGE EMAIL
-                    </Button>
-                  ) : (
-                    undefined
-                  )}
-                  {this.state.isEmail && !this.state.userAuth.emailVerified ? (
-                    <Button
-                      fullWidth
-                      variant="contained"
-                      color="primary"
-                      className={classes.submitWarning}
-                      onClick={this.verifyEmail}
-                    >
-                      VERIFY EMAIL
-                    </Button>
-                  ) : (
-                    undefined
-                  )}
-                </Paper>
-              </Grid>
-              <Grid item sm xs={12}>
-                <Paper className={classes.paper}>
-                  <h2 className={classes.postText}>Administration</h2>
-                  {this.reauthFlow()}
-                  {this.state.isEmail ? (
-                    <Button
-                      fullWidth
-                      variant="contained"
-                      className={classes.submit}
-                      onClick={this.resetPassword}
-                    >
-                      SEND PASSWORD RESET
-                    </Button>
-                  ) : (
-                    undefined
-                  )}
-                  <Button
-                    fullWidth
-                    variant="contained"
-                    disabled={this.isAuthOld()}
-                    className={classes.submitDanger}
-                    onClick={this.deleteAccount}
-                  >
-                    DELETE ACCOUNT
-                  </Button>
-                </Paper>
-              </Grid>
-            </Grid>
-          </div>
-      </Fragment>
+      <div className={classes.root}>
+        <Snackbar
+          anchorOrigin={{
+            vertical: "bottom",
+            horizontal: "right"
+          }}
+          open={this.state.snack !== undefined}
+          autoHideDuration={4000}
+          onClose={() => this.generateSnack(undefined)}
+          message={<span>{this.state.snack}</span>}
+        ></Snackbar>
+        <Grid container spacing={40}>
+          <Grid item sm xs={12}>
+            <Paper className={classes.paper}>
+              <h2 className={classes.postText}>Profile</h2>
+              <TextField
+                id="name"
+                label="Name"
+                className={classes.textField}
+                value={this.state.name || ""}
+                InputProps={{
+                  className: classes.textField
+                }}
+                InputLabelProps={{
+                  style: {
+                    color: "white"
+                  }
+                }}
+                onChange={val => this.setState({ name: val.target.value })}
+                margin="normal"
+              />
+              <Button
+                fullWidth
+                variant="contained"
+                color="primary"
+                className={classes.submit}
+                onClick={this.updateName}
+              >
+                SUBMIT
+              </Button>
+            </Paper>
+          </Grid>
+          <Grid item sm xs={12}>
+            <Paper className={classes.paper}>
+              <h2 className={classes.postText}>Email Settings</h2>
+              <TextField
+                id="email"
+                label="Email"
+                className={classes.textField}
+                value={this.state.email || ""}
+                InputProps={{
+                  classes: {
+                    disabled: classes.textFieldDisabled,
+                    root: classes.textField
+                  },
+                  disabled: !this.state.isEmail
+                }}
+                InputLabelProps={{
+                  style: {
+                    color: "white"
+                  }
+                }}
+                onChange={val => this.setState({ email: val.target.value })}
+                margin="normal"
+              />
+              {this.state.isEmail ? (
+                <Button
+                  fullWidth
+                  variant="contained"
+                  color="primary"
+                  className={classes.submit}
+                  disabled={this.isAuthOld()}
+                  onClick={this.updateEmail}
+                >
+                  CHANGE EMAIL
+                </Button>
+              ) : (
+                undefined
+              )}
+              {this.state.isEmail && !this.state.userAuth.emailVerified ? (
+                <Button
+                  fullWidth
+                  variant="contained"
+                  color="primary"
+                  className={classes.submitWarning}
+                  onClick={this.verifyEmail}
+                >
+                  VERIFY EMAIL
+                </Button>
+              ) : (
+                undefined
+              )}
+            </Paper>
+          </Grid>
+          <Grid item sm xs={12}>
+            <Paper className={classes.paper}>
+              <h2 className={classes.postText}>Administration</h2>
+              {this.reauthFlow()}
+              {this.state.isEmail ? (
+                <Button
+                  fullWidth
+                  variant="contained"
+                  className={classes.submit}
+                  onClick={this.resetPassword}
+                >
+                  SEND PASSWORD RESET
+                </Button>
+              ) : (
+                undefined
+              )}
+              <Button
+                fullWidth
+                variant="contained"
+                disabled={this.isAuthOld()}
+                className={classes.submitDanger}
+                onClick={this.deleteAccount}
+              >
+                DELETE ACCOUNT
+              </Button>
+            </Paper>
+          </Grid>
+        </Grid>
+      </div>
     );
   }
 }
