@@ -1,30 +1,33 @@
-import React, { PureComponent, Fragment } from "react";
+import React, { PureComponent } from "react";
 // Material UI Components
-import { AppBar, Toolbar, IconButton, Button } from "@material-ui/core";
+import { AppBar, Toolbar, IconButton, Button, Grid } from "@material-ui/core";
 // Navbar Menu - drawer component
 import NavBarMenu from "../NavBarMenu/NavBarMenu";
 // Icons
 import MenuIcon from "@material-ui/icons/Menu";
 // Style
 import navbarStyle from "./navbarStyle";
-import { withStyles } from "@material-ui/core/styles";
-import classNames from "classnames";
+import { withStyles } from "@material-ui/core";
 
 class Navbar extends PureComponent {
   constructor(props) {
     super(props);
     this.state = {
-      open: false
+      drawerOpen: false,
+      sensorsOpen: false
     };
   }
 
-  // drawer
-  handleDrawerOpen = () => {
-    this.setState({ open: true });
+  setSensorOpenState = state => {
+    this.setState({
+      sensorsOpen: state
+    });
   };
 
-  handleDrawerClose = drawerOpen => {
-    this.setState({ open: drawerOpen });
+  setDrawerOpenState = state => {
+    this.setState({
+      drawerOpen: state
+    });
   };
 
   signOut = () => {
@@ -38,49 +41,46 @@ class Navbar extends PureComponent {
     this.props.firebase.auth().currentUser.reload();
 
     return (
-      <Fragment>
-        <div className={classes.root}>
-          <AppBar
-            position="static"
-            className={classNames(
-              classes.appBar,
-              this.state.open && classes.appBarShift
-            )}
-          >
-            <Toolbar>
-              <IconButton
-                color="inherit"
-                aria-label="open drawer"
-                onClick={this.handleDrawerOpen}
-                className={classNames(
-                  classes.menuButton,
-                  this.state.open && classes.hide
-                )}
-              >
-                <MenuIcon />
-              </IconButton>
-              {/* This is a hacky way of moving the signout button over. Fix later? */}
-              <div className={classes.flex}></div>
-              <Button
-                className={classes.button}
-                color="primary"
-                onClick={this.signOut}
-              >
-                Sign Out
-              </Button>
-            </Toolbar>
-          </AppBar>
-          <NavBarMenu
-            firebase={this.props.firebase}
-            updateSensors={this.props.updateSensors}
-            sensors={this.props.sensors}
-            open={this.state.open}
-            changeOpen={this.handleDrawerClose.bind(this)}
-          />
-        </div>
-      </Fragment>
+      <div className={classes.root}>
+        <AppBar position="static" className={classes.appBar}>
+          <Toolbar>
+            <Grid justify="space-between" container spacing={0}>
+              <Grid item>
+                <IconButton
+                  color="inherit"
+                  aria-label="open drawer"
+                  onClick={() => {
+                    this.setDrawerOpenState(!this.state.drawerOpen);
+                    this.setSensorOpenState(false);
+                  }}
+                  className={classes.menuButton}
+                >
+                  <MenuIcon />
+                </IconButton>
+              </Grid>
+              <Grid item>
+                <Button
+                  className={classes.button}
+                  color="primary"
+                  onClick={this.signOut}
+                >
+                  Sign Out
+                </Button>
+              </Grid>
+            </Grid>
+          </Toolbar>
+        </AppBar>
+        <NavBarMenu
+          firebase={this.props.firebase}
+          sensors={this.props.sensors}
+          isDrawerOpen={this.state.drawerOpen}
+          isSensorsOpen={this.state.sensorsOpen}
+          setDrawerOpenState={this.setDrawerOpenState}
+          setSensorOpenState={this.setSensorOpenState}
+        />
+      </div>
     );
   }
 }
 
-export default withStyles(navbarStyle, { withTheme: true })(Navbar);
+export default withStyles(navbarStyle)(Navbar);

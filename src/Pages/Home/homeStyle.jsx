@@ -1,32 +1,32 @@
 // Styles
-import bg from '../../assets/images/bg.jpg';
+import bg from "../../assets/images/bg.jpg";
 
 const styles = theme => ({
   layout: {
-    width: 'auto',
-    marginLeft: theme.spacing.unit * 3,
-    marginRight: theme.spacing.unit * 3,
+    width: "auto",
+    marginLeft: theme.spacing(3),
+    marginRight: theme.spacing(3),
     paddingTop: 50,
     paddingBottom: 50
   },
   mainFeaturedPost: {
-    backgroundImage: 'url(' + bg + ')',
-    backgroundColor: '#27293d',
+    backgroundImage: "url(" + bg + ")",
+    backgroundColor: "#27293d",
     color: theme.palette.common.white,
-    marginBottom: theme.spacing.unit * 4
+    marginBottom: theme.spacing(4)
   },
   mainFeaturedPostContent: {
-    height: '100%',
-    width: 'auto',
-    padding: `${theme.spacing.unit * 6}px`,
-    [theme.breakpoints.up('md')]: {
+    height: "100%",
+    width: "auto",
+    padding: `${theme.spacing(6)}px`,
+    [theme.breakpoints.up("md")]: {
       paddingRight: 0
     }
   },
   card: {
-    backgroundColor: '#27293d',
-    display: 'flex',
-    color: 'white'
+    backgroundColor: "#27293d",
+    display: "flex",
+    color: "white"
   },
   cardDetails: {
     flex: 1
@@ -37,35 +37,35 @@ const styles = theme => ({
   },
   postText: {
     margin: 15,
-    lineHeight: 1.5,
+    lineHeight: 1.5
   },
   cardMedia: {
     width: 160
   },
   sidebarAboutBox: {
-    padding: theme.spacing.unit * 2,
+    padding: theme.spacing(2),
     backgroundColor: theme.palette.grey[200]
   },
   footer: {},
   logos: {
-    marginTop: '2%',
-    marginLeft: 'calc(50% - 350px)',
+    marginTop: "2%",
+    marginLeft: "calc(50% - 350px)",
     width: 650,
-    height: 'auto',
-    [theme.breakpoints.down('sm')]: {
-      marginLeft: 'calc(50% - 250px)',
+    height: "auto",
+    [theme.breakpoints.down("sm")]: {
+      marginLeft: "calc(50% - 250px)",
       width: 450
     },
-    [theme.breakpoints.down('xs')]: {
-      display: 'none'
+    [theme.breakpoints.down("xs")]: {
+      display: "none"
     }
   },
   menuButton: {
-    position: 'relative',
+    position: "relative",
     marginLeft: 0,
     marginRight: 20,
     marginBottom: 20
   }
-})
+});
 
-export default styles
+export default styles;

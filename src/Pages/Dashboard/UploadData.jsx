@@ -1,20 +1,22 @@
-import React, { Fragment } from "react";
-import { Typography, Input, Button, Snackbar } from "@material-ui/core";
+import React, { PureComponent } from "react";
+import {
+  Input,
+  Button,
+  Snackbar,
+  Grid,
+  withStyles,
+  Typography,
+  Paper
+} from "@material-ui/core";
 import Papa from "papaparse";
-import { withStyles } from "@material-ui/core/styles";
+import { uploadStyle } from "./dashboardStyle";
 
-const style = {
-  input: {
-    color: "white"
-  }
-};
-
-class UploadData extends React.Component {
+class UploadData extends PureComponent {
   constructor(props) {
     super(props);
     this.state = {
       snack: undefined
-    }
+    };
   }
 
   sendData = data => {
@@ -33,8 +35,8 @@ class UploadData extends React.Component {
   closeSnack = () => {
     this.setState({
       snack: undefined
-    })
-  }
+    });
+  };
 
   handleFile = event => {
     const elem = document.getElementById("upload-file");
@@ -71,25 +73,31 @@ class UploadData extends React.Component {
   render() {
     const { classes } = this.props;
     return (
-      <Fragment>
-        <Snackbar
-          anchorOrigin={{
-            vertical: 'bottom',
-            horizontal: 'right'
-          }}
-          open={this.state.snack !== undefined}
-          autoHideDuration={4000}
-          onClose={this.closeSnack}
-          message={<span>{this.state.snack}</span>}
-        >
-        </Snackbar>
-        <Input className={classes.input} id="upload-file" type="file" />
-        <Button color="primary" onClick={this.handleFile}>
-          Upload
-        </Button>
-      </Fragment>
+      <Grid container spacing={3} direction="column" alignItems="center">
+        <Grid item>
+          <Paper className={classes.paper}>
+            <Typography variant="h6" color="primary" gutterBottom>
+              Upload your csv file
+            </Typography>
+            <Snackbar
+              anchorOrigin={{
+                vertical: "bottom",
+                horizontal: "right"
+              }}
+              open={this.state.snack !== undefined}
+              autoHideDuration={4000}
+              onClose={this.closeSnack}
+              message={<span>{this.state.snack}</span>}
+            ></Snackbar>
+            <Input className={classes.input} id="upload-file" type="file" />
+            <Button color="primary" onClick={this.handleFile}>
+              Upload
+            </Button>
+          </Paper>
+        </Grid>
+      </Grid>
     );
   }
 }
 
-export default withStyles(style)(UploadData);
+export default withStyles(uploadStyle)(UploadData);

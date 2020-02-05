@@ -1,9 +1,8 @@
-import React, { PureComponent, Fragment } from "react";
+import React, { PureComponent } from "react";
 // Material UI Components
-import { withStyles, MuiThemeProvider } from "@material-ui/core";
+import { withStyles } from "@material-ui/core";
 //Style
-import dashboardStyle from "./dashboardStyle";
-import { mainTheme } from "../../assets/jss/mainStyle";
+import { dashboardStyle } from "./dashboardStyle";
 import Dashboard from "./Dashboard";
 
 class Sensor extends PureComponent {
@@ -48,18 +47,14 @@ class Sensor extends PureComponent {
   render() {
     const { classes } = this.props;
     return (
-      <Fragment>
-        <MuiThemeProvider theme={mainTheme}>
-          <div className={classes.root}>
-            <Dashboard
-              data={this.state.data}
-              sensorName={this.props.sensorName}
-              sensorId={this.props.sensorId}
-              firebase={this.props.firebase}
-            />
-          </div>
-        </MuiThemeProvider>
-      </Fragment>
+      <div className={classes.root}>
+        <Dashboard
+          data={this.state.data}
+          sensorName={this.props.sensorName}
+          sensorId={this.props.sensorId}
+          firebase={this.props.firebase}
+        />
+      </div>
     );
   }
 }

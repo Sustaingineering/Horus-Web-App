@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from "react";
+import React, { PureComponent, Fragment } from "react";
 // Router
 import { Switch, BrowserRouter, Route, Redirect } from "react-router-dom";
 // Components
@@ -10,7 +10,7 @@ import Home from "./Pages/Home/home.jsx";
 // Config
 import Config from "./Pages/Config/Config.jsx";
 import NavBar from "./Layout/Navbar/Navbar";
-import { withStyles } from "@material-ui/core/styles";
+import { withStyles } from "@material-ui/core";
 import { backgroundColor } from "./assets/jss/mainStyle";
 
 // Sensor
@@ -31,7 +31,7 @@ const customStyle = theme => ({
   }
 });
 
-class App extends Component {
+class App extends PureComponent {
   constructor(props) {
     super(props);
     this.firestoreSubscribers = [];
@@ -42,11 +42,11 @@ class App extends Component {
     };
   }
 
-  componentWillMount = () => {
+  componentDidMount = () => {
     this.props.firebase.auth().onAuthStateChanged(authUser => {
       if (authUser) {
         this.setState({ authUser: authUser });
-        this.updateSensors();
+        this.sensorSubscriber();
         this.postSubscriber();
       } else {
         try {
@@ -65,27 +65,29 @@ class App extends Component {
     });
   };
 
-  updateSensors = () => {
+  sensorSubscriber = () => {
     let db = this.props.firebase.firestore();
     // Grab the UID from the auth().currentUser object in case state isn't updated yet
     let uid = this.props.firebase.auth().currentUser.uid;
-    db.collection("users")
-      .doc(uid)
-      .get()
-      .then(doc => {
-        if (doc.exists) {
-          this.setState({
-            sensors: doc.data().sensors
-          });
-        } else {
-          db.collection("users")
-            .doc(uid)
-            .set({ sensors: {} });
-          this.setState({
-            sensors: {}
-          });
-        }
-      });
+    this.firestoreSubscribers.push(
+      db
+        .collection("users")
+        .doc(uid)
+        .onSnapshot(doc => {
+          if (doc.exists && doc.data().sensors) {
+            this.setState({
+              sensors: doc.data().sensors
+            });
+          } else {
+            db.collection("users")
+              .doc(uid)
+              .set({ sensors: {} });
+            this.setState({
+              sensors: {}
+            });
+          }
+        })
+    );
   };
 
   postSubscriber = () => {
@@ -128,11 +130,7 @@ class App extends Component {
     const { classes } = this.props;
     const renderPlatform = this.state.authUser ? (
       <Fragment>
-        <NavBar
-          updateSensors={this.updateSensors}
-          sensors={this.state.sensors}
-          firebase={this.props.firebase}
-        />
+        <NavBar sensors={this.state.sensors} firebase={this.props.firebase} />
         <div className={classes.root}>
           <div className={classes.container}>
             <Switch>
@@ -158,23 +156,17 @@ class App extends Component {
         </div>
       </Fragment>
     ) : (
-      <Fragment>
-        <Switch>
-          <Route path="/" exact component={LandingPage} />
-          <Route
-            path="/login"
-            exact
-            render={() => <SignInPage firebase={this.props.firebase} />}
-          />
-          <Redirect to="/" />
-        </Switch>
-      </Fragment>
+      <Switch>
+        <Route path="/" exact component={LandingPage} />
+        <Route
+          path="/login"
+          exact
+          render={() => <SignInPage firebase={this.props.firebase} />}
+        />
+        <Redirect to="/" />
+      </Switch>
     );
-    return (
-      <Fragment>
-        <BrowserRouter>{renderPlatform}</BrowserRouter>
-      </Fragment>
-    );
+    return <BrowserRouter>{renderPlatform}</BrowserRouter>;
   }
 }
 
