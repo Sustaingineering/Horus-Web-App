@@ -111,7 +111,8 @@ class NavBarMenu extends PureComponent {
       .then(() => this.props.updateSensors());
   };
 
-  processSensors = classes => {
+  processSensors = () => {
+    let { classes } = this.props;
     let sensorPages = [];
     for (let sensor in this.props.sensors) {
       sensorPages.push(
@@ -241,7 +242,7 @@ class NavBarMenu extends PureComponent {
               unmountOnExit
             >
               <List>
-                {this.processSensors(classes)}
+                {this.processSensors()}
                 <ListItem
                   key={"AddSensor-button"}
                   button
