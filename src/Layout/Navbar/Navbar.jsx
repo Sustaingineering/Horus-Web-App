@@ -51,6 +51,7 @@ class Navbar extends PureComponent {
                   aria-label="open drawer"
                   onClick={() => {
                     this.setDrawerOpenState(!this.state.drawerOpen);
+                    this.setSensorOpenState(false);
                   }}
                   className={classes.menuButton}
                 >

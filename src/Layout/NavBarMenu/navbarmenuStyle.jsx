@@ -23,6 +23,21 @@ const navbarmenuStyle = theme => ({
   white: {
     color: "white"
   },
+  paper: {
+    backgroundColor: primaryColor,
+    color: "white"
+  },
+  postText: {
+    color: "white"
+  },
+  textField: {
+    width: "100%",
+    color: "white"
+  },
+  textFieldDisabled: {
+    width: "100%",
+    color: "#9e9e9e"
+  },
   toolbar: {
     backgroundColor: primaryColor,
     display: "flex",

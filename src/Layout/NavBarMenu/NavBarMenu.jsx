@@ -135,10 +135,11 @@ class NavBarMenu extends PureComponent {
         <Dialog
           open={this.state.dialogOpen}
           onClose={() => this.setDialogOpenState(false)}
+          PaperProps={{ className: classes.paper }}
         >
           <DialogTitle id="form-dialog-title">Add a sensor</DialogTitle>
           <DialogContent>
-            <DialogContentText>
+            <DialogContentText className={classes.textField}>
               To add a sensor, give it a descriptive (unique) name, and input
               its unique ID.
             </DialogContentText>
@@ -150,12 +151,26 @@ class NavBarMenu extends PureComponent {
               margin="dense"
               id="unique-sensor-name"
               label="Unique Sensor Name"
+              className={classes.textField}
+              InputLabelProps={{
+                className: classes.textField
+              }}
+              InputProps={{
+                className: classes.textField
+              }}
               fullWidth
             />
             <TextField
               margin="dense"
               id="unique-sensor-id"
               label="Unique Sensor ID"
+              className={classes.textField}
+              InputLabelProps={{
+                className: classes.textField
+              }}
+              InputProps={{
+                className: classes.textField
+              }}
               fullWidth
             />
           </DialogContent>
@@ -256,7 +271,10 @@ class NavBarMenu extends PureComponent {
             <Link className={classes.white} to="/config">
               <ListItem
                 button
-                onClick={() => this.props.setDrawerOpenState(false)}
+                onClick={() => {
+                  this.props.setSensorOpenState(false);
+                  this.props.setDrawerOpenState(false);
+                }}
               >
                 <ListItemIcon>
                   <Settings className={classes.white} />
