@@ -4,7 +4,6 @@ import {
   Grid,
   Paper,
   TextField,
-  MuiThemeProvider,
   Button,
   Snackbar
 } from "@material-ui/core";
@@ -105,7 +104,7 @@ class Profile extends PureComponent {
   componentDidMount = async () => {
     // Update the user details to the latest results
     await this.props.firebase.auth().currentUser.reload();
-    let user = await this.props.firebase.auth().currentUser;
+    let user = this.props.firebase.auth().currentUser;
     // Check if it's an email auth
     let isEmail =
       this.state.userAuth.providerData.length === 0
@@ -191,10 +190,11 @@ class Profile extends PureComponent {
         .auth()
         .currentUser.reauthenticateWithCredential(credential)
         .then(result => {
-          this.generateSnack("Reauthorized.");
+          this.props.firebase.auth().currentUser.reload().then(() => {
+            this.generateSnack("Reauthorized.");
+          })
         })
         .catch(e => {
-          console.log(e);
           this.generateSnack(e.message);
         });
     } else {
@@ -203,10 +203,11 @@ class Profile extends PureComponent {
         .auth()
         .currentUser.reauthenticateWithPopup(provider)
         .then(result => {
-          this.generateSnack("Reauthorized.");
+          this.props.firebase.auth().currentUser.reload().then(() => {
+            this.generateSnack("Reauthorized.");
+          })
         })
         .catch(e => {
-          console.log(e);
           this.generateSnack(e.message);
         });
     }
@@ -220,10 +221,8 @@ class Profile extends PureComponent {
 
   render() {
     const { classes } = this.props;
-    console.log("rerender");
     return (
       <Fragment>
-        <MuiThemeProvider theme={mainTheme}>
           <div className={classes.root}>
             <Snackbar
               anchorOrigin={{
@@ -347,7 +346,6 @@ class Profile extends PureComponent {
               </Grid>
             </Grid>
           </div>
-        </MuiThemeProvider>
       </Fragment>
     );
   }
