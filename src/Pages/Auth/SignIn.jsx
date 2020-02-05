@@ -18,10 +18,6 @@ const style = {
 };
 
 class SignInPage extends PureComponent {
-  constructor(props) {
-    super(props);
-  }
-
   componentDidMount = () => {
     let ui =
       firebaseui.auth.AuthUI.getInstance() ||
