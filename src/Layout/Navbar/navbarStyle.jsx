@@ -48,7 +48,7 @@ const navbarStyle = theme => ({
   },
   button: {
     textAlign: "center",
-    marginTop: theme.spacing.unit,
+    marginTop: theme.spacing(1),
     backgroundColor: primaryColor,
     color: "white",
     "&:hover": {

@@ -23,15 +23,15 @@ const signinStyle = theme => ({
   },
   paper: {
     backgroundColor: backgroundColor,
-    marginTop: theme.spacing.unit * 8,
+    marginTop: theme.spacing(8),
     display: "flex",
     flexDirection: "column",
     alignItems: "center",
-    padding: `${theme.spacing.unit * 2}px ${theme.spacing.unit * 3}px ${theme
+    padding: `${theme.spacing(2)}px ${theme.spacing(3)}px ${theme
       .spacing.unit * 1.5}px`
   },
   avatar: {
-    margin: theme.spacing.unit,
+    margin: theme.spacing(1),
     marginBottom: "40px",
     backgroundColor: primaryColor
   },

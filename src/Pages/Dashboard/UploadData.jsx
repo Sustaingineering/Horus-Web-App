@@ -73,7 +73,7 @@ class UploadData extends PureComponent {
   render() {
     const { classes } = this.props;
     return (
-      <Grid container spacing={24} direction="column" alignItems="center">
+      <Grid container spacing={3} direction="column" alignItems="center">
         <Grid item>
           <Paper className={classes.paper}>
             <Typography variant="h6" color="primary" gutterBottom>

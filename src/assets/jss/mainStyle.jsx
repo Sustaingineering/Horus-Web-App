@@ -45,7 +45,6 @@ const defaultColorGradient =
 // MuiTheme
 const mainTheme = createMuiTheme({
   typography: {
-    useNextVariants: true,
     // Use the system font instead of the default Roboto font.
     fontFamily: [
       "-apple-system",

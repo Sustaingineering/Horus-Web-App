@@ -34,7 +34,7 @@ class ChartContainer extends PureComponent {
   render() {
     const data = (this.props.data || []).slice();
     return (
-      <Grid container spacing={24}>
+      <Grid container spacing={3}>
         {dataset.map(e => {
           return (
             <Grid key={e.title} item xs={12} sm={12} md={6}>

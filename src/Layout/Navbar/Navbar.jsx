@@ -7,7 +7,7 @@ import NavBarMenu from "../NavBarMenu/NavBarMenu";
 import MenuIcon from "@material-ui/icons/Menu";
 // Style
 import navbarStyle from "./navbarStyle";
-import { withStyles } from "@material-ui/core/styles";
+import { withStyles } from "@material-ui/core";
 import classNames from "classnames";
 
 class Navbar extends PureComponent {

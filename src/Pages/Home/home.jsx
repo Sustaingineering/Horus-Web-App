@@ -1,6 +1,6 @@
 import React, { Fragment, PureComponent } from "react";
 import { Link } from "react-router-dom";
-import { withStyles } from "@material-ui/core/styles";
+import { withStyles } from "@material-ui/core";
 import { Paper, Typography, Grid, Card, CardContent } from "@material-ui/core";
 import logos from "../../assets/images/logos.png";
 import styles from "./homeStyle";
@@ -37,7 +37,7 @@ class Home extends PureComponent {
               </Grid>
             </Grid>
           </Paper>
-          <Grid container spacing={40} className={classes.cardGrid}>
+          <Grid container spacing={4} className={classes.cardGrid}>
             {user === null ? (
               <Grid item key={"no-user-auth"} xs={12} md={6}>
                 <Card className={classes.card}>
@@ -64,12 +64,12 @@ class Home extends PureComponent {
                   <div className={classes.cardDetails}>
                     <CardContent>
                       <h2 className={classes.postTitle}>{post.title}</h2>
-                      <div
+                      <Typography
                         className={classes.postText}
                         variant="subtitle1"
                         color="inherit"
                         dangerouslySetInnerHTML={{ __html: post.text }}
-                      ></div>
+                      ></Typography>
                     </CardContent>
                   </div>
                 </Card>

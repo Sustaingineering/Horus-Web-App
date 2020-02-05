@@ -2,7 +2,7 @@ import React, { PureComponent } from "react";
 import { Paper, Button, Typography } from "@material-ui/core";
 import logos from "../../assets/images/logos.png";
 import { Link } from "react-router-dom";
-import { withStyles } from "@material-ui/core/styles";
+import { withStyles } from "@material-ui/core";
 import landingStyle from "./landingStyle";
 
 class LandingPage extends PureComponent {

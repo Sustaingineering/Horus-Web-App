@@ -1,5 +1,5 @@
 import React, { PureComponent } from "react";
-import { withStyles } from "@material-ui/core/styles";
+import { withStyles } from "@material-ui/core";
 import { monitoringStyle } from "./dashboardStyle";
 import Paper from "@material-ui/core/Paper";
 import { Grid, Typography } from "@material-ui/core";
@@ -40,7 +40,7 @@ class MonitoringData extends PureComponent {
         <Grid item xs={12} sm={4} md={4} key={type}>
           <div className={classes.container}>
           <Paper className={classes.paper}>
-            <Grid container wrap="nowrap" spacing={16}>
+            <Grid container wrap="nowrap" spacing={0}>
               <Grid item>{icons[type]}</Grid>
               <Grid item xs>
                 <Typography
@@ -76,7 +76,7 @@ class MonitoringData extends PureComponent {
     }
     return (
       <div className={classes.root}>
-        <Grid container spacing={24}>
+        <Grid container spacing={2}>
           {this.generateInfoBoxes(data)}
         </Grid>
       </div>

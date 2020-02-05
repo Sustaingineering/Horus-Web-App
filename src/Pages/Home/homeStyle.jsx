@@ -4,8 +4,8 @@ import bg from "../../assets/images/bg.jpg";
 const styles = theme => ({
   layout: {
     width: "auto",
-    marginLeft: theme.spacing.unit * 3,
-    marginRight: theme.spacing.unit * 3,
+    marginLeft: theme.spacing(3),
+    marginRight: theme.spacing(3),
     paddingTop: 50,
     paddingBottom: 50
   },
@@ -13,12 +13,12 @@ const styles = theme => ({
     backgroundImage: "url(" + bg + ")",
     backgroundColor: "#27293d",
     color: theme.palette.common.white,
-    marginBottom: theme.spacing.unit * 4
+    marginBottom: theme.spacing(4)
   },
   mainFeaturedPostContent: {
     height: "100%",
     width: "auto",
-    padding: `${theme.spacing.unit * 6}px`,
+    padding: `${theme.spacing(6)}px`,
     [theme.breakpoints.up("md")]: {
       paddingRight: 0
     }
@@ -43,7 +43,7 @@ const styles = theme => ({
     width: 160
   },
   sidebarAboutBox: {
-    padding: theme.spacing.unit * 2,
+    padding: theme.spacing(2),
     backgroundColor: theme.palette.grey[200]
   },
   footer: {},

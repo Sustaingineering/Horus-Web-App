@@ -14,7 +14,7 @@ const dashboardStyle = theme => ({
     fontSize: 20
   },
   paper: {
-    padding: theme.spacing.unit * 2,
+    padding: theme.spacing(2),
     textAlign: "center",
     color: theme.palette.text.secondary,
     backgroundColor: primaryColor
@@ -36,7 +36,7 @@ const monitoringStyle = theme => ({
     flexGrow: 1
   },
   paper: {
-    padding: theme.spacing.unit * 3,
+    padding: theme.spacing(3),
     textAlign: "center",
     verticalAlign: "center",
     color: "white",
@@ -54,7 +54,7 @@ const monitoringStyle = theme => ({
 
 const uploadStyle = theme => ({
   paper: {
-    padding: theme.spacing.unit * 2,
+    padding: theme.spacing(2),
     textAlign: "center",
     color: theme.palette.text.secondary,
     backgroundColor: primaryColor

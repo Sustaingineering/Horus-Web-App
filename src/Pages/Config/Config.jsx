@@ -3,7 +3,7 @@ import React, { PureComponent, Fragment } from "react";
 import { Grid, Paper, TextField, Button, Snackbar } from "@material-ui/core";
 //Style
 import profileStyle from "./configStyle";
-import { withStyles } from "@material-ui/core/styles";
+import { withStyles } from "@material-ui/core";
 
 class Profile extends PureComponent {
   constructor(props) {

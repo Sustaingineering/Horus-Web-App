@@ -8,7 +8,7 @@ import LockIcon from "@material-ui/icons/LockOutlined";
 import BackIcon from "@material-ui/icons/ArrowBack";
 //Style
 import signinStyle from "./signinStyle";
-import { withStyles } from "@material-ui/core/styles";
+import { withStyles } from "@material-ui/core";
 // Firebase
 import * as firebaseui from "firebaseui";
 
