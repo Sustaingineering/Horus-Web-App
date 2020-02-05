@@ -10,8 +10,8 @@ import Home from "./Pages/Home/home.jsx";
 // Config
 import Config from "./Pages/Config/Config.jsx";
 import NavBar from "./Layout/Navbar/Navbar";
-import { withStyles, MuiThemeProvider } from "@material-ui/core";
-import { mainTheme, backgroundColor } from "./assets/jss/mainStyle";
+import { withStyles } from "@material-ui/core";
+import { backgroundColor } from "./assets/jss/mainStyle";
 
 // Sensor
 import Sensor from "./Pages/Dashboard/Sensor";
@@ -69,22 +69,25 @@ class App extends PureComponent {
     let db = this.props.firebase.firestore();
     // Grab the UID from the auth().currentUser object in case state isn't updated yet
     let uid = this.props.firebase.auth().currentUser.uid;
-    this.firestoreSubscribers.push(db.collection("users")
-      .doc(uid)
-      .onSnapshot(doc => {
-        if (doc.exists) {
-          this.setState({
-            sensors: doc.data().sensors
-          });
-        } else {
-          db.collection("users")
-            .doc(uid)
-            .set({ sensors: {} });
-          this.setState({
-            sensors: {}
-          });
-        }
-      }));
+    this.firestoreSubscribers.push(
+      db
+        .collection("users")
+        .doc(uid)
+        .onSnapshot(doc => {
+          if (doc.exists && doc.data().sensors) {
+            this.setState({
+              sensors: doc.data().sensors
+            });
+          } else {
+            db.collection("users")
+              .doc(uid)
+              .set({ sensors: {} });
+            this.setState({
+              sensors: {}
+            });
+          }
+        })
+    );
   };
 
   postSubscriber = () => {
@@ -127,35 +130,30 @@ class App extends PureComponent {
     const { classes } = this.props;
     const renderPlatform = this.state.authUser ? (
       <Fragment>
-        <NavBar
-          sensors={this.state.sensors}
-          firebase={this.props.firebase}
-        />
-        <MuiThemeProvider theme={mainTheme}>
-          <div className={classes.root}>
-            <div className={classes.container}>
-              <Switch>
-                <Route
-                  path="/"
-                  exact
-                  render={() => (
-                    <Home
-                      posts={this.state.posts}
-                      firebase={this.props.firebase}
-                    />
-                  )}
-                />
-                {this.processSensors()}
-                <Route
-                  path="/config"
-                  exact
-                  render={() => <Config firebase={this.props.firebase} />}
-                />
-                <Redirect to="/" />
-              </Switch>
-            </div>
+        <NavBar sensors={this.state.sensors} firebase={this.props.firebase} />
+        <div className={classes.root}>
+          <div className={classes.container}>
+            <Switch>
+              <Route
+                path="/"
+                exact
+                render={() => (
+                  <Home
+                    posts={this.state.posts}
+                    firebase={this.props.firebase}
+                  />
+                )}
+              />
+              {this.processSensors()}
+              <Route
+                path="/config"
+                exact
+                render={() => <Config firebase={this.props.firebase} />}
+              />
+              <Redirect to="/" />
+            </Switch>
           </div>
-        </MuiThemeProvider>
+        </div>
       </Fragment>
     ) : (
       <Switch>
@@ -168,9 +166,7 @@ class App extends PureComponent {
         <Redirect to="/" />
       </Switch>
     );
-    return (
-      <BrowserRouter>{renderPlatform}</BrowserRouter>
-    );
+    return <BrowserRouter>{renderPlatform}</BrowserRouter>;
   }
 }
 
