@@ -1,6 +1,6 @@
 import React, { PureComponent } from "react";
 // Material UI Components
-import { AppBar, Toolbar, IconButton, Button } from "@material-ui/core";
+import { AppBar, Toolbar, IconButton, Button, Grid } from "@material-ui/core";
 // Navbar Menu - drawer component
 import NavBarMenu from "../NavBarMenu/NavBarMenu";
 // Icons
@@ -8,7 +8,6 @@ import MenuIcon from "@material-ui/icons/Menu";
 // Style
 import navbarStyle from "./navbarStyle";
 import { withStyles } from "@material-ui/core";
-import classNames from "classnames";
 
 class Navbar extends PureComponent {
   constructor(props) {
@@ -34,35 +33,31 @@ class Navbar extends PureComponent {
 
     return (
       <div className={classes.root}>
-        <AppBar
-          position="static"
-          className={classNames(
-            classes.appBar,
-            this.state.open && classes.appBarShift
-          )}
-        >
+        <AppBar position="static" className={classes.appBar}>
           <Toolbar>
-            <IconButton
-              color="inherit"
-              aria-label="open drawer"
-              onClick={() => {
-                this.setDrawerOpenState(true);
-              }}
-              className={classNames(
-                classes.menuButton,
-                this.state.open && classes.hide
-              )}
-            >
-              <MenuIcon />
-            </IconButton>
-            <div className={classes.flex}></div>
-            <Button
-              className={classes.button}
-              color="primary"
-              onClick={this.signOut}
-            >
-              Sign Out
-            </Button>
+            <Grid justify="space-between" container spacing={0}>
+              <Grid item>
+                <IconButton
+                  color="inherit"
+                  aria-label="open drawer"
+                  onClick={() => {
+                    this.setDrawerOpenState(!this.state.open);
+                  }}
+                  className={classes.menuButton}
+                >
+                  <MenuIcon />
+                </IconButton>
+              </Grid>
+              <Grid item>
+                <Button
+                  className={classes.button}
+                  color="primary"
+                  onClick={this.signOut}
+                >
+                  Sign Out
+                </Button>
+              </Grid>
+            </Grid>
           </Toolbar>
         </AppBar>
         <NavBarMenu

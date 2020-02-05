@@ -2,7 +2,6 @@
 import { drawerWidth, primaryColor } from "../../assets/jss/mainStyle";
 
 const navbarmenuStyle = theme => ({
-  sidebar: {},
   drawerPaper: {
     whiteSpace: "nowrap",
     width: drawerWidth,
@@ -51,18 +50,10 @@ const navbarmenuStyle = theme => ({
     },
     zIndex: 100
   },
-  listItems: {
-    backgroundColor: primaryColor,
-    color: "white",
-    transition: "background-color 1s",
-    "&:hover": {
-      backgroundColor: "rgba(0, 0, 0, 0.08)"
-    }
-  },
   sidebarDivider: {
     color: "white",
     backgroundColor: "white",
-    width: "50%",
+    width: "70%",
     marginLeft: "auto",
     marginRight: "auto"
   }

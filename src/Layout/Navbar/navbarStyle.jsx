@@ -17,12 +17,6 @@ const navbarStyle = theme => ({
     display: "flex",
     color: "white"
   },
-  hide: {
-    display: "none"
-  },
-  flex: {
-    flex: 1
-  },
   menuButton: {
     position: "relative",
     left: -15,
@@ -38,14 +32,6 @@ const navbarStyle = theme => ({
       duration: theme.transitions.duration.leavingScreen
     })
   },
-  appBarShift: {
-    marginLeft: drawerWidth,
-    width: `calc(100% - ${drawerWidth}px)`,
-    transition: theme.transitions.create(["width", "margin"], {
-      easing: theme.transitions.easing.sharp,
-      duration: theme.transitions.duration.enteringScreen
-    })
-  },
   button: {
     textAlign: "center",
     marginTop: theme.spacing(1),
@@ -55,10 +41,6 @@ const navbarStyle = theme => ({
       backgroundColor: "white",
       color: "black"
     }
-  },
-  lft: {
-    paddingLeft: 10,
-    paddingRight: 20
   }
 });
 

@@ -17,7 +17,6 @@ import {
 import { Link } from "react-router-dom";
 // Icons
 import IconButton from "@material-ui/core/IconButton";
-import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import Dashboard from "@material-ui/icons/Dashboard";
 import SensorIcon from "@material-ui/icons/Folder";
 import CloseIcon from "@material-ui/icons/Close";
@@ -196,9 +195,6 @@ class NavBarMenu extends PureComponent {
           open={this.props.isOpen}
         >
           <div className={classes.toolbar}>
-            <IconButton className={classes.white} onClick={this.setDrawerClose}>
-              <ChevronLeftIcon />
-            </IconButton>
           </div>
           <List>
             <Link className={classes.white} to="/">
