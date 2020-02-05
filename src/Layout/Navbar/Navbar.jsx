@@ -18,13 +18,8 @@ class Navbar extends PureComponent {
     };
   }
 
-  // drawer
-  handleDrawerOpen = () => {
-    this.setState({ open: true });
-  };
-
-  handleDrawerClose = drawerOpen => {
-    this.setState({ open: drawerOpen });
+  setDrawerOpenState = open => {
+    this.setState({ open });
   };
 
   signOut = () => {
@@ -51,7 +46,9 @@ class Navbar extends PureComponent {
               <IconButton
                 color="inherit"
                 aria-label="open drawer"
-                onClick={this.handleDrawerOpen}
+                onClick={() => {
+                  this.setDrawerOpenState(true);
+                }}
                 className={classNames(
                   classes.menuButton,
                   this.state.open && classes.hide
@@ -59,7 +56,6 @@ class Navbar extends PureComponent {
               >
                 <MenuIcon />
               </IconButton>
-              {/* This is a hacky way of moving the signout button over. Fix later? */}
               <div className={classes.flex}></div>
               <Button
                 className={classes.button}
@@ -74,8 +70,8 @@ class Navbar extends PureComponent {
             firebase={this.props.firebase}
             updateSensors={this.props.updateSensors}
             sensors={this.props.sensors}
-            open={this.state.open}
-            changeOpen={this.handleDrawerClose.bind(this)}
+            isOpen={this.state.open}
+            changeDrawerOpen={this.setDrawerOpenState}
           />
         </div>
       </Fragment>
@@ -83,4 +79,4 @@ class Navbar extends PureComponent {
   }
 }
 
-export default withStyles(navbarStyle, { withTheme: true })(Navbar);
+export default withStyles(navbarStyle)(Navbar);
