@@ -33,13 +33,8 @@ const dashboardStyle = theme => ({
 });
 
 const monitoringStyle = theme => ({
-  root: {
-    flexGrow: 1
-  },
-  paper: {
-    padding: theme.spacing(3),
-    textAlign: "center",
-    verticalAlign: "center",
+  card: {
+    padding: 0,
     color: "white",
     backgroundColor: primaryColor,
     flex: 1
@@ -47,6 +42,10 @@ const monitoringStyle = theme => ({
   container: {
     display: "flex",
     height: "100%"
+  },
+  cardContent: {
+    paddingTop: 0,
+    textAlign: "center"
   },
   icon: {
     fontSize: "40px"

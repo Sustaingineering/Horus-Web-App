@@ -1,7 +1,6 @@
 import React, { PureComponent } from "react";
-import { withStyles } from "@material-ui/core";
+import { withStyles, Card, CardContent, CardHeader } from "@material-ui/core";
 import { monitoringStyle } from "./dashboardStyle";
-import Paper from "@material-ui/core/Paper";
 import { Grid, Typography } from "@material-ui/core";
 
 import Timeline from "@material-ui/icons/Timeline";
@@ -31,26 +30,21 @@ const textMap = {
 };
 
 class MonitoringData extends PureComponent {
-  generateInfoBoxes = (data) => {
+  generateInfoBoxes = data => {
     let { classes } = this.props;
     let boxes = [];
     let icons = iconMap(classes);
     for (let type in textMap) {
       boxes.push(
-        <Grid item xs={12} sm={4} md={4} key={type}>
+        <Grid item xs={12} sm={6} md={4} key={type}>
           <div className={classes.container}>
-          <Paper className={classes.paper}>
-            <Grid container wrap="nowrap" spacing={0}>
-              <Grid item>{icons[type]}</Grid>
-              <Grid item xs>
-                <Typography
-                  color="primary"
-                  variant="caption"
-                  gutterBottom
-                  align="center"
-                >
-                  {textMap[type]}
-                </Typography>
+            <Card className={classes.card}>
+              <CardHeader
+                avatar={icons[type]}
+                title={textMap[type]}
+                titleTypographyProps={{ variant: "button" }}
+              ></CardHeader>
+              <CardContent className={classes.cardContent}>
                 <Typography color="primary" variant="h5">
                   {data[type] !== undefined
                     ? data[type] % 1 === 0
@@ -58,9 +52,8 @@ class MonitoringData extends PureComponent {
                       : Number(data[type]).toFixed(2)
                     : undefined}
                 </Typography>
-              </Grid>
-            </Grid>
-          </Paper>
+              </CardContent>
+            </Card>
           </div>
         </Grid>
       );
@@ -69,17 +62,14 @@ class MonitoringData extends PureComponent {
   };
 
   render() {
-    const { classes } = this.props;
     let data = {};
     if (this.props.data.length !== 0) {
       data = this.props.data[this.props.data.length - 1];
     }
     return (
-      <div className={classes.root}>
-        <Grid container spacing={2}>
-          {this.generateInfoBoxes(data)}
-        </Grid>
-      </div>
+      <Grid container spacing={3}>
+        {this.generateInfoBoxes(data)}
+      </Grid>
     );
   }
 }
