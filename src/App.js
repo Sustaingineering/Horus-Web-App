@@ -55,7 +55,7 @@ class App extends PureComponent {
         this.postSubscriber();
       } else {
         try {
-          this.firestoreSubscribers.map(unsubscribe => unsubscribe());
+          this.firestoreSubscribers.forEach(unsubscribe => unsubscribe());
         } catch (e) {
           console.log(e);
         } finally {
@@ -84,6 +84,7 @@ class App extends PureComponent {
               sensors: doc.data().sensors
             });
           } else if (!doc.metadata.fromCache) {
+            // Store a new document for the user with the sensor object
             db.collection("users")
               .doc(uid)
               .set({ sensors: {} });
@@ -153,7 +154,12 @@ class App extends PureComponent {
               <Route
                 path="/config"
                 exact
-                render={() => <Config firebase={this.props.firebase} />}
+                render={() => (
+                  <Config
+                    firebase={this.props.firebase}
+                    firestoreSubscribers={this.firestoreSubscribers}
+                  />
+                )}
               />
               <Redirect to="/" />
             </Switch>

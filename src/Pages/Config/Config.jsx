@@ -71,26 +71,33 @@ class Profile extends PureComponent {
 
   deleteAccount = () => {
     if (window.confirm("Are you sure? You CANNOT undo this.")) {
-      // Delete the user settings first
-      let uid = this.props.firebase.auth().currentUser.uid;
-      let db = this.props.firebase.firestore();
-      db.collection("users")
-        .doc(uid)
-        .delete()
-        .then(() => {
-          this.state.userAuth
-            .delete()
-            .then(() => {
-              console.log("Auth deleted");
-            })
-            .catch(e => {
-              console.log(e);
-            });
-          console.log("Deleted records");
-        })
-        .catch(e => {
-          console.log(e);
-        });
+      try {
+        // Unsubscribe the listeners
+        this.props.firestoreSubscribers.forEach(unsubscribe => unsubscribe());
+      } catch (e) {
+        console.log(e);
+      } finally {
+        // Delete the user settings first
+        let uid = this.props.firebase.auth().currentUser.uid;
+        let db = this.props.firebase.firestore();
+        db.collection("users")
+          .doc(uid)
+          .delete()
+          .then(() => {
+            this.state.userAuth
+              .delete()
+              .then(() => {
+                console.log("Auth deleted");
+              })
+              .catch(e => {
+                console.log(e);
+              });
+            console.log("Deleted records");
+          })
+          .catch(e => {
+            console.log(e);
+          });
+      }
     }
   };
 
@@ -156,14 +163,14 @@ class Profile extends PureComponent {
       } else {
         // Reauthenticate with popup here
         return (
-            <Button
-              fullWidth
-              variant="contained"
-              className={classes.submitInfo}
-              onClick={this.reauthenticate}
-            >
-              REAUTHENTICATE
-            </Button>
+          <Button
+            fullWidth
+            variant="contained"
+            className={classes.submitInfo}
+            onClick={this.reauthenticate}
+          >
+            REAUTHENTICATE
+          </Button>
         );
       }
     } else {
