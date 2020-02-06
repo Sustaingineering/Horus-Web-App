@@ -8,10 +8,13 @@ import {
   ListItem,
   ListItemIcon,
   ListItemText,
+  ListItemSecondaryAction,
   Collapse,
   Typography,
   Button,
-  TextField
+  TextField,
+  Switch,
+  Fade
 } from "@material-ui/core";
 // Routing
 import { Link } from "react-router-dom";
@@ -31,6 +34,7 @@ import DialogActions from "@material-ui/core/DialogActions";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
+import EditIcon from "@material-ui/icons/Edit";
 // Style
 import navbarmenuStyle from "./navbarmenuStyle";
 import classNames from "classnames";
@@ -38,10 +42,10 @@ import classNames from "classnames";
 class NavBarMenu extends PureComponent {
   constructor(props) {
     super(props);
-    this.toggle = false;
     this.state = {
       dialogOpen: false,
-      dialogInfoText: undefined
+      dialogInfoText: undefined,
+      editMode: false
     };
   }
 
@@ -49,6 +53,12 @@ class NavBarMenu extends PureComponent {
     this.setState({
       dialogOpen: state,
       dialogInfoText: undefined
+    });
+  };
+
+  setEditModeState = state => {
+    this.setState({
+      editMode: state
     });
   };
 
@@ -112,14 +122,18 @@ class NavBarMenu extends PureComponent {
                 </Typography>
               }
             />
-            <IconButton
-              onClick={e => {
-                this.deleteSensor(e, sensor);
-              }}
-              className={classes.close}
-            >
-              <CloseIcon />
-            </IconButton>
+            <Fade in={this.state.editMode}>
+              <ListItemSecondaryAction>
+                <IconButton
+                  onClick={e => {
+                    this.deleteSensor(e, sensor);
+                  }}
+                  className={classes.white}
+                >
+                  <CloseIcon />
+                </IconButton>
+              </ListItemSecondaryAction>
+            </Fade>
           </ListItem>
         </Link>
       );
@@ -240,29 +254,47 @@ class NavBarMenu extends PureComponent {
               />
               {this.props.isSensorsOpen ? <ExpandLess /> : <ExpandMore />}
             </ListItem>
-            <Collapse
-              in={this.props.isSensorsOpen}
-              timeout="auto"
-              unmountOnExit
-            >
+            <Collapse in={this.props.isSensorsOpen} timeout="auto">
               <List>
-                {this.processSensors()}
-                <ListItem
-                  key={"AddSensor-button"}
-                  button
-                  onClick={() => this.setDialogOpenState(true)}
-                >
+                <ListItem key={"EditSensor-button"}>
                   <ListItemIcon>
-                    <AddButton className={classes.white} />
+                    <EditIcon className={classes.white} />
                   </ListItemIcon>
                   <ListItemText
                     primary={
                       <Typography className={classes.white} type="body1">
-                        Add sensor...
+                        Edit mode
                       </Typography>
                     }
                   />
+                  <ListItemSecondaryAction>
+                    <Switch
+                      checked={this.state.editMode}
+                      onChange={e => this.setEditModeState(e.target.checked)}
+                      size="small"
+                    ></Switch>
+                  </ListItemSecondaryAction>
                 </ListItem>
+                {this.processSensors()}
+                <Collapse in={this.state.editMode} timeout="auto">
+                  <ListItem
+                    key={"AddSensor-button"}
+                    button
+                    onClick={() => this.setDialogOpenState(true)}
+                    className={classes.white}
+                  >
+                    <ListItemIcon>
+                      <AddButton className={classes.white} />
+                    </ListItemIcon>
+                    <ListItemText
+                      primary={
+                        <Typography className={classes.white} type="body1">
+                          Add...
+                        </Typography>
+                      }
+                    />
+                  </ListItem>
+                </Collapse>
               </List>
             </Collapse>
           </List>
