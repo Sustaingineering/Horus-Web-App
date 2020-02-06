@@ -3,11 +3,12 @@ import bg from "../../assets/images/bg.jpg";
 
 const styles = theme => ({
   layout: {
-    width: "auto",
-    marginLeft: theme.spacing(3),
-    marginRight: theme.spacing(3),
-    paddingTop: 50,
-    paddingBottom: 50
+    [theme.breakpoints.down("sm")]: {
+      margin: theme.spacing(3) / 2
+    },
+    [theme.breakpoints.up("sm")]: {
+      margin: theme.spacing(3)
+    }
   },
   mainFeaturedPost: {
     backgroundImage: "url(" + bg + ")",
@@ -46,7 +47,6 @@ const styles = theme => ({
     padding: theme.spacing(2),
     backgroundColor: theme.palette.grey[200]
   },
-  footer: {},
   logos: {
     marginTop: "2%",
     marginLeft: "calc(50% - 350px)",
@@ -59,12 +59,6 @@ const styles = theme => ({
     [theme.breakpoints.down("xs")]: {
       display: "none"
     }
-  },
-  menuButton: {
-    position: "relative",
-    marginLeft: 0,
-    marginRight: 20,
-    marginBottom: 20
   }
 });
 
