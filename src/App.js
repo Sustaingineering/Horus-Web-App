@@ -83,7 +83,7 @@ class App extends PureComponent {
             this.setState({
               sensors: doc.data().sensors
             });
-          } else {
+          } else if (!doc.metadata.fromCache) {
             db.collection("users")
               .doc(uid)
               .set({ sensors: {} });
