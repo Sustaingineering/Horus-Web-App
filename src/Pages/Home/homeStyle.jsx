@@ -1,8 +1,7 @@
-// Styles
-import bg from "../../assets/images/bg.jpg";
+import { primaryColor } from "../../assets/jss/mainStyle";
 
 const styles = theme => ({
-  layout: {
+  root: {
     [theme.breakpoints.down("sm")]: {
       margin: theme.spacing(3) / 2
     },
@@ -11,53 +10,33 @@ const styles = theme => ({
     }
   },
   mainFeaturedPost: {
-    backgroundImage: "url(" + bg + ")",
-    backgroundColor: "#27293d",
-    color: theme.palette.common.white,
     marginBottom: theme.spacing(4)
   },
-  mainFeaturedPostContent: {
-    height: "100%",
-    width: "auto",
-    padding: `${theme.spacing(6)}px`,
-    [theme.breakpoints.up("md")]: {
-      paddingRight: 0
-    }
-  },
   card: {
-    backgroundColor: "#27293d",
-    display: "flex",
+    backgroundColor: primaryColor,
     color: "white"
   },
-  cardDetails: {
-    flex: 1
-  },
   postTitle: {
-    margin: 15,
+    margin: 12,
     fontWeight: 700
   },
   postText: {
-    margin: 15,
-    lineHeight: 1.5
+    margin: 12,
+    lineHeight: 1.8
   },
   cardMedia: {
-    width: 160
+    height: 250,
   },
-  sidebarAboutBox: {
-    padding: theme.spacing(2),
-    backgroundColor: theme.palette.grey[200]
+  footer: {
+    textAlign: "center"
   },
   logos: {
-    marginTop: "2%",
-    marginLeft: "calc(50% - 350px)",
-    width: 650,
+    marginTop: theme.spacing(2),
+    width: "70vw",
+    maxWidth: 600,
     height: "auto",
-    [theme.breakpoints.down("sm")]: {
-      marginLeft: "calc(50% - 250px)",
-      width: 450
-    },
-    [theme.breakpoints.down("xs")]: {
-      display: "none"
+    [theme.breakpoints.up("sm")]: {
+      marginLeft: theme.spacing(7)
     }
   }
 });
