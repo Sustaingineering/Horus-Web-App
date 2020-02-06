@@ -47,7 +47,6 @@ const styles = theme => ({
     padding: theme.spacing(2),
     backgroundColor: theme.palette.grey[200]
   },
-  footer: {},
   logos: {
     marginTop: "2%",
     marginLeft: "calc(50% - 350px)",
@@ -60,12 +59,6 @@ const styles = theme => ({
     [theme.breakpoints.down("xs")]: {
       display: "none"
     }
-  },
-  menuButton: {
-    position: "relative",
-    marginLeft: 0,
-    marginRight: 20,
-    marginBottom: 20
   }
 });
 

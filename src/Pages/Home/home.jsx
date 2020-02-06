@@ -37,7 +37,7 @@ class Home extends PureComponent {
               </Grid>
             </Grid>
           </Paper>
-          <Grid container spacing={4} className={classes.cardGrid}>
+          <Grid container spacing={4}>
             {user === null ? (
               <Grid item key={"no-user-auth"} xs={12} md={6}>
                 <Card className={classes.card}>

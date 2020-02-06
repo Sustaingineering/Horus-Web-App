@@ -19,19 +19,21 @@ import Sensor from "./Pages/Dashboard/Sensor";
 const customStyle = theme => ({
   root: {
     position: "relative",
-    minHeight: "calc(100vh - 160px)",
     [theme.breakpoints.down("sm")]: {
       paddingTop: theme.spacing(7)
     },
     [theme.breakpoints.up("sm")]: {
       paddingTop: theme.spacing(8)
     },
-    backgroundColor: backgroundColor
+    backgroundColor: backgroundColor,
+    margin: theme.spacing(1),
+    paddingBottom: theme.spacing(8)
   },
   container: {
     flexGrow: 1,
-    marginRight: theme.spacing(1) / 2,
-    marginLeft: theme.spacing(7)
+    [theme.breakpoints.up("sm")]: {
+      marginLeft: theme.spacing(7)
+    }
   }
 });
 
