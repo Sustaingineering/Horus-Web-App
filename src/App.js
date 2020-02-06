@@ -30,7 +30,6 @@ const customStyle = theme => ({
     paddingBottom: theme.spacing(8)
   },
   container: {
-    flexGrow: 1,
     [theme.breakpoints.up("sm")]: {
       marginLeft: theme.spacing(7)
     }

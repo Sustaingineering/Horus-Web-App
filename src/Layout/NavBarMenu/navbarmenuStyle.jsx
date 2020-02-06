@@ -44,11 +44,6 @@ const navbarmenuStyle = theme => ({
     color: "#9e9e9e"
   },
   toolbar: {
-    backgroundColor: primaryColor,
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "flex-end",
-    padding: "0 8px",
     ...theme.mixins.toolbar
   },
   infoText: {

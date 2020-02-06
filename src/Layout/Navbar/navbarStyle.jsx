@@ -6,15 +6,13 @@ const navbarStyle = theme => ({
   root: {
     position: "fixed",
     top: 0,
-    flexGrow: 1,
     [theme.breakpoints.down("sm")]: {
-      height: "56px"
+      height: theme.spacing(7)
     },
     [theme.breakpoints.up("sm")]: {
-      height: "64px"
+      height: theme.spacing(8)
     },
     zIndex: 1,
-    display: "flex",
     color: "white"
   },
   menuButton: {
