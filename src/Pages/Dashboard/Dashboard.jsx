@@ -1,4 +1,4 @@
-import React, { PureComponent } from "react";
+import React, { PureComponent, Fragment } from "react";
 // Material UI Components
 import { withStyles, Tabs, Tab, Typography, Paper } from "@material-ui/core";
 // Components
@@ -28,7 +28,7 @@ class Dashboard extends PureComponent {
     const { value } = this.state;
     const data = (this.props.data || []).slice();
     return (
-      <div className={classes.root}>
+      <Fragment>
         <Typography variant="h4" color="primary" gutterBottom>
           {this.props.sensorName + " Dashboard"}
         </Typography>
@@ -58,7 +58,7 @@ class Dashboard extends PureComponent {
             />
           ][value]
         }
-      </div>
+      </Fragment>
     );
   }
 }

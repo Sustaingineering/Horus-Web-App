@@ -20,14 +20,18 @@ const customStyle = theme => ({
   root: {
     position: "relative",
     minHeight: "calc(100vh - 160px)",
-    paddingTop: 60, // with titlebar
-    paddingBottom: "20px",
+    [theme.breakpoints.down("sm")]: {
+      paddingTop: theme.spacing(7)
+    },
+    [theme.breakpoints.up("sm")]: {
+      paddingTop: theme.spacing(8)
+    },
     backgroundColor: backgroundColor
   },
   container: {
     flexGrow: 1,
-    marginRight: "2%",
-    marginLeft: "calc(57px + 2%)"
+    marginRight: theme.spacing(1) / 2,
+    marginLeft: theme.spacing(7)
   }
 });
 

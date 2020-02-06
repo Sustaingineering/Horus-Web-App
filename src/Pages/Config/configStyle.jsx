@@ -10,11 +10,12 @@ import {
 
 const profileStyle = theme => ({
   root: {
-    width: "auto",
-    marginLeft: theme.spacing(3),
-    marginRight: theme.spacing(3),
-    paddingTop: 50,
-    paddingBottom: 50
+    [theme.breakpoints.down("sm")]: {
+      margin: theme.spacing(3) / 2
+    },
+    [theme.breakpoints.up("sm")]: {
+      margin: theme.spacing(3)
+    }
   },
   paper: {
     backgroundColor: primaryColor,

@@ -1,6 +1,6 @@
 // Navbar Styles
 
-import { drawerWidth, primaryColor } from "../../assets/jss/mainStyle";
+import { primaryColor } from "../../assets/jss/mainStyle";
 
 const navbarStyle = theme => ({
   root: {

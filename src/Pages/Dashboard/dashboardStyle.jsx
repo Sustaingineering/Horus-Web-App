@@ -3,11 +3,12 @@ import { primaryColor } from "../../assets/jss/mainStyle";
 
 const dashboardStyle = theme => ({
   root: {
-    flexGrow: 1,
-    // marginLeft: '100px',
-    // marginRight: '30px',
-    paddingTop: 15,
-    height: "100%"
+    [theme.breakpoints.down("sm")]: {
+      margin: theme.spacing(3) / 2
+    },
+    [theme.breakpoints.up("sm")]: {
+      margin: theme.spacing(3)
+    }
   },
   title: {
     color: "white",
