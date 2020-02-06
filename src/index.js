@@ -6,6 +6,7 @@ import Firebase, { FirebaseContext } from "./Firebase/firebase.js";
 import { CssBaseline } from "@material-ui/core";
 import { MuiThemeProvider } from "@material-ui/core";
 import { mainTheme } from "./assets/jss/mainStyle";
+import * as serviceWorker from './serviceWorker';
 
 ReactDOM.render(
   <MuiThemeProvider theme={mainTheme}>
@@ -18,3 +19,5 @@ ReactDOM.render(
   </MuiThemeProvider>,
   document.getElementById("root")
 );
+
+serviceWorker.register();
