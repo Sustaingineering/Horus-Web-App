@@ -14,19 +14,29 @@ import { uploadStyle } from "./dashboardStyle";
 class UploadData extends PureComponent {
   constructor(props) {
     super(props);
+    this.rows = [];
     this.state = {
       snack: undefined
     };
   }
 
-  sendData = data => {
-    this.props.firebase
-      .database()
-      .ref(this.props.sensorId + "/" + data["time-stamp"].toString())
-      .set(data);
+  sendData = allData => {
+    return new Promise((resolve, reject) => {
+      let promises = allData.map(data =>
+        this.props.firebase
+          .database()
+          .ref(this.props.sensorId + "/" + data["time-stamp"].toString())
+          .set(data)
+      );
+      Promise.all(promises)
+        .then(done => resolve("Data uploaded to Firebase!"))
+        .catch(error => reject(error.message));
+    });
   };
 
   handleResult = result => {
+    document.getElementById("upload-file").value = "";
+    this.rows = [];
     this.setState({
       snack: result
     });
@@ -51,17 +61,20 @@ class UploadData extends PureComponent {
         },
         step: (row, parser) => {
           if (row.errors.length === 0 && row.data["time-stamp"]) {
-            this.sendData(row.data);
+            this.rows.push(row.data);
           } else {
             parser.abort();
           }
         },
         complete: results => {
-          elem.value = "";
           if (results.meta.aborted) {
             this.handleResult("File or data was malformed!");
           } else {
-            this.handleResult("Data has been uploaded to Firebase!");
+            this.sendData(this.rows.slice())
+              .then(msg => {
+                this.handleResult(msg);
+              })
+              .catch(msg => this.handleResult(msg));
           }
         }
       });
