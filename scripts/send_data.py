@@ -9,7 +9,8 @@ c = {
   "apiKey": "AIzaSyBI6chLsGI6XX67LGTXXH_gXLfngCS3aNs",
   "authDomain": "sustaingineering-horus.firebaseapp.com",
   "databaseURL": "https://sustaingineering-horus.firebaseio.com",
-  "storageBucket": "sustaingineering-horus.appspot.com"
+  "storageBucket": "sustaingineering-horus.appspot.com",
+  "serviceAccount": "serviceAccount.json"
 }
 
 fb = pyrebase.initialize_app(c)

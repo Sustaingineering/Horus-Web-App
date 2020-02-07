@@ -78,3 +78,7 @@ Firebase credentials are unique but non-secret, thus are committed.
   },
 }
 ```
+
+## Firebase RDB Access
+
+Write access requires authentication, thus sensors should use service accounts to upload data. 
