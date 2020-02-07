@@ -1,6 +1,33 @@
 {
   "rules": {
     ".read": "auth.uid != null",
-    ".write": "auth.uid != null"
+    ".write": "auth.uid != null",
+    "$sensor": {
+      ".validate": "$sensor.length > 0",
+      "$timestamp": {
+        ".validate": "$timestamp.matches(/^[\\d]+$/) && newData.hasChildren(['power', 'surface-temperature', 'op-temp', 'current', 'water-breaker', 'time-stamp', 'voltage'])",
+        "power": {
+          ".validate": "newData.isNumber()"
+        },
+        "surface-temperature": {
+          ".validate": "newData.isNumber()"
+        },
+        "op-temp": {
+          ".validate": "newData.isNumber()"
+        },
+        "current": {
+          ".validate": "newData.isNumber()"
+        },
+        "water-breaker": {
+          ".validate": "newData.isNumber()"
+        },
+        "time-stamp": {
+          ".validate": "newData.isNumber()"
+        },
+        "voltage": {
+          ".validate": "newData.isNumber()"
+        }
+      }
+    }
   }
 }
