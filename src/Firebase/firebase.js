@@ -5,6 +5,8 @@ import "firebase/database";
 import React from 'react';
 import firebaseConfig from "../../firebase.config.js";
 
+
+
 // Default export of firebase instance
 export default class Firebase {
   constructor() {
