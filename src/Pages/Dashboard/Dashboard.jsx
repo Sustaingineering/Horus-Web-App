@@ -36,7 +36,7 @@ class Dashboard extends PureComponent {
     const { classes } = this.props;
     const { value } = this.state;
     const data = (this.props.data || []).slice();
-    const selected = this.state.selected;
+    //const selected = this.state.selected;
 
     return (
       <Fragment>
@@ -73,9 +73,12 @@ class Dashboard extends PureComponent {
                                 <InputLabel shrink htmlFor="range">Range</InputLabel>
                                 <Select
                                     name="range-select"
+                                    className={classes.select}
                                     autoWidth={[true]}
-                                    value={selected}
-                                    onChange={event => this.handleChangeRange(event.target.value)}
+                                    value={this.props.selected}
+                                    onChange={event => this.props.changeRange(event.target.value)}
+                                    style={{color: 'white'}}
+                                    // classes={{root: rootclasses.root}}
                                     SelectDisplayProps={{
                                         label: "Range",
                                         InputLabelProps: this.state.shrink?{shrink:true}:{},
