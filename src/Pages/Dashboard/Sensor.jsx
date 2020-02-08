@@ -10,11 +10,12 @@ class Sensor extends PureComponent {
         super(props);
         this.db = null;
         this.state = {
-            data: []
+            data: [],
+            histdata: []
         };
         let date = new Date();
         let now = date.getTime();
-        let d = now - (365 * 24 * 60 * 60 * 1000);
+        let d = now - (60 * 24 * 60 * 60 * 1000);
         this.timestamp = Math.floor(d / 1000);
         this.nowstamp = Math.floor(now / 1000);
         this.setState({range: this.timestamp});
@@ -72,6 +73,7 @@ class Sensor extends PureComponent {
 
         this.db = this.props.firebase.database().ref(sensorId);
         let temp = [];
+        let temphist = [];
         // Use .once() to make it call less data
         // this.db.limitToLast(30).once("value", e => {
         //   for (let i in e.val()) {
@@ -85,8 +87,12 @@ class Sensor extends PureComponent {
             .once("value", e => {
                 console.log(e.val());
                 for (let i in e.val()) {
-                    temp.push(e.val()[i]);
+                    temphist.push(e.val()[i]);
+                    temp.push(e.val()[i]); //todo:to be removed so that main data page shows only live data
                 }
+                this.setState({
+                    histdata: temphist
+                });
             });
 
         this.db.limitToLast(1).on("child_added", e => {
@@ -112,6 +118,7 @@ class Sensor extends PureComponent {
             <div className={classes.root}>
                 <Dashboard
                     data={this.state.data}
+                    histdata={this.state.histdata}
                     sensorName={this.props.sensorName}
                     sensorId={this.props.sensorId}
                     changeRange={this.changeRange}

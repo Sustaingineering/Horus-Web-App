@@ -20,7 +20,8 @@ class Dashboard extends PureComponent {
     this.state = {
       value: 0,
       data: null,
-      error: null
+      error: null,
+      histdata: null
     };
   }
 
@@ -36,6 +37,7 @@ class Dashboard extends PureComponent {
     const { classes } = this.props;
     const { value } = this.state;
     const data = (this.props.data || []).slice();
+    const histdata = (this.props.histdata || []);
     //const selected = this.state.selected;
 
     return (
@@ -64,7 +66,7 @@ class Dashboard extends PureComponent {
             <ChartContainer data={this.props.data} />,
             <Paper>
                 <Grid container spacing={24}>
-                    <Grid item xs={12} sm={12} md={6}>
+                    <Grid item xs={24} sm={24} md={6}>
                         <Paper className={classes.paper}>
                             <Typography variant="h6" color="primary" gutterBottom>
                                 Data Range
@@ -97,8 +99,8 @@ class Dashboard extends PureComponent {
                             </FormControl>
                         </Paper>
                     </Grid>
-                    <Grid item xs={12} sm={12} md={6}>
-
+                    <Grid item xs={24} sm={24} md={6}>
+                        <ChartContainer data={this.props.histdata} />,
                     </Grid>
                 </Grid>
             </Paper>,
