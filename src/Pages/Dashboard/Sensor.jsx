@@ -11,16 +11,13 @@ class Sensor extends PureComponent {
         this.db = null;
         this.state = {
             data: [],
-            histdata: []
+            historydata: []
         };
         let date = new Date();
         let now = date.getTime();
-        let d = now - (60 * 24 * 60 * 60 * 1000);
+        let d = now - (30 * 24 * 60 * 60 * 1000);
         this.timestamp = Math.floor(d / 1000);
         this.nowstamp = Math.floor(now / 1000);
-        this.setState({range: this.timestamp});
-        this.setState({selected: 3});
-        //this.getDatabase();
     }
 
     // We wait until the component has been mounted (which means
@@ -32,7 +29,6 @@ class Sensor extends PureComponent {
 
     changeRange = (value) => {
         this.setState({selected: value});
-        console.log(value);
         let offset;
         if (value === 1) {
             offset = 60 * 60 * 1000;
@@ -57,23 +53,16 @@ class Sensor extends PureComponent {
         let now = date.getTime();
         let d = now - offset;
         this.timestamp = Math.floor(d / 1000);
-        console.log(this.timestamp);
         this.nowstamp = Math.floor(now / 1000);
-        console.log(this.nowstamp);
         this.setState({range: this.timestamp});
-        console.log(this.props.sensorId);
         this.getDatabase(this.props.sensorId);
     };
 
     getDatabase = sensorId => {
 
-        console.log(this.timestamp);
-        console.log(this.nowstamp);
-        console.log(sensorId);
-
         this.db = this.props.firebase.database().ref(sensorId);
         let temp = [];
-        let temphist = [];
+        let temphistory = [];
         // Use .once() to make it call less data
         // this.db.limitToLast(30).once("value", e => {
         //   for (let i in e.val()) {
@@ -85,13 +74,12 @@ class Sensor extends PureComponent {
             .startAt(this.timestamp.toString())
             .endAt(this.nowstamp.toString())
             .once("value", e => {
-                console.log(e.val());
                 for (let i in e.val()) {
-                    temphist.push(e.val()[i]);
-                    temp.push(e.val()[i]); //todo:to be removed so that main data page shows only live data
+                    temphistory.push(e.val()[i]);
+                    // temp.push(e.val()[i]); //removed so that main data page shows only live data
                 }
                 this.setState({
-                    histdata: temphist
+                    historydata: temphistory
                 });
             });
 
@@ -99,7 +87,6 @@ class Sensor extends PureComponent {
             temp = temp.slice();
             if (temp.length >= 30) temp.shift();
             temp.push(e.val());
-            console.log("truncating stuff");
             this.setState({
                 data: temp
             });
@@ -112,13 +99,11 @@ class Sensor extends PureComponent {
 
     render() {
         const {classes} = this.props;
-        console.log("sldjhfkjlahfkb hkjlafh kjlhkfdvjhfkjsdhf jkdhkljfshjt");
-        console.log(this.state.data);
         return (
             <div className={classes.root}>
                 <Dashboard
                     data={this.state.data}
-                    histdata={this.state.histdata}
+                    historydata={this.state.historydata}
                     sensorName={this.props.sensorName}
                     sensorId={this.props.sensorId}
                     changeRange={this.changeRange}
