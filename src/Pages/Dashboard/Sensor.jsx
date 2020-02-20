@@ -29,6 +29,7 @@ class Sensor extends PureComponent {
     let d = now - (30 * 24 * 60 * 60 * 1000);
     this.timestamp = Math.floor(d / 1000);
     this.nowstamp = Math.floor(now / 1000);
+    this.liveDataStamp = Math.floor((now - (20 * 24 * 60 * 60 * 1000)) / 1000);
   }
 
   // We wait until the component has been mounted (which means
@@ -52,16 +53,9 @@ class Sensor extends PureComponent {
   };
 
   getDatabase = sensorId => {
-
     this.db = this.props.firebase.database().ref(sensorId);
     let temp = [];
     let tempHistory = [];
-    // Use .once() to make it call less data
-    // this.db.limitToLast(30).once("value", e => {
-    //   for (let i in e.val()) {
-    //     temp.push(e.val()[i]);
-    //   }
-    // })
 
     this.db.orderByKey()
       .startAt(this.timestamp.toString())
@@ -73,6 +67,21 @@ class Sensor extends PureComponent {
         }
         this.setState({
           historyData: tempHistory
+        });
+      });
+
+    this.db.orderByKey()
+      .startAt(this.liveDataStamp.toString())
+      .endAt(this.nowstamp.toString())
+      .once("value", e => {
+        for (let i in e.val()) {
+          temp.push(e.val()[i]);
+          // temp.push(e.val()[i]); //removed so that main data page shows only live data
+        }
+        temp = temp.slice();
+        if (temp.length >= 30) temp.shift();
+        this.setState({
+          data: temp
         });
       });
 

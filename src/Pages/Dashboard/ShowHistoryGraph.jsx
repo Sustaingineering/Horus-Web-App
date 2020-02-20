@@ -4,14 +4,10 @@ import {historyStyle} from "./dashboardStyle";
 import ChartContainer from "./ChartContainer";
 
 class ShowHistoryGraph extends PureComponent {
-  constructor(props) {
-    super(props);
-  }
-
   render() {
     const {classes} = this.props;
 
-    this.state = this.props.state;
+    //this.state = this.props.state;
     this.selected = this.props.selected;
     this.changeRange = this.props.changeRange;
     this.historyData = this.props.historyData;
