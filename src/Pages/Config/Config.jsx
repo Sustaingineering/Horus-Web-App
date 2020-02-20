@@ -228,15 +228,15 @@ class Profile extends PureComponent {
     return (
       <div className={classes.root}>
         <Snackbar
-          anchorOrigin={{
-            vertical: "bottom",
-            horizontal: "right"
-          }}
-          open={this.state.snack !== undefined}
-          autoHideDuration={4000}
-          onClose={() => this.generateSnack(undefined)}
-          message={<span>{this.state.snack}</span>}
-        ></Snackbar>
+  anchorOrigin={{
+    vertical: "bottom",
+    horizontal: "right"
+  }}
+  open={this.state.snack !== undefined}
+  autoHideDuration={4000}
+  onClose={() => this.generateSnack(undefined)}
+  message={<span>{this.state.snack}</span>}
+  />
         <Grid container spacing={4}>
           <Grid item md sm={6} xs={12}>
             <Paper className={classes.paper}>

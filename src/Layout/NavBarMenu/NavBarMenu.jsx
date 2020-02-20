@@ -210,7 +210,7 @@ class NavBarMenu extends PureComponent {
           }}
           open={this.props.isDrawerOpen}
         >
-          <div className={classes.toolbar}></div>
+          <div className={classes.toolbar}/>
           <List>
             <Link className={classes.white} to="/">
               <ListItem
@@ -269,10 +269,10 @@ class NavBarMenu extends PureComponent {
                   />
                   <ListItemSecondaryAction>
                     <Switch
-                      checked={this.state.editMode}
-                      onChange={e => this.setEditModeState(e.target.checked)}
-                      size="small"
-                    ></Switch>
+  checked={this.state.editMode}
+  onChange={e => this.setEditModeState(e.target.checked)}
+  size="small"
+  />
                   </ListItemSecondaryAction>
                 </ListItem>
                 {this.processSensors()}
