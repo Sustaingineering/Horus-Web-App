@@ -80,10 +80,10 @@ const historyStyle = theme => ({
     backgroundColor: primaryColor
   },
   select: {
-    '&:before': {
+    "&:before": {
       borderColor: "white",
     },
-    '&:after': {
+    "&:after": {
       borderColor: "white",
     },
     color: "white",
