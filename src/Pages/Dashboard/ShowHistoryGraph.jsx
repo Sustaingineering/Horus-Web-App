@@ -26,21 +26,18 @@ class ShowHistoryGraph extends PureComponent {
     };
   }
 
-  handleStartDateTimeChange = (startDate) => {
-    this.setState({ startDate })
-  };
-
-  handleEndDateTimeChange = (endDate) => {
-    this.setState({ endDate })
-  };
-
-
   render() {
     const {classes} = this.props;
 
+    const now = Date.now();
+
     this.selected = this.props.selected;
+    this.start = this.props.start;
+    this.end = this.props.end;
     this.changeRange = this.props.changeRange;
     this.historyData = this.props.historyData;
+    this.changeCalStart = this.props.changeCalStart;
+    this.changeCalEnd = this.props.changeCalEnd;
 
     return (
       <Grid container spacing={3}>
@@ -91,9 +88,10 @@ class ShowHistoryGraph extends PureComponent {
                     rightArrowIconProps={{ className: classes.icon }}
                     label="Start"
                     inputVariant="standard"
-                    value={this.state.startDate || Date.now()}
-                    onChange={this.handleStartDateTimeChange}
-                    maxDate={this.state.endDate || Date.now()}
+                    format="yyyy/MM/dd HH:mm"
+                    value={this.start || now}
+                    onChange={this.changeCalStart}
+                    maxDate={this.start || now}
                   />
                   <DateTimePicker
                     InputLabelProps={{ className: classes.select }}
@@ -101,10 +99,11 @@ class ShowHistoryGraph extends PureComponent {
                     rightArrowIconProps={{ className: classes.icon }}
                     label="End"
                     inputVariant="standard"
-                    value={this.state.endDate || Date.now()}
-                    onChange={this.handleEndDateTimeChange}
-                    maxDate={Date.now()}
-                    minDate={this.state.startDate}
+                    format="yyyy/MM/dd HH:mm"
+                    value={this.end || now}
+                    onChange={this.changeCalEnd}
+                    maxDate={now}
+                    minDate={this.end}
                   />
                 </MuiPickersUtilsProvider>
               </ThemeProvider>

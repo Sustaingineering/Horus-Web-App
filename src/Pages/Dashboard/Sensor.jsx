@@ -52,6 +52,22 @@ class Sensor extends PureComponent {
     this.getDatabase(this.props.sensorId);
   };
 
+  handleStartDateTimeChange = (startDate) => {
+    this.setState({ start: startDate });
+    let startTime = startDate.getTime();
+    this.timestamp = Math.floor(startTime / 1000);
+    this.setState({range: this.timestamp});
+    this.getDatabase(this.props.sensorId);
+  };
+
+  handleEndDateTimeChange = (endDate) => {
+    this.setState({ end: endDate });
+    let endTime = endDate.getTime();
+    this.nowstamp = Math.floor(endTime / 1000);
+    this.setState({range: this.nowstamp});
+    this.getDatabase(this.props.sensorId);
+  };
+
   getDatabase = sensorId => {
     this.db = this.props.firebase.database().ref(sensorId);
     let temp = [];
@@ -109,7 +125,11 @@ class Sensor extends PureComponent {
           sensorName={this.props.sensorName}
           sensorId={this.props.sensorId}
           changeRange={this.changeRange}
+          changeCalStart={this.handleStartDateTimeChange}
+          changeCalEnd={this.handleEndDateTimeChange}
           selected={this.state.selected}
+          start={this.state.start}
+          end={this.state.end}
           firebase={this.props.firebase}
         />
       </div>

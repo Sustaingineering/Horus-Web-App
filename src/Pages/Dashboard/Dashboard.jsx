@@ -56,7 +56,11 @@ class Dashboard extends PureComponent {
             <ShowHistoryGraph
               state={this.state}
               selected={this.props.selected}
+              start={this.props.start}
+              end={this.props.end}
               changeRange={this.props.changeRange}
+              changeCalStart={this.props.changeCalStart}
+              changeCalEnd={this.props.changeCalEnd}
               historyData={this.props.historyData}
             />,
             <UploadData
