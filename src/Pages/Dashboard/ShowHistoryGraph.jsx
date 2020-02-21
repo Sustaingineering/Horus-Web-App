@@ -1,4 +1,4 @@
-import React, {PureComponent} from "react";
+import React, { PureComponent } from "react";
 import {
   Paper,
   Typography,
@@ -14,7 +14,7 @@ import {
   MuiPickersUtilsProvider,
 } from '@material-ui/pickers';
 import DateFnsUtils from '@date-io/date-fns'; // choose your lib
-import {historyStyle, materialTheme} from "./dashboardStyle";
+import { historyStyle, materialTheme } from "./dashboardStyle";
 import ChartContainer from "./ChartContainer";
 import ThemeProvider from "@material-ui/styles/ThemeProvider";
 
@@ -27,7 +27,7 @@ class ShowHistoryGraph extends PureComponent {
   }
 
   render() {
-    const {classes} = this.props;
+    const { classes } = this.props;
     const now = Date.now();
 
     this.selected = this.props.selected;
@@ -46,7 +46,7 @@ class ShowHistoryGraph extends PureComponent {
               <Typography variant="h6" color="primary" gutterBottom>
                 Date Range
               </Typography>
-              <FormControl style={{minWidth: 120}} className={classes.formControl}>
+              <FormControl style={{ minWidth: 120 }} className={classes.formControl}>
                 <InputLabel shrink htmlFor="range" className={classes.inputLabel}>Range</InputLabel>
                 <Select
                   name="range-select"
@@ -56,7 +56,7 @@ class ShowHistoryGraph extends PureComponent {
                       icon: classes.icon,
                     },
                   }}
-                  autoWidth={[true]}
+                  autoWidth={[ true ]}
                   value={this.selected || 0}
                   onChange={event => this.changeRange(event.target.value)}
                 >

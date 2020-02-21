@@ -39,7 +39,7 @@ class Chart extends PureComponent {
                     >
                       <CartesianGrid
                         strokeDasharray="5 5"
-                        verticalFill={["263148", "#444444"]}
+                        verticalFill={[ "263148", "#444444" ]}
                         fillOpacity={0.2}
                       />
                       <defs>
@@ -67,11 +67,11 @@ class Chart extends PureComponent {
                         tick={{ fill: "white" }}
                         stroke="#efefef"
                       >
-                        <Label value="Time" offset={0} fill= 'white' position="insideBottom" />
-                        <Label value={Voltage} offset={0} fontSize={20} fill= 'white' position="top" dy={-205} /> 
+                        <Label value="Time" offset={0} fill='white' position="insideBottom" />
+                        <Label value={Voltage} offset={0} fontSize={20} fill='white' position="top" dy={-205} />
                       </XAxis>
-                      <YAxis tick={{ fill: "white" }} stroke="#efefef" 
-                             label={{value: "Volts", fill: 'white', angle: -90, position: 'insideLeft' }}
+                      <YAxis tick={{ fill: "white" }} stroke="#efefef"
+                             label={{ value: "Volts", fill: 'white', angle: -90, position: 'insideLeft' }}
                       />
                       <Tooltip />
                       <Area
@@ -98,7 +98,7 @@ class Chart extends PureComponent {
                     >
                       <CartesianGrid
                         strokeDasharray="5 5"
-                        verticalFill={["263148", "#444444"]}
+                        verticalFill={[ "263148", "#444444" ]}
                         fillOpacity={0.2}
                       />
                       <defs>
@@ -126,11 +126,11 @@ class Chart extends PureComponent {
                         tick={{ fill: "white" }}
                         stroke="#efefef"
                       >
-                        <Label value="Time" offset={0} fill= 'white' position="insideBottom" />
-                        <Label value={Current} offset={0} fontSize={20} fill= 'white' position="top" dy={-205} /> 
+                        <Label value="Time" offset={0} fill='white' position="insideBottom" />
+                        <Label value={Current} offset={0} fontSize={20} fill='white' position="top" dy={-205} />
                       </XAxis>
-                      <YAxis tick={{ fill: "white" }} stroke="#efefef" 
-                             label={{value: "Amps", fill: 'white', angle: -90, position: 'insideLeft' }}/>
+                      <YAxis tick={{ fill: "white" }} stroke="#efefef"
+                             label={{ value: "Amps", fill: 'white', angle: -90, position: 'insideLeft' }} />
                       <Tooltip />
                       <Area
                         type="monotone"
@@ -156,7 +156,7 @@ class Chart extends PureComponent {
                     >
                       <CartesianGrid
                         strokeDasharray="5 5"
-                        verticalFill={["263148", "#444444"]}
+                        verticalFill={[ "263148", "#444444" ]}
                         fillOpacity={0.2}
                       />
                       <defs>
@@ -184,11 +184,11 @@ class Chart extends PureComponent {
                         tick={{ fill: "white" }}
                         stroke="#efefef"
                       >
-                        <Label value="Time" offset={0} fill= 'white' position="insideBottom" />
-                        <Label value={Power} offset={0} fontSize={20} fill= 'white' position="top" dy={-205} /> 
+                        <Label value="Time" offset={0} fill='white' position="insideBottom" />
+                        <Label value={Power} offset={0} fontSize={20} fill='white' position="top" dy={-205} />
                       </XAxis>
-                      <YAxis tick={{ fill: "white" }} stroke="#efefef" 
-                      label={{value: "Watts", fill: 'white', angle: -90, position: 'insideLeft' }}/>
+                      <YAxis tick={{ fill: "white" }} stroke="#efefef"
+                             label={{ value: "Watts", fill: 'white', angle: -90, position: 'insideLeft' }} />
                       <Tooltip />
                       <Area
                         type="monotone"
@@ -214,7 +214,7 @@ class Chart extends PureComponent {
                     >
                       <CartesianGrid
                         strokeDasharray="5 5"
-                        verticalFill={["263148", "#444444"]}
+                        verticalFill={[ "263148", "#444444" ]}
                         fillOpacity={0.2}
                       />
                       <defs>
@@ -260,11 +260,11 @@ class Chart extends PureComponent {
                         tick={{ fill: "white" }}
                         stroke="#efefef"
                       >
-                        <Label value="Time" offset={0} fill= 'white' position="insideBottom" />
-                        <Label value={Temperature} offset={0} fontSize={20} fill= 'white' position="top" dy={-205} /> 
+                        <Label value="Time" offset={0} fill='white' position="insideBottom" />
+                        <Label value={Temperature} offset={0} fontSize={20} fill='white' position="top" dy={-205} />
                       </XAxis>
-                      <YAxis tick={{ fill: "white" }} stroke="#efefef" 
-                      label={{value: "Celsius", fill: 'white', angle: -90, position: 'insideLeft' }}/>
+                      <YAxis tick={{ fill: "white" }} stroke="#efefef"
+                             label={{ value: "Celsius", fill: 'white', angle: -90, position: 'insideLeft' }} />
                       <Tooltip />
                       <Area
                         type="monotone"

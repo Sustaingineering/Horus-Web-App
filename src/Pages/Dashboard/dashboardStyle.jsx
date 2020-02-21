@@ -1,5 +1,5 @@
 // Dashboard Styles
-import {backgroundColor, primaryColor, secondaryColor, warningColor} from "../../assets/jss/mainStyle";
+import { backgroundColor, primaryColor, secondaryColor, warningColor } from "../../assets/jss/mainStyle";
 import createMuiTheme from "@material-ui/core/styles/createMuiTheme";
 
 const dashboardStyle = theme => ({
@@ -118,4 +118,4 @@ const materialTheme = createMuiTheme({
 });
 
 
-export {dashboardStyle, monitoringStyle, uploadStyle, historyStyle, materialTheme};
+export { dashboardStyle, monitoringStyle, uploadStyle, historyStyle, materialTheme };

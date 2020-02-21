@@ -1,13 +1,13 @@
-import React, {PureComponent, Fragment} from "react";
+import React, { PureComponent, Fragment } from "react";
 // Material UI Components
-import {withStyles, Tabs, Tab, Typography} from "@material-ui/core";
+import { withStyles, Tabs, Tab, Typography } from "@material-ui/core";
 // Components
 import MonitoringData from "./MonitoringData";
 import ChartContainer from "./ChartContainer";
 import UploadData from "./UploadData";
 import ShowHistoryGraph from "./ShowHistoryGraph";
 //Style
-import {dashboardStyle} from "./dashboardStyle";
+import { dashboardStyle } from "./dashboardStyle";
 
 class Dashboard extends PureComponent {
   constructor(props) {
@@ -21,12 +21,12 @@ class Dashboard extends PureComponent {
   }
 
   handleChange = (event, value) => {
-    this.setState({value: value});
+    this.setState({ value: value });
   };
 
   render() {
-    const {classes} = this.props;
-    const {value} = this.state;
+    const { classes } = this.props;
+    const { value } = this.state;
     const data = (this.props.data || []).slice();
 
     return (
@@ -34,8 +34,8 @@ class Dashboard extends PureComponent {
         <Typography variant="h4" color="primary" gutterBottom>
           {this.props.sensorName + " Dashboard"}
         </Typography>
-        <MonitoringData data={data}/>
-        <br/>
+        <MonitoringData data={data} />
+        <br />
         <Tabs
           value={value}
           className={classes.tabs}
@@ -44,15 +44,15 @@ class Dashboard extends PureComponent {
           textColor="primary"
           centered
         >
-          <Tab className={classes.tab} label="Data"/>
-          <Tab className={classes.tab} label="History"/>
-          <Tab className={classes.tab} label="Upload CSV"/>
+          <Tab className={classes.tab} label="Data" />
+          <Tab className={classes.tab} label="History" />
+          <Tab className={classes.tab} label="Upload CSV" />
         </Tabs>
-        <br/>
-        <br/>
+        <br />
+        <br />
         {
           [
-            <ChartContainer data={this.props.data}/>,
+            <ChartContainer data={this.props.data} />,
             <ShowHistoryGraph
               state={this.state}
               selected={this.props.selected}

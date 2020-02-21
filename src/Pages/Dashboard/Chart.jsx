@@ -45,7 +45,7 @@ class Chart extends PureComponent {
           >
             <CartesianGrid
               strokeDasharray="3 3"
-              verticalFill={["263148", "#444444"]}
+              verticalFill={[ "263148", "#444444" ]}
               fillOpacity={0.1}
             />
             <defs>
@@ -74,7 +74,7 @@ class Chart extends PureComponent {
               tick={{ fill: "white" }}
               stroke="#efefef"
               type="number"
-                domain={["dataMin", "dataMax"]}
+              domain={[ "dataMin", "dataMax" ]}
               minTickGap={200}
               tickFormatter={unixTime =>
                 moment(unixTime * 1000).format("hh:mm:ss")

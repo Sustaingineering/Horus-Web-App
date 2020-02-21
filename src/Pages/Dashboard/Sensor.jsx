@@ -1,8 +1,8 @@
-import React, {PureComponent} from "react";
+import React, { PureComponent } from "react";
 // Material UI Components
-import {withStyles} from "@material-ui/core";
+import { withStyles } from "@material-ui/core";
 //Style
-import {dashboardStyle} from "./dashboardStyle";
+import { dashboardStyle } from "./dashboardStyle";
 import Dashboard from "./Dashboard";
 
 const timeOffsetMap = {
@@ -41,7 +41,7 @@ class Sensor extends PureComponent {
   };
 
   changeRange = (value) => {
-    this.setState({selected: value});
+    this.setState({ selected: value });
     let offset;
     offset = timeOffsetMap[value];
     let date = new Date();
@@ -49,7 +49,7 @@ class Sensor extends PureComponent {
     let d = now - offset;
     this.timestamp = Math.floor(d / 1000);
     this.nowstamp = Math.floor(now / 1000);
-    this.setState({range: this.timestamp});
+    this.setState({ range: this.timestamp });
     this.getDatabase(this.props.sensorId);
   };
 
@@ -57,7 +57,7 @@ class Sensor extends PureComponent {
     this.setState({ start: startDate });
     let startTime = startDate.getTime();
     this.timestamp = Math.floor(startTime / 1000);
-    this.setState({range: this.timestamp});
+    this.setState({ range: this.timestamp });
     this.getDatabase(this.props.sensorId);
   };
 
@@ -65,7 +65,7 @@ class Sensor extends PureComponent {
     this.setState({ end: endDate });
     let endTime = endDate.getTime();
     this.nowstamp = Math.floor(endTime / 1000);
-    this.setState({range: this.nowstamp});
+    this.setState({ range: this.nowstamp });
     this.getDatabase(this.props.sensorId);
   };
 
@@ -117,7 +117,7 @@ class Sensor extends PureComponent {
   };
 
   render() {
-    const {classes} = this.props;
+    const { classes } = this.props;
     return (
       <div className={classes.root}>
         <Dashboard

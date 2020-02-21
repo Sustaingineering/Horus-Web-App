@@ -40,10 +40,10 @@ class MonitoringData extends PureComponent {
           <div className={classes.container}>
             <Card className={classes.card}>
               <CardHeader
-  avatar={icons[type]}
-  title={textMap[type]}
-  titleTypographyProps={{variant: "button"}}
-  />
+                avatar={icons[type]}
+                title={textMap[type]}
+                titleTypographyProps={{ variant: "button" }}
+              />
               <CardContent className={classes.cardContent}>
                 <Typography color="primary" variant="h5">
                   {data[type] !== undefined
