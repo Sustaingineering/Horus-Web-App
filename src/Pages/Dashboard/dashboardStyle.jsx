@@ -1,7 +1,6 @@
 // Dashboard Styles
-import {backgroundColor, mainTheme, primaryColor, secondaryColor, warningColor} from "../../assets/jss/mainStyle";
+import {backgroundColor, primaryColor, secondaryColor, warningColor} from "../../assets/jss/mainStyle";
 import createMuiTheme from "@material-ui/core/styles/createMuiTheme";
-import {lime} from "@material-ui/core/colors";
 
 const dashboardStyle = theme => ({
   root: {

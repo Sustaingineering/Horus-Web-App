@@ -28,7 +28,6 @@ class ShowHistoryGraph extends PureComponent {
 
   render() {
     const {classes} = this.props;
-
     const now = Date.now();
 
     this.selected = this.props.selected;
@@ -42,7 +41,7 @@ class ShowHistoryGraph extends PureComponent {
     return (
       <Grid container spacing={3}>
         <Grid item xs={6}>
-          <Grid xs={12} spacing={3}>
+          <Grid>
             <Paper className={classes.paper}>
               <Typography variant="h6" color="primary" gutterBottom>
                 Date Range
@@ -58,9 +57,10 @@ class ShowHistoryGraph extends PureComponent {
                     },
                   }}
                   autoWidth={[true]}
-                  value={this.selected}
+                  value={this.selected || 0}
                   onChange={event => this.changeRange(event.target.value)}
                 >
+                  <MenuItem value={0}>Select...</MenuItem>
                   <MenuItem value={1}>1 hour</MenuItem>
                   <MenuItem value={2}>2 hours</MenuItem>
                   <MenuItem value={3}>6 hours</MenuItem>
@@ -75,7 +75,7 @@ class ShowHistoryGraph extends PureComponent {
           </Grid>
         </Grid>
         <Grid item xs={6}>
-          <Grid xs={12} spacing={3}>
+          <Grid>
             <Paper className={classes.paper}>
               <Typography variant="h6" color="primary" gutterBottom>
                 Pick from Calendar
@@ -85,32 +85,32 @@ class ShowHistoryGraph extends PureComponent {
                   <DateTimePicker
                     InputLabelProps={{ className: classes.select }}
                     InputProps={{ className: classes.select }}
-                    rightArrowIconProps={{ className: classes.icon }}
+                    rightarrowiconprops={{ className: classes.icon }}
                     label="Start"
                     inputVariant="standard"
                     format="yyyy/MM/dd HH:mm"
                     value={this.start || now}
                     onChange={this.changeCalStart}
-                    maxDate={this.start || now}
+                    maxDate={this.end || now}
                   />
                   <DateTimePicker
                     InputLabelProps={{ className: classes.select }}
                     InputProps={{ className: classes.select }}
-                    rightArrowIconProps={{ className: classes.icon }}
+                    rightarrowiconprops={{ className: classes.icon }}
                     label="End"
                     inputVariant="standard"
                     format="yyyy/MM/dd HH:mm"
                     value={this.end || now}
                     onChange={this.changeCalEnd}
                     maxDate={now}
-                    minDate={this.end}
+                    minDate={this.start}
                   />
                 </MuiPickersUtilsProvider>
               </ThemeProvider>
             </Paper>
           </Grid>
         </Grid>
-        <Grid item xs={24} sm={24} md={12}>
+        <Grid item xs={12} sm={12} md={12}>
           <ChartContainer
             data={this.historyData}
           />

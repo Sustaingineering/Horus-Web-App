@@ -6,6 +6,7 @@ import {dashboardStyle} from "./dashboardStyle";
 import Dashboard from "./Dashboard";
 
 const timeOffsetMap = {
+  0: 0,
   1: 60 * 60 * 1000,
   2: 2 * 60 * 60 * 1000,
   3: 6 * 60 * 60 * 1000,
