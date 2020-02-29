@@ -86,6 +86,20 @@ const mainTheme = createMuiTheme({
   }
 });
 
+const materialTheme = createMuiTheme({
+  palette: {
+    primary: {
+      light: secondaryColor,
+      main: primaryColor,
+      dark: backgroundColor,
+      contrastText: secondaryColor,
+    },
+    error: {
+      main: warningColor,
+    },
+  }
+});
+
 export {
   //variables
   drawerWidth,
@@ -106,5 +120,6 @@ export {
   warningColorGradient,
   dangerColorGradient,
   defaultColor,
-  defaultColorGradient
+  defaultColorGradient,
+  materialTheme
 };

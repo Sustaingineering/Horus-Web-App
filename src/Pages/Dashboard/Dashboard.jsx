@@ -54,7 +54,6 @@ class Dashboard extends PureComponent {
           [
             <ChartContainer data={this.props.data} />,
             <ShowHistoryGraph
-              state={this.state}
               selected={this.props.selected}
               start={this.props.start}
               end={this.props.end}

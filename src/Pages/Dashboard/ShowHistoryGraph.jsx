@@ -14,7 +14,8 @@ import {
   MuiPickersUtilsProvider,
 } from '@material-ui/pickers';
 import DateFnsUtils from '@date-io/date-fns'; // choose your lib
-import { historyStyle, materialTheme } from "./dashboardStyle";
+import { historyStyle } from "./dashboardStyle";
+import { mainTheme } from "../../assets/jss/mainStyle";
 import ChartContainer from "./ChartContainer";
 import ThemeProvider from "@material-ui/styles/ThemeProvider";
 
@@ -56,7 +57,7 @@ class ShowHistoryGraph extends PureComponent {
                       icon: classes.icon,
                     },
                   }}
-                  autoWidth={[ true ]}
+                  autoWidth={true}
                   value={this.selected || 0}
                   onChange={event => this.changeRange(event.target.value)}
                 >
@@ -80,7 +81,7 @@ class ShowHistoryGraph extends PureComponent {
               <Typography variant="h6" color="primary" gutterBottom>
                 Pick from Calendar
               </Typography>
-              <ThemeProvider theme={materialTheme}>
+              <ThemeProvider theme={mainTheme}>
                 <MuiPickersUtilsProvider utils={DateFnsUtils}>
                   <DateTimePicker
                     InputLabelProps={{ className: classes.select }}

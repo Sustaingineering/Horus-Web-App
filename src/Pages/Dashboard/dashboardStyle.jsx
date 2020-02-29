@@ -103,19 +103,4 @@ const historyStyle = theme => ({
   }
 });
 
-const materialTheme = createMuiTheme({
-  palette: {
-    primary: {
-      light: secondaryColor,
-      main: primaryColor,
-      dark: backgroundColor,
-      contrastText: secondaryColor,
-    },
-    error: {
-      main: warningColor,
-    },
-  }
-});
-
-
-export { dashboardStyle, monitoringStyle, uploadStyle, historyStyle, materialTheme };
+export { dashboardStyle, monitoringStyle, uploadStyle, historyStyle };
