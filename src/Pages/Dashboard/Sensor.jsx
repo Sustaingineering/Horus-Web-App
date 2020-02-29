@@ -37,7 +37,8 @@ class Sensor extends PureComponent {
   // other components are unmounted) before polling, so we don't
   // have multiple registers to a particular database
   componentDidMount = () => {
-    this.getDatabase(this.props.sensorId);
+    this.initDatabase(this.props.sensorId);
+    this.initLiveData()
   };
 
   changeRange = (value) => {
@@ -50,7 +51,7 @@ class Sensor extends PureComponent {
     this.timestamp = Math.floor(d / 1000);
     this.nowstamp = Math.floor(now / 1000);
     this.setState({ range: this.timestamp });
-    this.getDatabase(this.props.sensorId);
+    this.getHistoricalData();
   };
 
   handleStartDateTimeChange = (startDate) => {
@@ -58,7 +59,7 @@ class Sensor extends PureComponent {
     let startTime = startDate.getTime();
     this.timestamp = Math.floor(startTime / 1000);
     this.setState({ range: this.timestamp });
-    this.getDatabase(this.props.sensorId);
+    this.getHistoricalData();
   };
 
   handleEndDateTimeChange = (endDate) => {
@@ -66,27 +67,17 @@ class Sensor extends PureComponent {
     let endTime = endDate.getTime();
     this.nowstamp = Math.floor(endTime / 1000);
     this.setState({ range: this.nowstamp });
-    this.getDatabase(this.props.sensorId);
+    this.getHistoricalData();
   };
 
-  getDatabase = sensorId => {
+
+  initDatabase = sensorId => {
     this.db = this.props.firebase.database().ref(sensorId);
+  };
+
+
+  initLiveData = () => {
     let temp = [];
-    let tempHistory = [];
-
-    this.db.orderByKey()
-      .startAt(this.timestamp.toString())
-      .endAt(this.nowstamp.toString())
-      .once("value", e => {
-        for (let i in e.val()) {
-          tempHistory.push(e.val()[i]);
-          // temp.push(e.val()[i]); //removed so that main data page shows only live data
-        }
-        this.setState({
-          historyData: tempHistory
-        });
-      });
-
     this.db.orderByKey()
       .startAt(this.liveDataStamp.toString())
       .endAt(this.nowstamp.toString())
@@ -110,6 +101,22 @@ class Sensor extends PureComponent {
         data: temp
       });
     });
+  };
+
+  getHistoricalData = () => {
+    let tempHistory = [];
+
+    this.db.orderByKey()
+      .startAt(this.timestamp.toString())
+      .endAt(this.nowstamp.toString())
+      .once("value", e => {
+        for (let i in e.val()) {
+          tempHistory.push(e.val()[i]);
+        }
+        this.setState({
+          historyData: tempHistory
+        });
+      });
   };
 
   componentWillUnmount = () => {
