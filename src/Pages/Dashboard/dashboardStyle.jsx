@@ -1,5 +1,6 @@
 // Dashboard Styles
-import { primaryColor } from "../../assets/jss/mainStyle";
+import { backgroundColor, primaryColor, secondaryColor, warningColor } from "../../assets/jss/mainStyle";
+import createMuiTheme from "@material-ui/core/styles/createMuiTheme";
 
 const dashboardStyle = theme => ({
   root: {
@@ -28,6 +29,14 @@ const dashboardStyle = theme => ({
     "&:hover": {
       color: "white",
       opacity: 1
+    }
+  },
+  select: {
+    "&:before": {
+      borderColor: "white"
+    },
+    "&:hover": {
+      borderColor: "white"
     }
   }
 });
@@ -64,4 +73,34 @@ const uploadStyle = theme => ({
   }
 });
 
-export { dashboardStyle, monitoringStyle, uploadStyle };
+const historyStyle = theme => ({
+  paper: {
+    padding: theme.spacing(2),
+    textAlign: "center",
+    color: theme.palette.text.secondary,
+    backgroundColor: primaryColor
+  },
+  select: {
+    "&:before": {
+      borderColor: "white",
+    },
+    "&:after": {
+      borderColor: "white",
+    },
+    color: "white",
+  },
+  inputLabel: {
+    color: "white"
+  },
+  formControl: {
+    color: "white"
+  },
+  icon: {
+    fill: "white"
+  },
+  input: {
+    color: "white"
+  }
+});
+
+export { dashboardStyle, monitoringStyle, uploadStyle, historyStyle };

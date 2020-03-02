@@ -90,7 +90,7 @@ class UploadData extends PureComponent {
         <Grid item>
           <Paper className={classes.paper}>
             <Typography variant="h6" color="primary" gutterBottom>
-              Upload your csv file
+              Upload your CSV file
             </Typography>
             <Snackbar
               anchorOrigin={{
@@ -101,7 +101,7 @@ class UploadData extends PureComponent {
               autoHideDuration={4000}
               onClose={this.closeSnack}
               message={<span>{this.state.snack}</span>}
-            ></Snackbar>
+            />
             <Input className={classes.input} id="upload-file" type="file" />
             <Button color="primary" onClick={this.handleFile}>
               Upload

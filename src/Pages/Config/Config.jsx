@@ -134,27 +134,27 @@ class Profile extends PureComponent {
         return (
           <Fragment>
             <TextField
-              id="curr-password"
-              label="Current Password"
-              type="password"
-              className={classes.textField}
-              value={this.state.password}
-              InputProps={{
+              id = "curr-password"
+              label = "Current Password"
+              type = "password"
+              className = {classes.textField}
+              value = {this.state.password}
+              InputProps = {{
                 className: classes.textField
               }}
-              InputLabelProps={{
+              InputLabelProps = {{
                 style: {
                   color: "white"
                 }
               }}
-              onChange={val => this.setState({ password: val.target.value })}
-              margin="normal"
+              onChange = {val => this.setState({ password: val.target.value })}
+              margin = "normal"
             />
             <Button
               fullWidth
-              variant="contained"
-              className={classes.submitInfo}
-              onClick={this.reauthenticate}
+              variant = "contained"
+              className = {classes.submitInfo}
+              onClick = {this.reauthenticate}
             >
               REAUTHENTICATE
             </Button>
@@ -165,9 +165,9 @@ class Profile extends PureComponent {
         return (
           <Button
             fullWidth
-            variant="contained"
-            className={classes.submitInfo}
-            onClick={this.reauthenticate}
+            variant = "contained"
+            className = {classes.submitInfo}
+            onClick = {this.reauthenticate}
           >
             REAUTHENTICATE
           </Button>
@@ -226,79 +226,79 @@ class Profile extends PureComponent {
   render() {
     const { classes } = this.props;
     return (
-      <div className={classes.root}>
+      <div className = {classes.root}>
         <Snackbar
-          anchorOrigin={{
+          anchorOrigin = {{
             vertical: "bottom",
             horizontal: "right"
           }}
-          open={this.state.snack !== undefined}
-          autoHideDuration={4000}
-          onClose={() => this.generateSnack(undefined)}
-          message={<span>{this.state.snack}</span>}
-        ></Snackbar>
-        <Grid container spacing={4}>
-          <Grid item md sm={6} xs={12}>
-            <Paper className={classes.paper}>
-              <h2 className={classes.postText}>Profile</h2>
+          open = {this.state.snack !== undefined}
+          autoHideDuration = {4000}
+          onClose = {() => this.generateSnack(undefined)}
+          message = {<span>{this.state.snack}</span>}
+        />
+        <Grid container spacing = {4}>
+          <Grid item md sm = {6} xs = {12}>
+            <Paper className = {classes.paper}>
+              <h2 className = {classes.postText}>Profile</h2>
               <TextField
-                id="name"
-                label="Name"
-                className={classes.textField}
-                value={this.state.name || ""}
-                InputProps={{
+                id = "name"
+                label = "Name"
+                className = {classes.textField}
+                value = {this.state.name || ""}
+                InputProps = {{
                   className: classes.textField
                 }}
-                InputLabelProps={{
+                InputLabelProps = {{
                   style: {
                     color: "white"
                   }
                 }}
-                onChange={val => this.setState({ name: val.target.value })}
-                margin="normal"
+                onChange = {val => this.setState({ name: val.target.value })}
+                margin = "normal"
               />
               <Button
                 fullWidth
-                variant="contained"
-                color="primary"
-                className={classes.submit}
-                onClick={this.updateName}
+                variant = "contained"
+                color = "primary"
+                className = {classes.submit}
+                onClick = {this.updateName}
               >
                 SUBMIT
               </Button>
             </Paper>
           </Grid>
-          <Grid item md sm={6} xs={12}>
-            <Paper className={classes.paper}>
-              <h2 className={classes.postText}>Email Settings</h2>
+          <Grid item md sm = {6} xs = {12}>
+            <Paper className = {classes.paper}>
+              <h2 className = {classes.postText}>Email Settings</h2>
               <TextField
-                id="email"
-                label="Email"
-                className={classes.textField}
-                value={this.state.email || ""}
-                InputProps={{
+                id = "email"
+                label = "Email"
+                className = {classes.textField}
+                value = {this.state.email || ""}
+                InputProps = {{
                   classes: {
                     disabled: classes.textFieldDisabled,
                     root: classes.textField
                   },
                   disabled: !this.state.isEmail
                 }}
-                InputLabelProps={{
+                InputLabelProps = {{
                   style: {
                     color: "white"
                   }
                 }}
-                onChange={val => this.setState({ email: val.target.value })}
-                margin="normal"
+                onChange = {val => this.setState({ email: val.target.value })}
+                margin = "normal"
               />
               {this.state.isEmail ? (
                 <Button
                   fullWidth
-                  variant="contained"
-                  color="primary"
-                  className={classes.submit}
-                  disabled={this.isAuthOld()}
-                  onClick={this.updateEmail}
+                  variant = "contained"
+                  color = "primary"
+                  className = {classes.submit}
+                  disabled = {this.isAuthOld()}
+                  onClick = {this.updateEmail}
                 >
                   CHANGE EMAIL
                 </Button>
@@ -308,10 +308,10 @@ class Profile extends PureComponent {
               {this.state.isEmail && !this.state.userAuth.emailVerified ? (
                 <Button
                   fullWidth
-                  variant="contained"
-                  color="primary"
-                  className={classes.submitWarning}
-                  onClick={this.verifyEmail}
+                  variant = "contained"
+                  color = "primary"
+                  className = {classes.submitWarning}
+                  onClick = {this.verifyEmail}
                 >
                   VERIFY EMAIL
                 </Button>
@@ -320,16 +320,16 @@ class Profile extends PureComponent {
               )}
             </Paper>
           </Grid>
-          <Grid item md sm={12} xs={12}>
-            <Paper className={classes.paper}>
-              <h2 className={classes.postText}>Administration</h2>
+          <Grid item md sm = {12} xs = {12}>
+            <Paper className = {classes.paper}>
+              <h2 className = {classes.postText}>Administration</h2>
               {this.reauthFlow()}
               {this.state.isEmail ? (
                 <Button
                   fullWidth
-                  variant="contained"
-                  className={classes.submit}
-                  onClick={this.resetPassword}
+                  variant = "contained"
+                  className = {classes.submit}
+                  onClick = {this.resetPassword}
                 >
                   SEND PASSWORD RESET
                 </Button>
@@ -338,10 +338,10 @@ class Profile extends PureComponent {
               )}
               <Button
                 fullWidth
-                variant="contained"
-                disabled={this.isAuthOld()}
-                className={classes.submitDanger}
-                onClick={this.deleteAccount}
+                variant = "contained"
+                disabled = {this.isAuthOld()}
+                className = {classes.submitDanger}
+                onClick = {this.deleteAccount}
               >
                 DELETE ACCOUNT
               </Button>

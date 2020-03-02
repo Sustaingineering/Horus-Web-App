@@ -1,20 +1,20 @@
 import React, { PureComponent } from "react";
 // Material UI Components
 import {
-  Drawer,
+  Button,
+  Collapse,
   Divider,
+  Drawer,
+  Fade,
   List,
-  withStyles,
   ListItem,
   ListItemIcon,
-  ListItemText,
   ListItemSecondaryAction,
-  Collapse,
-  Typography,
-  Button,
-  TextField,
+  ListItemText,
   Switch,
-  Fade
+  TextField,
+  Typography,
+  withStyles
 } from "@material-ui/core";
 // Routing
 import { Link } from "react-router-dom";
@@ -91,8 +91,8 @@ class NavBarMenu extends PureComponent {
     let uid = this.props.firebase.auth().currentUser.uid;
     let remove = {};
     remove[
-      ["sensors." + sensor]
-    ] = this.props.firebase.firestore.FieldValue.delete();
+      [ "sensors." + sensor ]
+      ] = this.props.firebase.firestore.FieldValue.delete();
     db.collection("users")
       .doc(uid)
       .update(remove);
@@ -210,7 +210,7 @@ class NavBarMenu extends PureComponent {
           }}
           open={this.props.isDrawerOpen}
         >
-          <div className={classes.toolbar}></div>
+          <div className={classes.toolbar} />
           <List>
             <Link className={classes.white} to="/">
               <ListItem
@@ -272,7 +272,7 @@ class NavBarMenu extends PureComponent {
                       checked={this.state.editMode}
                       onChange={e => this.setEditModeState(e.target.checked)}
                       size="small"
-                    ></Switch>
+                    />
                   </ListItemSecondaryAction>
                 </ListItem>
                 {this.processSensors()}

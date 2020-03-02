@@ -16,7 +16,7 @@ class Home extends PureComponent {
           <Grid container className={classes.mainFeaturedPost}>
             <Grid item>
               <Card className={classes.card}>
-                <CardMedia image={bg} className={classes.cardMedia}></CardMedia>
+                <CardMedia image={bg} className={classes.cardMedia} />
                 <CardContent>
                   <Typography
                     component="h1"
@@ -76,7 +76,7 @@ class Home extends PureComponent {
                       variant="subtitle1"
                       color="inherit"
                       dangerouslySetInnerHTML={{ __html: post.text }}
-                    ></Typography>
+                    />
                   </CardContent>
                 </Card>
               </Grid>

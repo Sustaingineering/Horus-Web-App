@@ -49,7 +49,7 @@ class SignInPage extends PureComponent {
             <Avatar className={classes.avatar}>
               <LockIcon />
             </Avatar>
-            <div id="firebaseui-auth-container"></div>
+            <div id="firebaseui-auth-container"/>
             <br />
             <br />
             <Link style={style} to="/">

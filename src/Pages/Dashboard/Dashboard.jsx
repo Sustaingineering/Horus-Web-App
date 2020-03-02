@@ -1,13 +1,13 @@
 import React, { PureComponent, Fragment } from "react";
 // Material UI Components
-import { withStyles, Tabs, Tab, Typography, Paper } from "@material-ui/core";
+import { withStyles, Tabs, Tab, Typography } from "@material-ui/core";
 // Components
 import MonitoringData from "./MonitoringData";
 import ChartContainer from "./ChartContainer";
-// import HistoryChart from "./historyChart";
+import UploadData from "./UploadData";
+import ShowHistoryGraph from "./ShowHistoryGraph";
 //Style
 import { dashboardStyle } from "./dashboardStyle";
-import UploadData from "./UploadData";
 
 class Dashboard extends PureComponent {
   constructor(props) {
@@ -15,7 +15,8 @@ class Dashboard extends PureComponent {
     this.state = {
       value: 0,
       data: null,
-      error: null
+      error: null,
+      historyData: null
     };
   }
 
@@ -27,6 +28,7 @@ class Dashboard extends PureComponent {
     const { classes } = this.props;
     const { value } = this.state;
     const data = (this.props.data || []).slice();
+
     return (
       <Fragment>
         <Typography variant="h4" color="primary" gutterBottom>
@@ -51,7 +53,15 @@ class Dashboard extends PureComponent {
         {
           [
             <ChartContainer data={this.props.data} />,
-            <Paper></Paper>,
+            <ShowHistoryGraph
+              selected={this.props.selected}
+              start={this.props.start}
+              end={this.props.end}
+              changeRange={this.props.changeRange}
+              changeCalStart={this.props.changeCalStart}
+              changeCalEnd={this.props.changeCalEnd}
+              historyData={this.props.historyData}
+            />,
             <UploadData
               firebase={this.props.firebase}
               sensorId={this.props.sensorId}
