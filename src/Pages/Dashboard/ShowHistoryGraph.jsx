@@ -28,7 +28,6 @@ class ShowHistoryGraph extends PureComponent {
   }
 
   render() {
-    const { classes } = this.props;
     const now = Date.now();
 
     this.selected = this.props.selected;
@@ -43,20 +42,14 @@ class ShowHistoryGraph extends PureComponent {
       <Grid container spacing={3}>
         <Grid item xs={6}>
           <Grid>
-            <Paper className={classes.paper}>
+            <Paper>
               <Typography variant="h6" color="primary" gutterBottom>
                 Date Range
               </Typography>
-              <FormControl style={{ minWidth: 120 }} className={classes.formControl}>
-                <InputLabel shrink htmlFor="range" className={classes.inputLabel}>Range</InputLabel>
+              <FormControl style={{ minWidth: 120 }}>
+                <InputLabel shrink htmlFor="range">Range</InputLabel>
                 <Select
                   name="range-select"
-                  className={classes.select}
-                  inputProps={{
-                    classes: {
-                      icon: classes.icon,
-                    },
-                  }}
                   autoWidth={true}
                   value={this.selected || 0}
                   onChange={event => this.changeRange(event.target.value)}
@@ -77,16 +70,13 @@ class ShowHistoryGraph extends PureComponent {
         </Grid>
         <Grid item xs={6}>
           <Grid>
-            <Paper className={classes.paper}>
+            <Paper>
               <Typography variant="h6" color="primary" gutterBottom>
                 Pick from Calendar
               </Typography>
               <ThemeProvider theme={mainTheme}>
                 <LocalizationProvider dateAdapter={DateFnsUtils}>
                   <DateTimePicker
-                    InputLabelProps={{ className: classes.select }}
-                    InputProps={{ className: classes.select }}
-                    rightarrowiconprops={{ className: classes.icon }}
                     label="Start"
                     inputVariant="standard"
                     format="yyyy/MM/dd HH:mm"
@@ -95,9 +85,6 @@ class ShowHistoryGraph extends PureComponent {
                     maxDate={this.end || now}
                   />
                   <DateTimePicker
-                    InputLabelProps={{ className: classes.select }}
-                    InputProps={{ className: classes.select }}
-                    rightarrowiconprops={{ className: classes.icon }}
                     label="End"
                     inputVariant="standard"
                     format="yyyy/MM/dd HH:mm"
@@ -121,4 +108,4 @@ class ShowHistoryGraph extends PureComponent {
   }
 }
 
-export default withStyles(historyStyle)(ShowHistoryGraph);
+export default ShowHistoryGraph;

@@ -11,12 +11,12 @@ import PowerSettingsNew from "@material-ui/icons/PowerSettingsNew";
 
 const iconMap = classes => {
   return {
-    voltage: <OfflineBolt className={classes.icon} />,
-    current: <Timeline className={classes.icon} />,
-    power: <PowerSettingsNew className={classes.icon} />,
-    "op-temp": <AcUnit className={classes.icon} />,
-    "surface-temperature": <AcUnit className={classes.icon} />,
-    "water-breaker": <Waves className={classes.icon} />
+    voltage: <OfflineBolt />,
+    current: <Timeline />,
+    power: <PowerSettingsNew />,
+    "op-temp": <AcUnit />,
+    "surface-temperature": <AcUnit />,
+    "water-breaker": <Waves />
   };
 };
 
@@ -37,14 +37,14 @@ class MonitoringData extends PureComponent {
     for (let type in textMap) {
       boxes.push(
         <Grid item xs={12} sm={6} md={4} key={type}>
-          <div className={classes.container}>
-            <Card className={classes.card}>
+          <div>
+            <Card>
               <CardHeader
                 avatar={icons[type]}
                 title={textMap[type]}
                 titleTypographyProps={{ variant: "button" }}
               />
-              <CardContent className={classes.cardContent}>
+              <CardContent>
                 <Typography color="primary" variant="h5">
                   {data[type] !== undefined
                     ? data[type] % 1 === 0

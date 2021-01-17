@@ -34,6 +34,16 @@ const mainTheme = createMuiTheme({
           }
         }
       }
+    },
+    MuiDrawer: {
+      styleOverrides: {
+        paper: {
+          width: 240,
+        },
+        // paperAnchorLeft: {
+        //   display: "none"
+        // }
+      }
     }
   },
   palette: {

@@ -13,8 +13,6 @@ import NavBarMenu from "../NavBarMenu/NavBarMenu";
 // Icons
 import MenuIcon from "@material-ui/icons/Menu";
 // Style
-import navbarStyle from "./navbarStyle";
-import { withStyles } from "@material-ui/core";
 
 class Navbar extends PureComponent {
   constructor(props) {
@@ -42,8 +40,6 @@ class Navbar extends PureComponent {
   };
 
   render() {
-    const { classes } = this.props;
-
     // Refresh to check if token is still valid on every nav
     this.props.firebase.auth().currentUser.reload();
 
@@ -54,8 +50,8 @@ class Navbar extends PureComponent {
           this.setSensorOpenState(false);
         }}
       >
-        <div className={classes.root}>
-          <AppBar position="static" className={classes.appBar}>
+        <div>
+          <AppBar position="static">
             <Toolbar>
               <Grid justify="space-between" container spacing={0}>
                 <Grid item>
@@ -66,14 +62,12 @@ class Navbar extends PureComponent {
                       this.setDrawerOpenState(!this.state.drawerOpen);
                       this.setSensorOpenState(false);
                     }}
-                    className={classes.menuButton}
                   >
                     <MenuIcon />
                   </IconButton>
                 </Grid>
                 <Grid item>
                   <Button
-                    className={classes.button}
                     color="primary"
                     onClick={this.signOut}
                   >
@@ -97,4 +91,4 @@ class Navbar extends PureComponent {
   }
 }
 
-export default withStyles(navbarStyle)(Navbar);
+export default Navbar;

@@ -35,9 +35,8 @@ class Chart extends PureComponent {
   };
 
   render() {
-    const { classes } = this.props;
     return (
-      <Paper className={classes.paper}>
+      <Paper>
         <ResponsiveContainer width="100%" height={310}>
           <AreaChart
             data={this.props.data}

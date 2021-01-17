@@ -1,8 +1,5 @@
 import React, { PureComponent } from "react";
 // Material UI Components
-import { withStyles } from "@material-ui/core";
-//Style
-import { dashboardStyle } from "./dashboardStyle";
 import Dashboard from "./Dashboard";
 
 const timeOffsetMap = {
@@ -124,9 +121,8 @@ class Sensor extends PureComponent {
   };
 
   render() {
-    const { classes } = this.props;
     return (
-      <div className={classes.root}>
+      <div>
         <Dashboard
           data={this.state.data}
           historyData={this.state.historyData}
@@ -145,4 +141,4 @@ class Sensor extends PureComponent {
   }
 }
 
-export default withStyles(dashboardStyle)(Sensor);
+export default Sensor;

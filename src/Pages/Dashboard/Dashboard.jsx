@@ -25,7 +25,6 @@ class Dashboard extends PureComponent {
   };
 
   render() {
-    const { classes } = this.props;
     const { value } = this.state;
     const data = (this.props.data || []).slice();
 
@@ -38,15 +37,14 @@ class Dashboard extends PureComponent {
         <br />
         <Tabs
           value={value}
-          className={classes.tabs}
           onChange={this.handleChange}
           indicatorColor="primary"
           textColor="primary"
           centered
         >
-          <Tab className={classes.tab} label="Data" />
-          <Tab className={classes.tab} label="History" />
-          <Tab className={classes.tab} label="Upload CSV" />
+          <Tab label="Data" />
+          <Tab label="History" />
+          <Tab label="Upload CSV" />
         </Tabs>
         <br />
         <br />

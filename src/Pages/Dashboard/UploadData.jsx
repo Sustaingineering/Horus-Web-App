@@ -84,11 +84,10 @@ class UploadData extends PureComponent {
   };
 
   render() {
-    const { classes } = this.props;
     return (
       <Grid container spacing={3} direction="column" alignItems="center">
         <Grid item>
-          <Paper className={classes.paper}>
+          <Paper>
             <Typography variant="h6" color="primary" gutterBottom>
               Upload your CSV file
             </Typography>
@@ -102,7 +101,7 @@ class UploadData extends PureComponent {
               onClose={this.closeSnack}
               message={<span>{this.state.snack}</span>}
             />
-            <Input className={classes.input} id="upload-file" type="file" />
+            <Input id="upload-file" type="file" />
             <Button color="primary" onClick={this.handleFile}>
               Upload
             </Button>
@@ -113,4 +112,4 @@ class UploadData extends PureComponent {
   }
 }
 
-export default withStyles(uploadStyle)(UploadData);
+export default UploadData;

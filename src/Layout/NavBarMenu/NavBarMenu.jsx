@@ -14,7 +14,6 @@ import {
   Switch,
   TextField,
   Typography,
-  withStyles
 } from "@material-ui/core";
 // Routing
 import { Link } from "react-router-dom";
@@ -35,9 +34,6 @@ import DialogContent from "@material-ui/core/DialogContent";
 import DialogContentText from "@material-ui/core/DialogContentText";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import EditIcon from "@material-ui/icons/Edit";
-// Style
-import navbarmenuStyle from "./navbarmenuStyle";
-import classNames from "classnames";
 
 class NavBarMenu extends PureComponent {
   constructor(props) {
@@ -45,20 +41,20 @@ class NavBarMenu extends PureComponent {
     this.state = {
       dialogOpen: false,
       dialogInfoText: undefined,
-      editMode: false
+      editMode: false,
     };
   }
 
-  setDialogOpenState = state => {
+  setDialogOpenState = (state) => {
     this.setState({
       dialogOpen: state,
-      dialogInfoText: undefined
+      dialogInfoText: undefined,
     });
   };
 
-  setEditModeState = state => {
+  setEditModeState = (state) => {
     this.setState({
-      editMode: state
+      editMode: state,
     });
   };
 
@@ -79,7 +75,7 @@ class NavBarMenu extends PureComponent {
         });
     } else {
       this.setState({
-        dialogInfoText: "Name or ID were malformed!"
+        dialogInfoText: "Name or ID were malformed!",
       });
     }
   };
@@ -91,19 +87,16 @@ class NavBarMenu extends PureComponent {
     let uid = this.props.firebase.auth().currentUser.uid;
     let remove = {};
     remove[
-      [ "sensors." + sensor ]
-      ] = this.props.firebase.firestore.FieldValue.delete();
-    db.collection("users")
-      .doc(uid)
-      .update(remove);
+      ["sensors." + sensor]
+    ] = this.props.firebase.firestore.FieldValue.delete();
+    db.collection("users").doc(uid).update(remove);
   };
 
   processSensors = () => {
-    let { classes } = this.props;
     let sensorPages = [];
     for (let sensor in this.props.sensors) {
       sensorPages.push(
-        <Link key={sensor + "-key"} className={classes.white} to={"/" + sensor}>
+        <Link key={sensor + "-key"} to={"/" + sensor}>
           <ListItem
             key={sensor}
             button
@@ -113,11 +106,11 @@ class NavBarMenu extends PureComponent {
             }}
           >
             <ListItemIcon>
-              <SensorIcon className={classes.white} />
+              <SensorIcon />
             </ListItemIcon>
             <ListItemText
               primary={
-                <Typography noWrap className={classes.white} type="body1">
+                <Typography noWrap type="body1">
                   {sensor}
                 </Typography>
               }
@@ -125,10 +118,9 @@ class NavBarMenu extends PureComponent {
             <Fade in={this.state.editMode}>
               <ListItemSecondaryAction>
                 <IconButton
-                  onClick={e => {
+                  onClick={(e) => {
                     this.deleteSensor(e, sensor);
                   }}
-                  className={classes.white}
                 >
                   <CloseIcon />
                 </IconButton>
@@ -142,14 +134,11 @@ class NavBarMenu extends PureComponent {
   };
 
   render() {
-    const { classes } = this.props;
-
     return (
-      <div className={classes.root}>
+      <div>
         <Dialog
           open={this.state.dialogOpen}
           onClose={() => this.setDialogOpenState(false)}
-          PaperProps={{ className: classes.paper }}
         >
           <DialogTitle id="form-dialog-title">Add a sensor</DialogTitle>
           <DialogContent>
@@ -157,9 +146,7 @@ class NavBarMenu extends PureComponent {
               To add a sensor, give it a descriptive (unique) name, and input
               its unique ID.
             </DialogContentText>
-            <DialogContentText>
-              {this.state.dialogInfoText}
-            </DialogContentText>
+            <DialogContentText>{this.state.dialogInfoText}</DialogContentText>
             <TextField
               autoFocus
               margin="dense"
@@ -186,19 +173,9 @@ class NavBarMenu extends PureComponent {
             </Button>
           </DialogActions>
         </Dialog>
-        <Drawer
-          variant="permanent"
-          classes={{
-            paper: classNames(
-              classes.drawerPaper,
-              !this.props.isDrawerOpen && classes.drawerPaperClose
-            )
-          }}
-          open={this.props.isDrawerOpen}
-        >
-          <div className={classes.toolbar} />
+        <Drawer variant="permanent" open={this.props.isDrawerOpen}>
           <List>
-            <Link className={classes.white} to="/">
+            <Link to="/">
               <ListItem
                 button
                 onClick={() => {
@@ -207,20 +184,15 @@ class NavBarMenu extends PureComponent {
                 }}
               >
                 <ListItemIcon>
-                  <Dashboard className={classes.white} />
+                  <Dashboard />
                 </ListItemIcon>
                 <ListItemText
                   key="Home-button"
-                  primary={
-                    <Typography className={classes.white} type="body1">
-                      Home
-                    </Typography>
-                  }
+                  primary={<Typography type="body1">Home</Typography>}
                 />
               </ListItem>
             </Link>
             <ListItem
-              className={classes.white}
               button
               onClick={() => {
                 this.props.setDrawerOpenState(true);
@@ -228,15 +200,11 @@ class NavBarMenu extends PureComponent {
               }}
             >
               <ListItemIcon>
-                <GraphicEQ className={classes.white} />
+                <GraphicEQ />
               </ListItemIcon>
               <ListItemText
                 key="SensorList-button"
-                primary={
-                  <Typography className={classes.white} type="body1">
-                    Sensor
-                  </Typography>
-                }
+                primary={<Typography type="body1">Sensor</Typography>}
               />
               {this.props.isSensorsOpen ? <ExpandLess /> : <ExpandMore />}
             </ListItem>
@@ -244,19 +212,15 @@ class NavBarMenu extends PureComponent {
               <List>
                 <ListItem key={"EditSensor-button"}>
                   <ListItemIcon>
-                    <EditIcon className={classes.white} />
+                    <EditIcon />
                   </ListItemIcon>
                   <ListItemText
-                    primary={
-                      <Typography className={classes.white} type="body1">
-                        Edit mode
-                      </Typography>
-                    }
+                    primary={<Typography type="body1">Edit mode</Typography>}
                   />
                   <ListItemSecondaryAction>
                     <Switch
                       checked={this.state.editMode}
-                      onChange={e => this.setEditModeState(e.target.checked)}
+                      onChange={(e) => this.setEditModeState(e.target.checked)}
                       size="small"
                     />
                   </ListItemSecondaryAction>
@@ -267,26 +231,21 @@ class NavBarMenu extends PureComponent {
                     key={"AddSensor-button"}
                     button
                     onClick={() => this.setDialogOpenState(true)}
-                    className={classes.white}
                   >
                     <ListItemIcon>
-                      <AddButton className={classes.white} />
+                      <AddButton />
                     </ListItemIcon>
                     <ListItemText
-                      primary={
-                        <Typography className={classes.white} type="body1">
-                          Add...
-                        </Typography>
-                      }
+                      primary={<Typography type="body1">Add...</Typography>}
                     />
                   </ListItem>
                 </Collapse>
               </List>
             </Collapse>
           </List>
-          <Divider className={classes.sidebarDivider} />
+          <Divider />
           <List>
-            <Link className={classes.white} to="/config">
+            <Link to="/config">
               <ListItem
                 button
                 onClick={() => {
@@ -295,14 +254,10 @@ class NavBarMenu extends PureComponent {
                 }}
               >
                 <ListItemIcon>
-                  <Settings className={classes.white} />
+                  <Settings />
                 </ListItemIcon>
                 <ListItemText
-                  primary={
-                    <Typography className={classes.white} type="body1">
-                      Config
-                    </Typography>
-                  }
+                  primary={<Typography type="body1">Config</Typography>}
                 />
               </ListItem>
             </Link>
@@ -313,4 +268,4 @@ class NavBarMenu extends PureComponent {
   }
 }
 
-export default withStyles(navbarmenuStyle)(NavBarMenu);
+export default NavBarMenu;
