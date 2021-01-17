@@ -1,9 +1,14 @@
 import React, { PureComponent, Fragment } from "react";
 // Material UI Components
-import { Grid, Paper, TextField, Button, Snackbar } from "@material-ui/core";
-//Style
-import profileStyle from "./configStyle";
-import { withStyles } from "@material-ui/core";
+import {
+  Grid,
+  TextField,
+  Button,
+  Snackbar,
+  Typography,
+  Card,
+  CardContent,
+} from "@material-ui/core";
 
 class Profile extends PureComponent {
   constructor(props) {
@@ -17,19 +22,19 @@ class Profile extends PureComponent {
       email: user.email,
       password: "",
       isEmail: undefined,
-      snack: undefined
+      snack: undefined,
     };
   }
 
   updateName = () => {
     this.state.userAuth
       .updateProfile({
-        displayName: this.state.name
+        displayName: this.state.name,
       })
       .then(() => {
         this.generateSnack("Updated name.");
       })
-      .catch(e => {
+      .catch((e) => {
         this.generateSnack(e.message);
       });
   };
@@ -40,7 +45,7 @@ class Profile extends PureComponent {
       .then(() => {
         this.generateSnack("Updated email.");
       })
-      .catch(e => {
+      .catch((e) => {
         this.generateSnack(e.message);
       });
   };
@@ -51,7 +56,7 @@ class Profile extends PureComponent {
       .then(() => {
         this.generateSnack("Email verification sent.");
       })
-      .catch(e => {
+      .catch((e) => {
         this.generateSnack(e.message);
       });
   };
@@ -64,7 +69,7 @@ class Profile extends PureComponent {
       .then(() => {
         this.generateSnack("Password reset email sent.");
       })
-      .catch(e => {
+      .catch((e) => {
         this.generateSnack(e.message);
       });
   };
@@ -73,7 +78,7 @@ class Profile extends PureComponent {
     if (window.confirm("Are you sure? You CANNOT undo this.")) {
       try {
         // Unsubscribe the listeners
-        this.props.firestoreSubscribers.forEach(unsubscribe => unsubscribe());
+        this.props.firestoreSubscribers.forEach((unsubscribe) => unsubscribe());
       } catch (e) {
         console.log(e);
       } finally {
@@ -89,12 +94,12 @@ class Profile extends PureComponent {
               .then(() => {
                 console.log("Auth deleted");
               })
-              .catch(e => {
+              .catch((e) => {
                 console.log(e);
               });
             console.log("Deleted records");
           })
-          .catch(e => {
+          .catch((e) => {
             console.log(e);
           });
       }
@@ -115,7 +120,7 @@ class Profile extends PureComponent {
       name: user.displayName,
       phone: user.phoneNumber,
       email: user.email,
-      isEmail: isEmail
+      isEmail: isEmail,
     });
   };
 
@@ -127,35 +132,21 @@ class Profile extends PureComponent {
   };
 
   reauthFlow = () => {
-    let { classes } = this.props;
     if (this.isAuthOld()) {
       if (this.state.isEmail) {
         // Reauthenticate with password here, given in TextField
         return (
           <Fragment>
             <TextField
-              id = "curr-password"
-              label = "Current Password"
-              type = "password"
-              className = {classes.textField}
-              value = {this.state.password}
-              InputProps = {{
-                className: classes.textField
-              }}
-              InputLabelProps = {{
-                style: {
-                  color: "white"
-                }
-              }}
-              onChange = {val => this.setState({ password: val.target.value })}
-              margin = "normal"
-            />
-            <Button
               fullWidth
-              variant = "contained"
-              className = {classes.submitInfo}
-              onClick = {this.reauthenticate}
-            >
+              id="curr-password"
+              label="Current Password"
+              type="password"
+              value={this.state.password}
+              onChange={(val) => this.setState({ password: val.target.value })}
+              margin="normal"
+            />
+            <Button fullWidth variant="contained" onClick={this.reauthenticate}>
               REAUTHENTICATE
             </Button>
           </Fragment>
@@ -163,12 +154,7 @@ class Profile extends PureComponent {
       } else {
         // Reauthenticate with popup here
         return (
-          <Button
-            fullWidth
-            variant = "contained"
-            className = {classes.submitInfo}
-            onClick = {this.reauthenticate}
-          >
+          <Button fullWidth variant="contained" onClick={this.reauthenticate}>
             REAUTHENTICATE
           </Button>
         );
@@ -187,7 +173,7 @@ class Profile extends PureComponent {
       this.props.firebase
         .auth()
         .currentUser.reauthenticateWithCredential(credential)
-        .then(result => {
+        .then((result) => {
           this.props.firebase
             .auth()
             .currentUser.reload()
@@ -195,7 +181,7 @@ class Profile extends PureComponent {
               this.generateSnack("Reauthorized.");
             });
         })
-        .catch(e => {
+        .catch((e) => {
           this.generateSnack(e.message);
         });
     } else {
@@ -203,7 +189,7 @@ class Profile extends PureComponent {
       this.props.firebase
         .auth()
         .currentUser.reauthenticateWithPopup(provider)
-        .then(result => {
+        .then((result) => {
           this.props.firebase
             .auth()
             .currentUser.reload()
@@ -211,146 +197,123 @@ class Profile extends PureComponent {
               this.generateSnack("Reauthorized.");
             });
         })
-        .catch(e => {
+        .catch((e) => {
           this.generateSnack(e.message);
         });
     }
   };
 
-  generateSnack = snack => {
+  generateSnack = (snack) => {
     this.setState({
-      snack: snack
+      snack: snack,
     });
   };
 
   render() {
-    const { classes } = this.props;
     return (
-      <div className = {classes.root}>
+      <React.Fragment>
         <Snackbar
-          anchorOrigin = {{
+          anchorOrigin={{
             vertical: "bottom",
-            horizontal: "right"
+            horizontal: "right",
           }}
-          open = {this.state.snack !== undefined}
-          autoHideDuration = {4000}
-          onClose = {() => this.generateSnack(undefined)}
-          message = {<span>{this.state.snack}</span>}
+          open={this.state.snack !== undefined}
+          autoHideDuration={4000}
+          onClose={() => this.generateSnack(undefined)}
+          message={<span>{this.state.snack}</span>}
         />
-        <Grid container spacing = {4}>
-          <Grid item md sm = {6} xs = {12}>
-            <Paper className = {classes.paper}>
-              <h2 className = {classes.postText}>Profile</h2>
-              <TextField
-                id = "name"
-                label = "Name"
-                className = {classes.textField}
-                value = {this.state.name || ""}
-                InputProps = {{
-                  className: classes.textField
-                }}
-                InputLabelProps = {{
-                  style: {
-                    color: "white"
-                  }
-                }}
-                onChange = {val => this.setState({ name: val.target.value })}
-                margin = "normal"
-              />
-              <Button
-                fullWidth
-                variant = "contained"
-                color = "primary"
-                className = {classes.submit}
-                onClick = {this.updateName}
-              >
-                SUBMIT
-              </Button>
-            </Paper>
+        <Grid container spacing={4}>
+          <Grid item md sm={6} xs={12}>
+            <Card>
+              <CardContent>
+                <Typography variant="h6">Profile</Typography>
+                <TextField
+                  fullWidth
+                  id="name"
+                  label="Name"
+                  value={this.state.name || ""}
+                  onChange={(val) => this.setState({ name: val.target.value })}
+                  margin="normal"
+                />
+                <Button
+                  fullWidth
+                  variant="contained"
+                  color="primary"
+                  onClick={this.updateName}
+                >
+                  SUBMIT
+                </Button>
+              </CardContent>
+            </Card>
           </Grid>
-          <Grid item md sm = {6} xs = {12}>
-            <Paper className = {classes.paper}>
-              <h2 className = {classes.postText}>Email Settings</h2>
-              <TextField
-                id = "email"
-                label = "Email"
-                className = {classes.textField}
-                value = {this.state.email || ""}
-                InputProps = {{
-                  classes: {
-                    disabled: classes.textFieldDisabled,
-                    root: classes.textField
-                  },
-                  disabled: !this.state.isEmail
-                }}
-                InputLabelProps = {{
-                  style: {
-                    color: "white"
-                  }
-                }}
-                onChange = {val => this.setState({ email: val.target.value })}
-                margin = "normal"
-              />
-              {this.state.isEmail ? (
-                <Button
+          <Grid item md sm={6} xs={12}>
+            <Card>
+              <CardContent>
+                <Typography variant="h6">Email Settings</Typography>
+                <TextField
                   fullWidth
-                  variant = "contained"
-                  color = "primary"
-                  className = {classes.submit}
-                  disabled = {this.isAuthOld()}
-                  onClick = {this.updateEmail}
-                >
-                  CHANGE EMAIL
-                </Button>
-              ) : (
-                undefined
-              )}
-              {this.state.isEmail && !this.state.userAuth.emailVerified ? (
-                <Button
-                  fullWidth
-                  variant = "contained"
-                  color = "primary"
-                  className = {classes.submitWarning}
-                  onClick = {this.verifyEmail}
-                >
-                  VERIFY EMAIL
-                </Button>
-              ) : (
-                undefined
-              )}
-            </Paper>
+                  id="email"
+                  label="Email"
+                  value={this.state.email || ""}
+                  InputProps={{
+                    disabled: !this.state.isEmail,
+                  }}
+                  onChange={(val) => this.setState({ email: val.target.value })}
+                  margin="normal"
+                />
+                {this.state.isEmail ? (
+                  <Button
+                    fullWidth
+                    variant="contained"
+                    color="primary"
+                    disabled={this.isAuthOld()}
+                    onClick={this.updateEmail}
+                  >
+                    CHANGE EMAIL
+                  </Button>
+                ) : undefined}
+                {this.state.isEmail && !this.state.userAuth.emailVerified ? (
+                  <Button
+                    fullWidth
+                    variant="contained"
+                    color="primary"
+                    onClick={this.verifyEmail}
+                  >
+                    VERIFY EMAIL
+                  </Button>
+                ) : undefined}
+              </CardContent>
+            </Card>
           </Grid>
-          <Grid item md sm = {12} xs = {12}>
-            <Paper className = {classes.paper}>
-              <h2 className = {classes.postText}>Administration</h2>
-              {this.reauthFlow()}
-              {this.state.isEmail ? (
+          <Grid item md sm={12} xs={12}>
+            <Card>
+              <CardContent>
+                <Typography variant="h6">Administration</Typography>
+                {this.reauthFlow()}
+                {this.state.isEmail ? (
+                  <Button
+                    fullWidth
+                    variant="contained"
+                    onClick={this.resetPassword}
+                  >
+                    SEND PASSWORD RESET
+                  </Button>
+                ) : undefined}
                 <Button
                   fullWidth
-                  variant = "contained"
-                  className = {classes.submit}
-                  onClick = {this.resetPassword}
+                  variant="contained"
+                  disabled={this.isAuthOld()}
+                  onClick={this.deleteAccount}
                 >
-                  SEND PASSWORD RESET
+                  DELETE ACCOUNT
                 </Button>
-              ) : (
-                undefined
-              )}
-              <Button
-                fullWidth
-                variant = "contained"
-                disabled = {this.isAuthOld()}
-                className = {classes.submitDanger}
-                onClick = {this.deleteAccount}
-              >
-                DELETE ACCOUNT
-              </Button>
-            </Paper>
+              </CardContent>
+            </Card>
           </Grid>
         </Grid>
-      </div>
+      </React.Fragment>
     );
   }
 }
 
-export default withStyles(profileStyle)(Profile);
+export default Profile;

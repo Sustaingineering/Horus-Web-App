@@ -153,11 +153,11 @@ class NavBarMenu extends PureComponent {
         >
           <DialogTitle id="form-dialog-title">Add a sensor</DialogTitle>
           <DialogContent>
-            <DialogContentText className={classes.textField}>
+            <DialogContentText>
               To add a sensor, give it a descriptive (unique) name, and input
               its unique ID.
             </DialogContentText>
-            <DialogContentText className={classes.infoText}>
+            <DialogContentText>
               {this.state.dialogInfoText}
             </DialogContentText>
             <TextField
@@ -165,26 +165,12 @@ class NavBarMenu extends PureComponent {
               margin="dense"
               id="unique-sensor-name"
               label="Unique Sensor Name"
-              className={classes.textField}
-              InputLabelProps={{
-                className: classes.textField
-              }}
-              InputProps={{
-                className: classes.textField
-              }}
               fullWidth
             />
             <TextField
               margin="dense"
               id="unique-sensor-id"
               label="Unique Sensor ID"
-              className={classes.textField}
-              InputLabelProps={{
-                className: classes.textField
-              }}
-              InputProps={{
-                className: classes.textField
-              }}
               fullWidth
             />
           </DialogContent>

@@ -5,29 +5,26 @@
   "description": "Horus monitoring system",
   "private": true,
   "dependencies": {
-    "@date-io/date-fns": "^1.3.13",
-    "@material-ui/core": "^4.9.1",
-    "@material-ui/icons": "^4.9.1",
-    "@vtex/react-csv-parse": "^3.0.2",
+    "@date-io/date-fns": "^2.10.6",
+    "@emotion/react": "^11.1.4",
+    "@emotion/styled": "^11.0.0",
+    "@material-ui/core": "^5.0.0-alpha.23",
+    "@material-ui/icons": "^5.0.0-alpha.23",
+    "@material-ui/lab": "^5.0.0-alpha.23",
     "csv": "^5.3.1",
-    "date-fns": "^2.9.0",
-    "firebase": "^7.8.0",
-    "firebase-tools": "^7.12.1",
+    "firebase": "^8.2.3",
+    "firebase-tools": "^9.2.1",
     "firebaseui": "^4.4.0",
     "font-awesome": "^4.7.0",
-    "material-ui": "^0.20.2",
-    "material-ui-pickers": "^2.2.4",
     "moment": "^2.24.0",
     "papaparse": "^5.1.1",
-    "react": "^16.12.0",
-    "react-dom": "^16.12.0",
+    "react": "^17.0.0",
+    "react-dom": "^17.0.0",
     "react-router": "^5.1.2",
     "react-router-dom": "^5.1.2",
-    "react-scripts": "^3.3.1",
-    "recharts": "^1.8.5",
-    "typeface-roboto": "0.0.75",
-    "@material-ui/pickers": "^3.2.10",
-    "@material-ui/styles": "^4.9.0"
+    "react-scripts": "^4.0.1",
+    "recharts": "^2.0.3",
+    "typeface-roboto": "^1.1.13"
   },
   "homepage": ".",
   "scripts": {
@@ -45,6 +42,7 @@
     "not op_mini all"
   ],
   "devDependencies": {
+    "eslint-plugin-prettier": "^3.3.1",
     "react-app-rewired": "^2.1.5"
   }
 }

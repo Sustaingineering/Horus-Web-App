@@ -11,8 +11,8 @@ import {
 } from "@material-ui/core"
 import {
   DateTimePicker,
-  MuiPickersUtilsProvider,
-} from '@material-ui/pickers';
+} from '@material-ui/lab';
+import LocalizationProvider from '@material-ui/lab/LocalizationProvider';
 import DateFnsUtils from '@date-io/date-fns'; // choose your lib
 import { historyStyle } from "./dashboardStyle";
 import { mainTheme } from "../../assets/jss/mainStyle";
@@ -82,7 +82,7 @@ class ShowHistoryGraph extends PureComponent {
                 Pick from Calendar
               </Typography>
               <ThemeProvider theme={mainTheme}>
-                <MuiPickersUtilsProvider utils={DateFnsUtils}>
+                <LocalizationProvider dateAdapter={DateFnsUtils}>
                   <DateTimePicker
                     InputLabelProps={{ className: classes.select }}
                     InputProps={{ className: classes.select }}
@@ -106,7 +106,7 @@ class ShowHistoryGraph extends PureComponent {
                     maxDate={now}
                     minDate={this.start}
                   />
-                </MuiPickersUtilsProvider>
+                </LocalizationProvider>
               </ThemeProvider>
             </Paper>
           </Grid>

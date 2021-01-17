@@ -10,31 +10,31 @@ import Home from "./Pages/Home/home.jsx";
 // Config
 import Config from "./Pages/Config/Config.jsx";
 import NavBar from "./Layout/Navbar/Navbar";
-import { withStyles } from "@material-ui/core";
+import { Container, withStyles } from "@material-ui/core";
 import { backgroundColor } from "./assets/jss/mainStyle";
 
 // Sensor
 import Sensor from "./Pages/Dashboard/Sensor";
 
-const customStyle = theme => ({
-  root: {
-    position: "relative",
-    [theme.breakpoints.down("sm")]: {
-      paddingTop: theme.spacing(7)
-    },
-    [theme.breakpoints.up("sm")]: {
-      paddingTop: theme.spacing(8)
-    },
-    backgroundColor: backgroundColor,
-    margin: theme.spacing(1),
-    paddingBottom: theme.spacing(8)
-  },
-  container: {
-    [theme.breakpoints.up("sm")]: {
-      marginLeft: theme.spacing(7)
-    }
-  }
-});
+// const customStyle = theme => ({
+//   root: {
+//     position: "relative",
+//     [theme.breakpoints.down("sm")]: {
+//       paddingTop: theme.spacing(7)
+//     },
+//     [theme.breakpoints.up("sm")]: {
+//       paddingTop: theme.spacing(8)
+//     },
+//     backgroundColor: backgroundColor,
+//     margin: theme.spacing(1),
+//     paddingBottom: theme.spacing(8)
+//   },
+//   container: {
+//     [theme.breakpoints.up("sm")]: {
+//       marginLeft: theme.spacing(7)
+//     }
+//   }
+// });
 
 class App extends PureComponent {
   constructor(props) {
@@ -133,12 +133,10 @@ class App extends PureComponent {
   };
 
   render() {
-    const { classes } = this.props;
     const renderPlatform = this.state.authUser ? (
       <Fragment>
         <NavBar sensors={this.state.sensors} firebase={this.props.firebase} />
-        <div className={classes.root}>
-          <div className={classes.container}>
+        <Container>
             <Switch>
               <Route
                 path="/"
@@ -163,8 +161,7 @@ class App extends PureComponent {
               />
               <Redirect to="/" />
             </Switch>
-          </div>
-        </div>
+        </Container>
       </Fragment>
     ) : (
       <Switch>
@@ -181,4 +178,4 @@ class App extends PureComponent {
   }
 }
 
-export default withStyles(customStyle)(App);
+export default App;

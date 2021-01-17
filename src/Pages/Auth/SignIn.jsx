@@ -6,9 +6,6 @@ import { Avatar } from "@material-ui/core";
 // Icons
 import LockIcon from "@material-ui/icons/LockOutlined";
 import BackIcon from "@material-ui/icons/ArrowBack";
-//Style
-import signinStyle from "./signinStyle";
-import { withStyles } from "@material-ui/core";
 // Firebase
 import * as firebaseui from "firebaseui";
 
@@ -41,12 +38,11 @@ class SignInPage extends PureComponent {
   };
 
   render() {
-    const { classes } = this.props;
     return (
-      <div className={classes.root}>
-        <div className={classes.container}>
-          <div className={classes.paper}>
-            <Avatar className={classes.avatar}>
+      <div>
+        <div>
+          <div>
+            <Avatar>
               <LockIcon />
             </Avatar>
             <div id="firebaseui-auth-container"/>
@@ -62,4 +58,4 @@ class SignInPage extends PureComponent {
   }
 }
 
-export default withRouter(withStyles(signinStyle)(SignInPage));
+export default withRouter(SignInPage);
