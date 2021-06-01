@@ -38,7 +38,7 @@ class ChartContainer extends PureComponent {
         <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
           {dataset.map((e) => {
             return (
-              <div className="card bg-white p-5 rounded-lg">
+              <div className="card bg-white p-5 rounded-lg shadow-lg" key={`chart-${e.title}`}>
                 <span className="w-screen"></span>
                 <Chart
                   data={data}

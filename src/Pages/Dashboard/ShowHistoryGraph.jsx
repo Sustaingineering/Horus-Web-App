@@ -22,14 +22,14 @@ class ShowHistoryGraph extends PureComponent {
     this.changeCalEnd = this.props.changeCalEnd;
 
     return (
-      <Grid container spacing={3}>
-        <Grid item xs={6}>
-          <Grid>
-            <Paper>
-              <Typography variant="h6" color="primary" gutterBottom>
+      <div>
+        <div>
+          <div>
+            <div>
+              <p variant="h6" color="primary" gutterBottom>
                 Date Range
-              </Typography>
-              <FormControl style={{ minWidth: 120 }}>
+              </p>
+              {/* <form style={{ minWidth: 120 }}>
                 <InputLabel shrink htmlFor="range">Range</InputLabel>
                 <Select
                   name="range-select"
@@ -47,19 +47,18 @@ class ShowHistoryGraph extends PureComponent {
                   <MenuItem value={7}>6 months</MenuItem>
                   <MenuItem value={8}>1 year</MenuItem>
                 </Select>
-              </FormControl>
-            </Paper>
-          </Grid>
-        </Grid>
-        <Grid item xs={6}>
-          <Grid>
-            <Paper>
-              <Typography variant="h6" color="primary" gutterBottom>
+              </form> */}
+            </div>
+          </div>
+        </div>
+        <div>
+          <div>
+            <div>
+              <p variant="h6" color="primary" gutterBottom>
                 Pick from Calendar
-              </Typography>
-              <ThemeProvider theme={mainTheme}>
-                <LocalizationProvider dateAdapter={DateFnsUtils}>
-                  <DateTimePicker
+              </p>
+                {/* <LocalizationProvider dateAdapter={DateFnsUtils}> */}
+                  {/* <DateTimePicker
                     label="Start"
                     inputVariant="standard"
                     format="yyyy/MM/dd HH:mm"
@@ -75,18 +74,17 @@ class ShowHistoryGraph extends PureComponent {
                     onChange={this.changeCalEnd}
                     maxDate={now}
                     minDate={this.start}
-                  />
-                </LocalizationProvider>
-              </ThemeProvider>
-            </Paper>
-          </Grid>
-        </Grid>
-        <Grid item xs={12} sm={12} md={12}>
+                  /> */}
+                {/* </LocalizationProvider> */}
+            </div>
+          </div>
+        </div>
+        <div item xs={12} sm={12} md={12}>
           <ChartContainer
             data={this.historyData}
           />
-        </Grid>
-      </Grid>
+        </div>
+      </div>
     );
   }
 }

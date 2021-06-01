@@ -62,13 +62,13 @@ class Sensors extends PureComponent {
         <Section text="Sensors" subText="Add, edit, and remove sensors here" />
         <div className="mt-10 grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 w-full gap-6">
           {Object.keys(this.props.sensors).map((sensor) => (
-            <div className="card bg-white p-5 rounded-lg h-72">
+            <div className="card bg-white p-5 rounded-lg shadow-lg h-72" key={`sensor-${sensor}`}>
               {/* <span className="w-screen"></span> */}
-              <p className="card-title h-full">
+              <div className="card-title h-full">
                 <ChipIcon className="block h-8 w-8 -ml-1 mr-2 mb-2" />
                 {sensor}
                 <p className="font-extralight text-sm whitespace-nowrap">{`ID: ${this.props.sensors[sensor]}`}</p>
-              </p>
+              </div>
               <div className="card-actions">
                 <Link to={`/sensors/${sensor}`}>
                   <button className="btn">View</button>

@@ -2,7 +2,7 @@ import clsx from "clsx";
 
 export function Container(props) {
   return (
-    <div className="container mx-auto my-auto mt-0 max-w-7xl w-full p-3">
+    <div className="container mx-auto my-auto mt-0 max-w-7xl w-full p-1.5 sm:p-2.5">
       <div className="w-full h-full bg-transparent">
         {props.children}
       </div>

@@ -8,7 +8,7 @@ import { Container, Section } from "../../Components/Basics";
 import { RadioGroup } from "@headlessui/react";
 import clsx from "clsx";
 
-const Tabs = ["Realtime Data", "Historical Data", "Upload Data", "Settings"];
+const Tabs = ["Realtime", "Historical", "Edit"];
 
 class Dashboard extends PureComponent {
   constructor(props) {
@@ -41,7 +41,7 @@ class Dashboard extends PureComponent {
         <div className="justify-center flex flex-wrap content-center">
           <RadioGroup
             as="div"
-            className="tabs tabs-boxed"
+            className="tabs tabs-boxed shadow-xl my-5"
             value={this.state.currentTab}
             onChange={this.setTab}
           >

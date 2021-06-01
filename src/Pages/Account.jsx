@@ -189,7 +189,7 @@ export default class Account extends PureComponent {
           </div>
         ) : undefined}
         <div className="grid md:grid-cols-1 grid-cols-1 gap-6 md:p-10">
-          <div className="card bg-white rounded-lg">
+          <div className="card bg-white rounded-lg shadow-lg">
             <div className="card-body">
               <p className="card-title">Profile</p>
               {/* Weird hack below to make it actually take up the entire row */}
@@ -222,7 +222,7 @@ export default class Account extends PureComponent {
             </div>
           </div>
 
-          <div className="card bg-white rounded-lg">
+          <div className="card bg-white rounded-lg shadow-lg">
             <div className="card-body">
               <p className="card-title">Email</p>
               <div className="form-control">
@@ -263,7 +263,7 @@ export default class Account extends PureComponent {
             </div>
           </div>
 
-          <div className="card bg-white rounded-lg">
+          <div className="card bg-white rounded-lg shadow-lg">
             <div className="card-body">
               <p className="card-title">Administration</p>
               {this.isAuthOld() ? (

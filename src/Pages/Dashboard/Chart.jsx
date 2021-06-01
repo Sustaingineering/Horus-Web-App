@@ -38,7 +38,7 @@ class Chart extends PureComponent {
         >
           <CartesianGrid
             strokeDasharray="3 3"
-            verticalFill={["263148", "#444444"]}
+            // verticalFill={["263148", "#444444"]}
             fillOpacity={0.1}
           />
           <defs>

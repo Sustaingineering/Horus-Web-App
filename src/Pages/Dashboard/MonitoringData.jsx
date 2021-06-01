@@ -61,8 +61,8 @@ class MonitoringData extends PureComponent {
     }
     return (
       <Container>
-        <div className="grid-flow-row lg:grid-cols-3 md:grid-cols-2 grid-cols-1 stats w-full rounded-lg">
-          {Object.keys(textMap).map((type) => (<div className="stat">
+        <div className="grid-flow-row lg:grid-cols-3 md:grid-cols-2 grid-cols-1 stats w-full rounded-lg shadow-lg">
+          {Object.keys(textMap).map((type) => (<div className="stat" key={`monitoring-data-${type}`}>
             <div className="stat-figure text-info">{}</div>
             <div className="stat-title">{textMap[type]}</div>
             <div className="stat-value text-info">{Number(data[type]).toFixed(2)}</div>
