@@ -20,22 +20,23 @@ class Sensor extends PureComponent {
     this.db = null;
     this.state = {
       data: [],
-      historyData: []
+      historyData: [],
     };
     let date = new Date();
     let now = date.getTime();
-    let d = now - (30 * 24 * 60 * 60 * 1000);
+    let d = now - 30 * 24 * 60 * 60 * 1000;
     this.timestamp = Math.floor(d / 1000);
     this.nowstamp = Math.floor(now / 1000);
-    this.liveDataStamp = Math.floor((now - (20 * 24 * 60 * 60 * 1000)) / 1000);
+    this.liveDataStamp = Math.floor((now - 20 * 24 * 60 * 60 * 1000) / 1000);
   }
 
   // We wait until the component has been mounted (which means
   // other components are unmounted) before polling, so we don't
   // have multiple registers to a particular database
   componentDidMount = () => {
+    this.props.setPath(`sensors/${this.props.sensorName}`);
     this.initDatabase(this.props.sensorId);
-    this.initLiveData()
+    this.initLiveData();
   };
 
   changeRange = (value) => {
@@ -67,18 +68,18 @@ class Sensor extends PureComponent {
     this.getHistoricalData();
   };
 
-
-  initDatabase = sensorId => {
+  initDatabase = (sensorId) => {
     this.db = this.props.firebase.database().ref(sensorId);
   };
 
-
   initLiveData = () => {
     let temp = [];
-    this.db.orderByKey()
-      .startAt(this.liveDataStamp.toString())
+    this.db
+      .orderByKey()
+      .limitToLast(50)
+      // .startAt(this.liveDataStamp.toString())
       .endAt(this.nowstamp.toString())
-      .once("value", e => {
+      .once("value", (e) => {
         for (let i in e.val()) {
           temp.push(e.val()[i]);
           // temp.push(e.val()[i]); //removed so that main data page shows only live data
@@ -86,16 +87,16 @@ class Sensor extends PureComponent {
         temp = temp.slice();
         if (temp.length >= 30) temp.shift();
         this.setState({
-          data: temp
+          data: temp,
         });
       });
 
-    this.db.limitToLast(1).on("child_added", e => {
+    this.db.limitToLast(1).on("child_added", (e) => {
       temp = temp.slice();
       if (temp.length >= 30) temp.shift();
       temp.push(e.val());
       this.setState({
-        data: temp
+        data: temp,
       });
     });
   };
@@ -103,15 +104,16 @@ class Sensor extends PureComponent {
   getHistoricalData = () => {
     let tempHistory = [];
 
-    this.db.orderByKey()
+    this.db
+      .orderByKey()
       .startAt(this.timestamp.toString())
       .endAt(this.nowstamp.toString())
-      .once("value", e => {
+      .once("value", (e) => {
         for (let i in e.val()) {
           tempHistory.push(e.val()[i]);
         }
         this.setState({
-          historyData: tempHistory
+          historyData: tempHistory,
         });
       });
   };
@@ -122,21 +124,19 @@ class Sensor extends PureComponent {
 
   render() {
     return (
-      <div>
-        <Dashboard
-          data={this.state.data}
-          historyData={this.state.historyData}
-          sensorName={this.props.sensorName}
-          sensorId={this.props.sensorId}
-          changeRange={this.changeRange}
-          changeCalStart={this.handleStartDateTimeChange}
-          changeCalEnd={this.handleEndDateTimeChange}
-          selected={this.state.selected}
-          start={this.state.start}
-          end={this.state.end}
-          firebase={this.props.firebase}
-        />
-      </div>
+      <Dashboard
+        data={this.state.data}
+        historyData={this.state.historyData}
+        sensorName={this.props.sensorName}
+        sensorId={this.props.sensorId}
+        changeRange={this.changeRange}
+        changeCalStart={this.handleStartDateTimeChange}
+        changeCalEnd={this.handleEndDateTimeChange}
+        selected={this.state.selected}
+        start={this.state.start}
+        end={this.state.end}
+        firebase={this.props.firebase}
+      />
     );
   }
 }

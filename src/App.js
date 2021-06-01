@@ -20,6 +20,7 @@ class App extends PureComponent {
       authUser: undefined,
       sensors: {},
       posts: [],
+      currentPath: undefined,
     };
   }
 
@@ -85,31 +86,20 @@ class App extends PureComponent {
     );
   };
 
-  processSensors = () => {
-    let sensorsRedirects = [];
-    for (let sensor in this.state.sensors) {
-      sensorsRedirects.push(
-        <Route
-          path={"/" + sensor}
-          exact
-          key={sensor}
-          render={() => (
-            <Sensor
-              sensorName={sensor}
-              firebase={this.props.firebase}
-              sensorId={this.state.sensors[sensor]}
-            />
-          )}
-        />
-      );
-    }
-    return sensorsRedirects;
+  setPath = (path) => {
+    this.setState({
+      currentPath: path,
+    });
   };
 
   render() {
     const renderPlatform = this.state.authUser ? (
       <Fragment>
-        <NavBar sensors={this.state.sensors} firebase={this.props.firebase}>
+        <NavBar
+          sensors={this.state.sensors}
+          firebase={this.props.firebase}
+          currentPath={this.state.currentPath}
+        >
           <Switch>
             {Object.keys(this.state.sensors).map((sensor) => (
               <Route
@@ -121,6 +111,7 @@ class App extends PureComponent {
                     sensorName={sensor}
                     firebase={this.props.firebase}
                     sensorId={this.state.sensors[sensor]}
+                    setPath={this.setPath}
                   />
                 )}
               />
@@ -130,8 +121,10 @@ class App extends PureComponent {
               exact
               render={() => (
                 <Sensors
+                  sensors={this.state.sensors}
                   firebase={this.props.firebase}
                   firestoreSubscribers={this.firestoreSubscribers}
+                  setPath={this.setPath}
                 />
               )}
             />
@@ -142,6 +135,7 @@ class App extends PureComponent {
                 <Help
                   firebase={this.props.firebase}
                   firestoreSubscribers={this.firestoreSubscribers}
+                  setPath={this.setPath}
                 />
               )}
             />
@@ -152,6 +146,7 @@ class App extends PureComponent {
                 <Account
                   firebase={this.props.firebase}
                   firestoreSubscribers={this.firestoreSubscribers}
+                  setPath={this.setPath}
                 />
               )}
             />
@@ -159,7 +154,7 @@ class App extends PureComponent {
               path="/"
               exact
               render={() => (
-                <Home posts={this.state.posts} firebase={this.props.firebase} />
+                <Home posts={this.state.posts} firebase={this.props.firebase} setPath={this.setPath} />
               )}
             />
             <Redirect to="/" />

@@ -1,35 +1,21 @@
 import React, { PureComponent } from "react";
 import { Link } from "react-router-dom";
-import { Container } from "../Components/Basics";
+import { Container, Section } from "../Components/Basics";
 import bg from "../assets/images/bg.jpg";
 
 class Home extends PureComponent {
+  componentDidMount = () => {
+    this.props.setPath("home");
+  }
   render() {
     const user = this.props.firebase.auth().currentUser.displayName;
     return (
       <Container>
-        <div className="grid grid-cols-1 gap-6 max-w-6xl">
-          <div className="card image-full max-h-80">
-            <figure>
-              <img src={bg} />
-            </figure>
-            <div className="card-body">
-              <p className="card-title">
-                {user === null ? "Welcome!" : "Welcome, " + user + "!"}
-              </p>
-              <p>
-                Sustaingineering is a student engineering design team that
-                designs, develops and deploys sustainable technology solutions
-                for renewable energy applications in remote and developing
-                communities. Our goal is to create power solutions to address
-                the global challenge of climate change and to improve the
-                quality of life of the people living in these communities.
-              </p>
-            </div>
-          </div>
+        <Section text={user === null ? "Welcome!" : "Welcome, " + user + "!"} subText="Updates will show up here" />
+        <div className="mt-10 grid grid-cols-1 gap-6 max-w-7xl">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {user === null ? (
-              <div className="card">
+              <div className="card bg-white rounded-lg">
                 <div className="card-body">
                   <p className="card-title">Set your name!</p>
                   <p>
@@ -39,7 +25,7 @@ class Home extends PureComponent {
               </div>
             ) : undefined}
             {this.props.posts.map((post) => (
-              <div className="card" key={post.title}>
+              <div className="card bg-white rounded-lg" key={post.title}>
                 <div className="card-body">
                   <p className="card-title">{post.title}</p>
                   <p dangerouslySetInnerHTML={{ __html: post.text }} />

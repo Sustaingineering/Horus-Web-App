@@ -1,14 +1,15 @@
 import React, { PureComponent } from "react";
+import { Container } from "../../Components/Basics";
+import { LightningBoltIcon, TrendingUpIcon, } from "@heroicons/react/outline";
 
-
-const iconMap = classes => {
+const iconMap = (classes) => {
   return {
     voltage: <OfflineBolt />,
     current: <Timeline />,
     power: <PowerSettingsNew />,
     "op-temp": <AcUnit />,
     "surface-temperature": <AcUnit />,
-    "water-breaker": <Waves />
+    "water-breaker": <Waves />,
   };
 };
 
@@ -18,11 +19,11 @@ const textMap = {
   power: "Power Absorbed",
   "op-temp": "Operating Temperature",
   "surface-temperature": "Surface Temperature",
-  "water-breaker": "Water Breaker"
+  "water-breaker": "Water Breaker",
 };
 
 class MonitoringData extends PureComponent {
-  generateInfoBoxes = data => {
+  generateInfoBoxes = (data) => {
     let { classes } = this.props;
     let boxes = [];
     let icons = iconMap(classes);
@@ -41,7 +42,7 @@ class MonitoringData extends PureComponent {
                   {data[type] !== undefined
                     ? data[type] % 1 === 0
                       ? data[type]
-                      : Number(data[type]).toFixed(2)
+                      : Number(data[type] * 1000).toFixed(2)
                     : undefined}
                 </Typography>
               </CardContent>
@@ -59,9 +60,41 @@ class MonitoringData extends PureComponent {
       data = this.props.data[this.props.data.length - 1];
     }
     return (
-      <Grid container spacing={3}>
-        {this.generateInfoBoxes(data)}
-      </Grid>
+      <Container>
+        <div className="grid-flow-row lg:grid-cols-3 md:grid-cols-2 grid-cols-1 stats w-full rounded-lg">
+          {Object.keys(textMap).map((type) => (<div className="stat">
+            <div className="stat-figure text-info">{}</div>
+            <div className="stat-title">{textMap[type]}</div>
+            <div className="stat-value text-info">{Number(data[type]).toFixed(2)}</div>
+            {/* <div className="stat-desc">21% more than last month</div> */}
+          </div>))}
+          {/* <div className="stat">
+            <div className="stat-figure text-primary"></div>
+          </div>
+          <div className="stat">
+            <div className="stat-figure text-info"></div>
+            <div className="stat-title">Page Views</div>
+            <div className="stat-value text-info">2.6M</div>
+            <div className="stat-desc">21% more than last month</div>
+          </div>
+          <div className="stat">
+            <div className="stat-figure text-info">
+              <div className="avatar online">
+                <div className="w-16 h-16 p-1 mask mask-squircle bg-base-100">
+                  <img
+                    src="/tailwind-css-component-profile-5@56w.png"
+                    alt="Avatar Tailwind CSS Component"
+                    className="mask mask-squircle"
+                  />
+                </div>
+              </div>
+            </div>
+            <div className="stat-value">86%</div>
+            <div className="stat-title">Tasks done</div>
+            <div className="stat-desc text-info">31 tasks remaining</div>
+          </div> */}
+        </div>
+      </Container>
     );
   }
 }

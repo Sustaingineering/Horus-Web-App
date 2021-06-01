@@ -8,13 +8,13 @@ class LandingPage extends PureComponent {
     return (
       <div className="mt-20">
         <Container>
-          <div className="card text-center shadow-2xl">
-            <img className="mx-auto" src={logos} alt="logos" />
+          <div className="card text-center bg-white max-w-2xl m-auto shadow-xl">
+            <img className="mx-auto filter invert" src={logos} alt="logos" />
             <div className="card-body">
-              <p className="text-lg">Horus Monitoring</p>
+              <p className="text-lg font-semibold subpixel-antialiased">Horus Monitoring</p>
               <div className="card-actions justify-center">
                 <Link to="/login">
-                  <button className="btn btn-outline btn-accent">
+                  <button className="btn btn-primary">
                     SIGN IN
                   </button>
                 </Link>

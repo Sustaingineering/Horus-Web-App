@@ -4,7 +4,11 @@ import MonitoringData from "./MonitoringData";
 import ChartContainer from "./ChartContainer";
 import UploadData from "./UploadData";
 import ShowHistoryGraph from "./ShowHistoryGraph";
-import { Container } from "../../Components/Basics";
+import { Container, Section } from "../../Components/Basics";
+import { RadioGroup } from "@headlessui/react";
+import clsx from "clsx";
+
+const Tabs = ["Realtime Data", "Historical Data", "Upload Data", "Settings"];
 
 class Dashboard extends PureComponent {
   constructor(props) {
@@ -14,6 +18,7 @@ class Dashboard extends PureComponent {
       data: null,
       error: null,
       historyData: null,
+      currentTab: Tabs[0],
     };
   }
 
@@ -21,37 +26,46 @@ class Dashboard extends PureComponent {
     this.setState({ value: value });
   };
 
+  setTab = (tab) => {
+    this.setState({
+      currentTab: tab,
+    });
+  };
+
   render() {
-    const { value } = this.state;
     const data = (this.props.data || []).slice();
 
     return (
       <Container>
-        <div className="card max-w-6xl">
-          <p className="card-title">{this.props.sensorName + " Dashboard"}</p>
-          {/* <MonitoringData data={data} /> */}
-          <br />
-          <div className="tabs">
-            <a className="tab tab-bordered">Data</a>
-            <a className="tab tab-bordered">History</a>
-            <a className="tab tab-bordered">Upload CSV</a>
-          </div>
-          {/* <Tabs
-            value={value}
-            onChange={this.handleChange}
-            indicatorColor="primary"
-            textColor="primary"
-            centered
+        <Section text={`${this.props.sensorName} Dashboard`} subText={`ID: ${this.props.sensorId}`} />
+        <div className="justify-center flex flex-wrap content-center">
+          <RadioGroup
+            as="div"
+            className="tabs tabs-boxed"
+            value={this.state.currentTab}
+            onChange={this.setTab}
           >
-            <Tab label="Data" />
-            <Tab label="History" />
-            <Tab label="Upload CSV" />
-          </Tabs> */}
-          <br />
-          <br />
+            {Tabs.map((tab) => (
+              <RadioGroup.Option value={tab}>
+                {({ checked }) => (
+                  <a className={clsx("tab", checked ? "tab-active" : "")}>
+                    {tab}
+                  </a>
+                )}
+              </RadioGroup.Option>
+            ))}
+          </RadioGroup>
+        </div>
+
+        {
           {
-            [
-              <ChartContainer data={this.props.data} />,
+            [Tabs[0]]: (
+              <Fragment>
+                <MonitoringData data={data} />
+                <ChartContainer data={this.props.data} />
+              </Fragment>
+            ),
+            [Tabs[1]]: (
               <ShowHistoryGraph
                 selected={this.props.selected}
                 start={this.props.start}
@@ -60,14 +74,16 @@ class Dashboard extends PureComponent {
                 changeCalStart={this.props.changeCalStart}
                 changeCalEnd={this.props.changeCalEnd}
                 historyData={this.props.historyData}
-              />,
+              />
+            ),
+            [Tabs[2]]: (
               <UploadData
                 firebase={this.props.firebase}
                 sensorId={this.props.sensorId}
-              />,
-            ][value]
-          }
-        </div>
+              />
+            ),
+          }[this.state.currentTab]
+        }
       </Container>
     );
   }

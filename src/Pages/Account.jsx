@@ -1,5 +1,5 @@
-import React, { PureComponent, Fragment } from "react";
-import { Container } from "../Components/Basics";
+import React, { PureComponent } from "react";
+import { Container, Section } from "../Components/Basics";
 
 export default class Account extends PureComponent {
   constructor(props) {
@@ -100,6 +100,7 @@ export default class Account extends PureComponent {
 
   componentDidMount = async () => {
     // Update the user details to the latest results
+    this.props.setPath("account");
     await this.props.firebase.auth().currentUser.reload();
     let user = this.props.firebase.auth().currentUser;
     // Check if it's an email auth
@@ -178,6 +179,7 @@ export default class Account extends PureComponent {
   render() {
     return (
       <Container>
+        <Section text="Account" subText="Settings related to your account" />
         {this.state.snack ? (
           <div
             className="absolute bottom-0 right-0 alert alert-info shadow-lg mx-5 my-5"
@@ -186,8 +188,8 @@ export default class Account extends PureComponent {
             {this.state.snack}
           </div>
         ) : undefined}
-        <div className="grid md:grid-cols-1 grid-cols-1 gap-6 max-w-6xl">
-          <div className="card">
+        <div className="grid md:grid-cols-1 grid-cols-1 gap-6 md:p-10">
+          <div className="card bg-white rounded-lg">
             <div className="card-body">
               <p className="card-title">Profile</p>
               {/* Weird hack below to make it actually take up the entire row */}
@@ -220,7 +222,7 @@ export default class Account extends PureComponent {
             </div>
           </div>
 
-          <div className="card">
+          <div className="card bg-white rounded-lg">
             <div className="card-body">
               <p className="card-title">Email</p>
               <div className="form-control">
@@ -261,7 +263,7 @@ export default class Account extends PureComponent {
             </div>
           </div>
 
-          <div className="card">
+          <div className="card bg-white rounded-lg">
             <div className="card-body">
               <p className="card-title">Administration</p>
               {this.isAuthOld() ? (

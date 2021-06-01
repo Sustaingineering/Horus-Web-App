@@ -35,10 +35,10 @@ class ChartContainer extends PureComponent {
     const data = (this.props.data || []).slice();
     return (
       <Container>
-        <div className="grid grid-cols-1 gap-6">
+        <div className="grid grid-cols-1 xl:grid-cols-2 gap-6">
           {dataset.map((e) => {
             return (
-              <div className="card">
+              <div className="card bg-white p-5 rounded-lg">
                 <span className="w-screen"></span>
                 <Chart
                   data={data}

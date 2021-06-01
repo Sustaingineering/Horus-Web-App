@@ -60,7 +60,7 @@ class Chart extends PureComponent {
           <XAxis
             dataKey="time-stamp"
             name="Time"
-            tick={{ fill: "white" }}
+            tick={{ fill: "black" }}
             stroke="#efefef"
             type="number"
             domain={["dataMin", "dataMax"]}
@@ -73,7 +73,7 @@ class Chart extends PureComponent {
             <Label
               value="Time"
               offset={0}
-              fill="white"
+              fill="black"
               position="insideBottom"
               dy={15}
             />
@@ -81,17 +81,17 @@ class Chart extends PureComponent {
               value={this.props.title}
               offset={0}
               fontSize={20}
-              fill="white"
+              fill="black"
               position="top"
               dy={-250}
             />
           </XAxis>
           <YAxis
-            tick={{ fill: "white" }}
+            tick={{ fill: "black" }}
             stroke="#efefef"
             label={{
               value: this.props.unit,
-              fill: "white",
+              fill: "black",
               angle: -90,
               position: "insideLeft",
             }}
