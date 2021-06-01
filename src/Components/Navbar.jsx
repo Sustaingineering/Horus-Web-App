@@ -44,7 +44,7 @@ class Navbar extends PureComponent {
           <div className="w-full navbar">
             <div className="flex-none lg:hidden">
               <label htmlFor="my-drawer-3" className="btn btn-square btn-ghost">
-                <MenuIcon className={ICON_CLASSES} />
+                <MenuIcon className={clsx(ICON_CLASSES, "ml-2")} />
               </label>
             </div>
             <div className="flex-1 px-2 mx-2">

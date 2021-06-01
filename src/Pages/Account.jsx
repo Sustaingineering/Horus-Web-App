@@ -188,7 +188,7 @@ export default class Account extends PureComponent {
             {this.state.snack}
           </div>
         ) : undefined}
-        <div className="grid md:grid-cols-1 grid-cols-1 gap-6 md:p-10">
+        <div className="mt-10 grid md:grid-cols-1 grid-cols-1 gap-6 md:p-10">
           <div className="card bg-white rounded-lg shadow-lg">
             <div className="card-body">
               <p className="card-title">Profile</p>
