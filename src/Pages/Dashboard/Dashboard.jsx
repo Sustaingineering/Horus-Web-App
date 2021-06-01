@@ -1,13 +1,10 @@
 import React, { PureComponent, Fragment } from "react";
-// Material UI Components
-import { withStyles, Tabs, Tab, Typography } from "@material-ui/core";
 // Components
 import MonitoringData from "./MonitoringData";
 import ChartContainer from "./ChartContainer";
 import UploadData from "./UploadData";
 import ShowHistoryGraph from "./ShowHistoryGraph";
-//Style
-import { dashboardStyle } from "./dashboardStyle";
+import { Container } from "../../Components/Basics";
 
 class Dashboard extends PureComponent {
   constructor(props) {
@@ -16,7 +13,7 @@ class Dashboard extends PureComponent {
       value: 0,
       data: null,
       error: null,
-      historyData: null
+      historyData: null,
     };
   }
 
@@ -29,46 +26,51 @@ class Dashboard extends PureComponent {
     const data = (this.props.data || []).slice();
 
     return (
-      <Fragment>
-        <Typography variant="h4" color="primary" gutterBottom>
-          {this.props.sensorName + " Dashboard"}
-        </Typography>
-        <MonitoringData data={data} />
-        <br />
-        <Tabs
-          value={value}
-          onChange={this.handleChange}
-          indicatorColor="primary"
-          textColor="primary"
-          centered
-        >
-          <Tab label="Data" />
-          <Tab label="History" />
-          <Tab label="Upload CSV" />
-        </Tabs>
-        <br />
-        <br />
-        {
-          [
-            <ChartContainer data={this.props.data} />,
-            <ShowHistoryGraph
-              selected={this.props.selected}
-              start={this.props.start}
-              end={this.props.end}
-              changeRange={this.props.changeRange}
-              changeCalStart={this.props.changeCalStart}
-              changeCalEnd={this.props.changeCalEnd}
-              historyData={this.props.historyData}
-            />,
-            <UploadData
-              firebase={this.props.firebase}
-              sensorId={this.props.sensorId}
-            />
-          ][value]
-        }
-      </Fragment>
+      <Container>
+        <div className="card max-w-6xl">
+          <p className="card-title">{this.props.sensorName + " Dashboard"}</p>
+          {/* <MonitoringData data={data} /> */}
+          <br />
+          <div className="tabs">
+            <a className="tab tab-bordered">Data</a>
+            <a className="tab tab-bordered">History</a>
+            <a className="tab tab-bordered">Upload CSV</a>
+          </div>
+          {/* <Tabs
+            value={value}
+            onChange={this.handleChange}
+            indicatorColor="primary"
+            textColor="primary"
+            centered
+          >
+            <Tab label="Data" />
+            <Tab label="History" />
+            <Tab label="Upload CSV" />
+          </Tabs> */}
+          <br />
+          <br />
+          {
+            [
+              <ChartContainer data={this.props.data} />,
+              <ShowHistoryGraph
+                selected={this.props.selected}
+                start={this.props.start}
+                end={this.props.end}
+                changeRange={this.props.changeRange}
+                changeCalStart={this.props.changeCalStart}
+                changeCalEnd={this.props.changeCalEnd}
+                historyData={this.props.historyData}
+              />,
+              <UploadData
+                firebase={this.props.firebase}
+                sensorId={this.props.sensorId}
+              />,
+            ][value]
+          }
+        </div>
+      </Container>
     );
   }
 }
 
-export default withStyles(dashboardStyle)(Dashboard);
+export default Dashboard;

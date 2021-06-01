@@ -1,23 +1,6 @@
 import React, { PureComponent } from "react";
-import {
-  Paper,
-  Typography,
-  FormControl,
-  InputLabel,
-  Select,
-  MenuItem,
-  Grid,
-  withStyles,
-} from "@material-ui/core"
-import {
-  DateTimePicker,
-} from '@material-ui/lab';
-import LocalizationProvider from '@material-ui/lab/LocalizationProvider';
 import DateFnsUtils from '@date-io/date-fns'; // choose your lib
-import { historyStyle } from "./dashboardStyle";
-import { mainTheme } from "../../assets/jss/mainStyle";
 import ChartContainer from "./ChartContainer";
-import ThemeProvider from "@material-ui/styles/ThemeProvider";
 
 class ShowHistoryGraph extends PureComponent {
   constructor(props) {

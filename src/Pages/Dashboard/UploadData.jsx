@@ -1,15 +1,6 @@
 import React, { PureComponent } from "react";
-import {
-  Input,
-  Button,
-  Snackbar,
-  Grid,
-  withStyles,
-  Typography,
-  Paper
-} from "@material-ui/core";
+
 import Papa from "papaparse";
-import { uploadStyle } from "./dashboardStyle";
 
 class UploadData extends PureComponent {
   constructor(props) {

@@ -1,13 +1,5 @@
 import React, { PureComponent } from "react";
-import { withStyles, Card, CardContent, CardHeader } from "@material-ui/core";
-import { monitoringStyle } from "./dashboardStyle";
-import { Grid, Typography } from "@material-ui/core";
 
-import Timeline from "@material-ui/icons/Timeline";
-import AcUnit from "@material-ui/icons/AcUnit";
-import Waves from "@material-ui/icons/Waves";
-import OfflineBolt from "@material-ui/icons/OfflineBolt";
-import PowerSettingsNew from "@material-ui/icons/PowerSettingsNew";
 
 const iconMap = classes => {
   return {
@@ -74,4 +66,4 @@ class MonitoringData extends PureComponent {
   }
 }
 
-export default withStyles(monitoringStyle)(MonitoringData);
+export default MonitoringData;

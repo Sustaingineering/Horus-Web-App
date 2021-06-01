@@ -1,5 +1,5 @@
 import React, { PureComponent } from "react";
-import { Grid } from "@material-ui/core";
+import { Container } from "../../Components/Basics";
 import Chart from "./Chart";
 
 const dataset = [
@@ -7,49 +7,52 @@ const dataset = [
     color: "#fd5d93",
     title: "Voltage",
     unit: "Volts",
-    dataKey1: "voltage"
+    dataKey1: "voltage",
   },
   {
     color: "#efefef",
     title: "Current",
     unit: "Amps",
-    dataKey1: "current"
+    dataKey1: "current",
   },
   {
     color: "#1d8cf8",
     title: "Power",
     unit: "Watts",
-    dataKey1: "power"
+    dataKey1: "power",
   },
   {
     color: "#00f2c3",
     title: "Temperature",
     unit: "Celcius",
     dataKey1: "op-temp",
-    dataKey2: "surface-temperature"
-  }
+    dataKey2: "surface-temperature",
+  },
 ];
 
 class ChartContainer extends PureComponent {
   render() {
     const data = (this.props.data || []).slice();
     return (
-      <Grid container spacing={3}>
-        {dataset.map(e => {
-          return (
-            <Grid key={e.title} item xs={12} sm={12} md={6}>
-              <Chart
-                data={data}
-                color={e.color}
-                title={e.title}
-                unit={e.unit}
-                dataKey1={e.dataKey1}
-                dataKey2={e.dataKey2}
-              />
-            </Grid>
-          );
-        })}
-      </Grid>
+      <Container>
+        <div className="grid grid-cols-1 gap-6">
+          {dataset.map((e) => {
+            return (
+              <div className="card">
+                <span className="w-screen"></span>
+                <Chart
+                  data={data}
+                  color={e.color}
+                  title={e.title}
+                  unit={e.unit}
+                  dataKey1={e.dataKey1}
+                  dataKey2={e.dataKey2}
+                />
+              </div>
+            );
+          })}
+        </div>
+      </Container>
     );
   }
 }

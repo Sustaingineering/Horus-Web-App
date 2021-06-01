@@ -1,21 +1,13 @@
 import React, { PureComponent } from "react";
 // Router
 import { withRouter, Link } from "react-router-dom";
-// Material UI Components
-import { Avatar } from "@material-ui/core";
-// Icons
-import LockIcon from "@material-ui/icons/LockOutlined";
-import BackIcon from "@material-ui/icons/ArrowBack";
 // Firebase
 import * as firebaseui from "firebaseui";
-
-const style = {
-  textDecoration: "none",
-  color: "white"
-};
+import { Container } from "../Components/Basics";
+import { ArrowLeftIcon } from "@heroicons/react/outline";
 
 class SignInPage extends PureComponent {
-  componentDidMount = () => {
+  componentDidMount() {
     let ui =
       firebaseui.auth.AuthUI.getInstance() ||
       new firebaseui.auth.AuthUI(this.props.firebase.auth());
@@ -23,36 +15,31 @@ class SignInPage extends PureComponent {
       signInOptions: [
         {
           provider: this.props.firebase.auth.EmailAuthProvider.PROVIDER_ID,
-          requireDisplayName: false
+          requireDisplayName: false,
         },
-        this.props.firebase.auth.GoogleAuthProvider.PROVIDER_ID
+        this.props.firebase.auth.GoogleAuthProvider.PROVIDER_ID,
       ],
       callbacks: {
         signInSuccessWithAuthResult: (authResult, redirectUrl) => {
           return true;
-        }
+        },
       },
       signInFlow: "popup",
-      credentialHelper: firebaseui.auth.CredentialHelper.NONE
+      credentialHelper: firebaseui.auth.CredentialHelper.NONE,
     });
-  };
+  }
 
   render() {
     return (
-      <div>
-        <div>
-          <div>
-            <Avatar>
-              <LockIcon />
-            </Avatar>
-            <div id="firebaseui-auth-container"/>
-            <br />
-            <br />
-            <Link style={style} to="/">
-              <BackIcon />
+      <div className="mt-40">
+        <Container>
+          <div className="text-center">
+            <div id="firebaseui-auth-container" className="mb-10" />
+            <Link to="/">
+              <ArrowLeftIcon className="h-6 w-6 m-auto" />
             </Link>
           </div>
-        </div>
+        </Container>
       </div>
     );
   }

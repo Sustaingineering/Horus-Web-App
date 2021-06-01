@@ -2,39 +2,15 @@ import React, { PureComponent, Fragment } from "react";
 // Router
 import { Switch, BrowserRouter, Route, Redirect } from "react-router-dom";
 // Components
-import LandingPage from "./Pages/Landing/Landing.jsx";
+import LandingPage from "./Pages/Landing";
 // SignIn Component
-import SignInPage from "./Pages/Auth/SignIn";
-// Home
-import Home from "./Pages/Home/home.jsx";
-// Config
-import Config from "./Pages/Config/Config.jsx";
-import NavBar from "./Layout/Navbar/Navbar";
-import { Container, withStyles } from "@material-ui/core";
-import { backgroundColor } from "./assets/jss/mainStyle";
-
-// Sensor
+import SignInPage from "./Pages/SignIn";
+import Home from "./Pages/Home";
+import Sensors from "./Pages/Sensors";
+import Account from "./Pages/Account";
+import NavBar from "./Components/Navbar";
 import Sensor from "./Pages/Dashboard/Sensor";
-
-// const customStyle = theme => ({
-//   root: {
-//     position: "relative",
-//     [theme.breakpoints.down("sm")]: {
-//       paddingTop: theme.spacing(7)
-//     },
-//     [theme.breakpoints.up("sm")]: {
-//       paddingTop: theme.spacing(8)
-//     },
-//     backgroundColor: backgroundColor,
-//     margin: theme.spacing(1),
-//     paddingBottom: theme.spacing(8)
-//   },
-//   container: {
-//     [theme.breakpoints.up("sm")]: {
-//       marginLeft: theme.spacing(7)
-//     }
-//   }
-// });
+import Help from "./Pages/Help";
 
 class App extends PureComponent {
   constructor(props) {
@@ -43,19 +19,19 @@ class App extends PureComponent {
     this.state = {
       authUser: undefined,
       sensors: {},
-      posts: []
+      posts: [],
     };
   }
 
   componentDidMount = () => {
-    this.props.firebase.auth().onAuthStateChanged(authUser => {
+    this.props.firebase.auth().onAuthStateChanged((authUser) => {
       if (authUser) {
         this.setState({ authUser: authUser });
         this.sensorSubscriber();
         this.postSubscriber();
       } else {
         try {
-          this.firestoreSubscribers.forEach(unsubscribe => unsubscribe());
+          this.firestoreSubscribers.forEach((unsubscribe) => unsubscribe());
         } catch (e) {
           console.log(e);
         } finally {
@@ -63,7 +39,7 @@ class App extends PureComponent {
           this.setState({
             authUser: undefined,
             sensors: {},
-            posts: []
+            posts: [],
           });
         }
       }
@@ -78,18 +54,16 @@ class App extends PureComponent {
       db
         .collection("users")
         .doc(uid)
-        .onSnapshot(doc => {
+        .onSnapshot((doc) => {
           if (doc.exists && doc.data().sensors) {
             this.setState({
-              sensors: doc.data().sensors
+              sensors: doc.data().sensors,
             });
           } else if (!doc.metadata.fromCache) {
             // Store a new document for the user with the sensor object
-            db.collection("users")
-              .doc(uid)
-              .set({ sensors: {} });
+            db.collection("users").doc(uid).set({ sensors: {} });
             this.setState({
-              sensors: {}
+              sensors: {},
             });
           }
         })
@@ -99,13 +73,13 @@ class App extends PureComponent {
   postSubscriber = () => {
     let db = this.props.firebase.firestore();
     this.firestoreSubscribers.push(
-      db.collection("posts").onSnapshot(c => {
+      db.collection("posts").onSnapshot((c) => {
         let posts = [];
-        c.forEach(doc => {
+        c.forEach((doc) => {
           posts.push(doc.data());
         });
         this.setState({
-          posts: posts
+          posts: posts,
         });
       })
     );
@@ -135,33 +109,62 @@ class App extends PureComponent {
   render() {
     const renderPlatform = this.state.authUser ? (
       <Fragment>
-        <NavBar sensors={this.state.sensors} firebase={this.props.firebase} />
-        <Container>
-            <Switch>
+        <NavBar sensors={this.state.sensors} firebase={this.props.firebase}>
+          <Switch>
+            {Object.keys(this.state.sensors).map((sensor) => (
               <Route
-                path="/"
+                path={`/sensors/${sensor}`}
                 exact
+                key={"route-" + sensor}
                 render={() => (
-                  <Home
-                    posts={this.state.posts}
+                  <Sensor
+                    sensorName={sensor}
                     firebase={this.props.firebase}
+                    sensorId={this.state.sensors[sensor]}
                   />
                 )}
               />
-              {this.processSensors()}
-              <Route
-                path="/config"
-                exact
-                render={() => (
-                  <Config
-                    firebase={this.props.firebase}
-                    firestoreSubscribers={this.firestoreSubscribers}
-                  />
-                )}
-              />
-              <Redirect to="/" />
-            </Switch>
-        </Container>
+            ))}
+            <Route
+              path="/sensors"
+              exact
+              render={() => (
+                <Sensors
+                  firebase={this.props.firebase}
+                  firestoreSubscribers={this.firestoreSubscribers}
+                />
+              )}
+            />
+            <Route
+              path="/help"
+              exact
+              render={() => (
+                <Help
+                  firebase={this.props.firebase}
+                  firestoreSubscribers={this.firestoreSubscribers}
+                />
+              )}
+            />
+            <Route
+              path="/account"
+              exact
+              render={() => (
+                <Account
+                  firebase={this.props.firebase}
+                  firestoreSubscribers={this.firestoreSubscribers}
+                />
+              )}
+            />
+            <Route
+              path="/"
+              exact
+              render={() => (
+                <Home posts={this.state.posts} firebase={this.props.firebase} />
+              )}
+            />
+            <Redirect to="/" />
+          </Switch>
+        </NavBar>
       </Fragment>
     ) : (
       <Switch>
